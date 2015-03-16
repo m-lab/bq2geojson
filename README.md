@@ -4,11 +4,23 @@ for just about anyone to fetch M-Lab data from Google BigQuery and convert it
 into a format (GeoJSON) that is easily usable by mapping software, Leaflet in
 this particular case.
 
+## Dependencies
 Several [Node.js](https://nodejs.org/) modules are required to convert the CSV 
 files from BigQuery into GeoJSON files usable by Leaflet:
 
 * [csv2geojson](https://github.com/mapbox/csv2geojson)
 * [Turf.js](http://turfjs.org/)
+
+These should be automatically installed in the local directory when you run
+"npm insall" later.
+
+You will also need to have the [Google Cloud
+SDK](https://cloud.google.com/sdk/) installed.  Most importantly, the SDK
+contains the "bq" command, which is the tool used to query BigQuery.  There are
+versions of the SDK for all major OSs, though it's rather expected that most
+people will be using some variant of GNU/Linux or Mac OS.  Once installed, you
+need to make sure that the "bq" command is in your path, else edit
+bq2geojson.sh and put in an absolute path to the utility.
 
 ## Getting started
 Assuming you already have Node.js and npm installed on your system, and both
