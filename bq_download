@@ -4,8 +4,9 @@ connection_spec.client_geolocation.longitude AS longitude,
 (125 * web100_log_entry.snap.HCThruOctetsAcked/
 (web100_log_entry.snap.SndLimTimeRwin +
 web100_log_entry.snap.SndLimTimeCwnd +
-web100_log_entry.snap.SndLimTimeSnd)) AS download_throughput
-FROM [m_lab.tablename]
+web100_log_entry.snap.SndLimTimeSnd)) AS download_throughput,
+(web100_log_entry.snap.SumRTT / web100_log_entry.snap.CountRTT) AS avg_rtt
+FROM [measurement-lab:m_lab.tablename]
 WHERE
 IS_EXPLICITLY_DEFINED(web100_log_entry.snap.SndLimTimeRwin) AND
 IS_EXPLICITLY_DEFINED(web100_log_entry.snap.SndLimTimeCwnd) AND
@@ -24,6 +25,4 @@ web100_log_entry.snap.SndLimTimeCwnd +
 web100_log_entry.snap.SndLimTimeSnd) < 3600000000 AND
 IS_EXPLICITLY_DEFINED(web100_log_entry.snap.CongSignals) AND
 web100_log_entry.snap.CongSignals > 0 AND
-connection_spec.client_geolocation.country_code = '<country_code>' AND
-connection_spec.client_geolocation.region = '<region_state>' AND
-connection_spec.client_geolocation.city = '<city>' 
+connection_spec.client_geolocation.country_code = 'US'
