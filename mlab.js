@@ -50,17 +50,17 @@ function addHexLayer(geoJson) {
 
 	hexgrid.features.forEach( function(cell) {
 
-		var ndt_avg = cell.properties.ndt_avg;
+		var download_avg = cell.properties.download_avg;
 		var hexStyle = cell.hexStyle = {};
 
 		hexStyle.weight = 1;
 		hexStyle.fillOpacity = 0.3;
 
-		if ( ! ndt_avg ) {
+		if ( ! download_avg ) {
 			hexStyle.weight = 0;
 			hexStyle.fillOpacity = 0;
 		} else {
-			hexStyle.color = getHexColor(ndt_avg);
+			hexStyle.color = getHexColor(download_avg);
 		}
 
 	});
