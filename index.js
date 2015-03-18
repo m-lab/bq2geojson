@@ -8,6 +8,8 @@ var indir = "./csv/";
 // Where to write GeoJSON files.
 var outdir = "./geojson/";
 
+var min_test_cnt = 30;
+
 // Create the bounding box for the grid.  This should be set according to the
 // region you are expecting data for http://boundingbox.klokantech.com/
 // Be careful setting cellWidth.  If you set it too small over too large an
@@ -33,14 +35,26 @@ for ( i = 0; i < csv_files.length; i++ ) {
 			console.log(err);
 			throw err;
 		}
-		// Covert download_throughput to a number so that Turf.js can perform
-		// math on it properly.
-		// https://github.com/mapbox/csv2geojson/issues/31
+		// Add a property for how many tests occur in each cell
+		var turfgrid = turf.count(hexgrid, geoJson, 'test_cnt');
+
+		// Remove cells ("features") where the test count is less than a
+		// predefined minumum number.
+		// While we're looping through the object, also take the opportunity to
+		// covert download_throughput to a number so that Turf.js can perform
+		// math on it properly: https://github.com/mapbox/csv2geojson/issues/31
 		for ( idx = 0; idx < geoJson.features.length; idx++ ) {
-			var throughput = Number(geoJson.features[idx].properties['download_throughput']);
-			geoJson.features[idx].properties['download_throughput'] = throughput;
+			if ( geoJson.features[idx].properties['test_cnt'] < min_test_cnt ) {
+				geoJson.features.splice(idx, 1);
+			} else {
+				var throughput = Number(geoJson.features[idx].properties['download_throughput']);
+				geoJson.features[idx].properties['download_throughput'] = throughput;
+			}
 		};
-		var turfgrid = turf.average(hexgrid, geoJson, 'download_throughput', 'ndt_avg');
+
+		// Add a property for the average download through put in each cell
+		var turfgrid = turf.average(hexgrid, geoJson, 'download_throughput', 'download_avg');
+
 		// Serialize the GeoJSON so we can write it to a file.
 		var turfgrid_serial = JSON.stringify(turfgrid);
 		fs.writeFileSync(outdir + fname + '.geojson', turfgrid_serial);
