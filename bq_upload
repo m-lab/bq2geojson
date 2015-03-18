@@ -1,0 +1,16 @@
+SELECT
+connection_spec.client_geolocation.latitude AS latitude,
+connection_spec.client_geolocation.longitude AS longitude,
+(125 * web100_log_entry.snap.HCThruOctetsReceived/web100_log_entry.snap.Duration) AS upload_throughput
+FROM [measurement-lab:m_lab.tablename]
+WHERE
+IS_EXPLICITLY_DEFINED(web100_log_entry.snap.Duration) AND
+IS_EXPLICITLY_DEFINED(web100_log_entry.snap.HCThruOctetsReceived) AND
+web100_log_entry.snap.HCThruOctetsReceived >= 8192 AND
+IS_EXPLICITLY_DEFINED(project) AND project = 0 AND
+IS_EXPLICITLY_DEFINED(web100_log_entry.is_last_entry) AND
+web100_log_entry.snap.Duration >= 9000000 AND
+web100_log_entry.snap.Duration < 3600000000 AND
+connection_spec.client_geolocation.country_code = '<country_code>' AND
+connection_spec.client_geolocation.region = '<region_state>' AND
+connection_spec.client_geolocation.city = '<city>'
