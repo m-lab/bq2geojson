@@ -154,7 +154,7 @@ for ( var i = 0; i < months.length; i++ ) {
 
 	// Stringify GeoJSON and write it to the file system
 	var hexgrid_serial = JSON.stringify(hexgrid);
-	fs.writeFileSync(geojson_dir + sub_dir + '.geojson', turfgrid_serial);
+	fs.writeFileSync(geojson_dir + sub_dir + '.geojson', hexgrid_serial);
 	console.log('Wrote file ' + geojson_dir + sub_dir + '.geojson');
 
 }
