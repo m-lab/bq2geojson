@@ -231,11 +231,11 @@ function turfize(results) {
  */
 function turf_average(hexgrid, geojson, props) {
 
-	props.averages.forEach( function (field) {
+	props['averages'].forEach( function (field) {
 		console.log('* Averaging ' + field + '.');
 		var start = new Date();
-		elapsed(start);
 		turfgrid = turf.average(hexgrid, geojson, field, field + '_avg');
+		elapsed(start);
 	});
 
 	return turfgrid;
@@ -251,7 +251,7 @@ function turf_average(hexgrid, geojson, props) {
  */
 function normalize(geojson, props) {
 
-	for ( var i = 0; i < geojson.features.length; i++ ) {
+	for ( var i = geojson.features.length -1; i >=0; i-- ) {
 		if ( geojson.features[i].properties[props['count']] < min_test_cnt ) {
 			geojson.features.splice(i, 1);
 		} else {
