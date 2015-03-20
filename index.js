@@ -15,19 +15,29 @@ var exec = require('child_process').execSync;
 // Options passed to the bq client.
 // -n: defines arbitrarily high number of results to return that we should
 // never surpass in practice, and just makes sure we get everything.
+//
 // --format csv: output format should be CSV.
+//
 // --quiet: don't output status messages, since they'd end up in the CSV.
+//
 // --headless: don't know what effect this has, but seems good since this may
 // possibly be automated in some way.
 var bq_opts='-n 1000000 --format csv --quiet --headless';
 
-// Where the CSV files from BigQuery will be written. By defaul they will go in
-// the bigquery/ directory since, well, it is BigQuery data.
-var csv_dir = './bigquery/csv/';
-
-// Where to write GeoJSON files. By default they will go in the html/ directory
-// since they will be consumed by a browser.
-var geojson_dir = './html/geojson/';
+// 'csv': Where the CSV files from BigQuery will be written. By defaul they
+// will go in the bigquery/ directory since, well, it is BigQuery data.
+//
+// 'geojson': Where to write GeoJSON files. By default they will go in the
+// ./html/ directory since they will be consumed by a browser.
+//
+// 'tmp': Temporary directory where intermediate files are stored.  In case
+// something fails, these won't have to be generated again, potentially.  And
+// maybe useful for debugging.
+var dirs = {
+	'csv' : './bigquery/csv/',
+	'geojson' : './html/geojson/',
+	'tmp' : './tmp/'
+}
 
 // Minimun tests per cell.  If the number of tests in a given hex cell is less
 // than this, then remove data for the cell.  This should be used to make sure
@@ -83,7 +93,7 @@ if ( process.argv[2] ) {
 var months = [];
 if ( process.argv[3] ) {
 	process.argv.slice(3).forEach( function(month) {
-		if ( month.match('[0-9]{2}') ) {
+		if ( month.match('^[0-9]{2}$') ) {
 			months.push(month);
 		} else {
 			console.log('Month arguments must be two digits.');
@@ -97,17 +107,14 @@ if ( process.argv[3] ) {
 	}
 }
 
-// Make the necessary base directories for CSV and GeoJSON files.
-try {
-	fs.mkdirSync(csv_dir);
-	fs.mkdirSync(geojson_dir);
-} catch(err) {
-	if ( err.code != 'EEXIST' ) {
-		throw err;
-	}
+// Make the necessary base directories.
+for (var dir in dirs) {
+	create_dir(dirs[dir]);
 }
-	
-// Create the intial grid of hexagons within our bounding box.
+
+// Create the intial grid of hexagons within our bounding box.  This variable
+// will get passed around quite a few time as it steps through the process of
+// creating the final GeoJSON file.
 var hexgrid = turf.hex(bbox, cellWidth, 'miles');
 
 //  The year will never change for a given run, so loop through all the months
@@ -117,16 +124,9 @@ for ( var i = 0; i < months.length; i++ ) {
 
 	// Some convenient variables to have on hand
 	var sub_dir = year + '_' + months[i];
-	var csv_path = csv_dir + sub_dir;
+	var csv_path = dirs['csv'] + sub_dir;
 
-	// Make the 
-	try {
-		fs.mkdirSync(csv_path); 
-	} catch(err) {
-		if ( err.code != 'EEXIST' ) {
-			throw err;
-		}
-	}
+	create_dir(csv_path);
 
 	// Calculate CSV file paths for convenience
 	var down_path = csv_path + '/download.csv';
@@ -146,45 +146,25 @@ for ( var i = 0; i < months.length; i++ ) {
 	// Convert CSV to GeoJSON and then process with Turf
 	async.parallel({
 		'download' : function(callback) {
-			console.log('Converting download throughput CSV data to GeoJSON.');
+			console.log('* Converting download throughput CSV data to GeoJSON.');
 			csv2geojson(csv_down, function(err, geojson) {
-				console.log('  * Normalizing download throughput data.');
-				geojson = normalize(geojson, download_props);
-				console.log('  * Counting dowload throughput points in each hex cell.');
-				var start = new Date();
-				geojson = turf.count(hexgrid, geojson, download_props.count);
-				elapsed(start);
 				callback(null, geojson);
 			});
 		},
 		'upload' : function(callback) {
-			console.log('Converting upload throughput CSV data to GeoJSON.');
+			console.log('* Converting upload throughput CSV data to GeoJSON.');
 			csv2geojson(csv_up, function(err, geojson) {
-				console.log('  * Normalizing upload throughput data.');
-				geojson = normalize(geojson, upload_props);
-				console.log('  * Counting upload throughput points in each hex cell.');
-				var start = new Date();
-				geojson = turf.count(hexgrid, geojson, upload_props.count);
-				elapsed(start);
 				callback(null, geojson);
 			});
 		}
-	},
-		function (err, results) {
-			console.log('Averaging download throughput and RTT data.');
-			var start = new Date();
-			hexgrid = turf_average(hexgrid, results.download, download_props);
-			elapsed(start);
-			console.log('Averaging upload throughput data.');
-			var start = new Date();
-			hexgrid = turf_average(hexgrid, results.upload, upload_props);
-			elapsed(start);
+	}, function (err, results) {
+		turfize(results);
 	});
 
 	// Stringify GeoJSON and write it to the file system
 	var hexgrid_serial = JSON.stringify(hexgrid);
-	fs.writeFileSync(geojson_dir + sub_dir + '.geojson', hexgrid_serial);
-	console.log('Wrote file ' + geojson_dir + sub_dir + '.geojson');
+	fs.writeFileSync(dirs['geojson'] + sub_dir + '.geojson', hexgrid_serial);
+	console.log('* Wrote file ' + dirs['geojson'] + sub_dir + '.geojson');
 
 }
 
@@ -195,18 +175,53 @@ for ( var i = 0; i < months.length; i++ ) {
 function get_csv(path, query) {
 	try {
 		fs.statSync(path).isFile();
-		console.log('CSV file ' + path + ' already exists. Skipping ...'); 
+		console.log('* CSV file ' + path + ' already exists. Skipping ...'); 
 		return fs.readFileSync(path, encoding='utf8');
 	} catch(err) {
 		if ( ! err.code == 'ENOENT' ) {
 			throw err;
-		}
-	}
-	console.log('Querying BigQuery for ' + months[i] + '/' + year + '.');
+		} }
+	console.log('* Querying BigQuery for ' + months[i] + '/' + year + '.');
 	var result = exec('bq query ' + bq_opts + ' "' + query + '"', {'encoding' : 'utf8'});
 	fs.writeFileSync(path, result);
-	console.log('Wrote CSV file ' + down_path + '.');
+	console.log('* Wrote CSV file ' + down_path + '.');
 	return result;
+}
+
+
+/*
+ * Run the normalized GeoJSON through Turf.js. Measures and displays elapsed
+ * time each Turf.js operation for the benefit of the user, since some
+ * operations can take quite a while.  Writes intermediate stages of hexgrid to
+ * files for debugging or timesaving by loading them instead of reprocessing
+ * the same data twice (not yet implemented).
+ */
+function turfize(results) {
+
+	console.log('* Counting dowload throughput points in each hex cell.');
+	var start = new Date();
+	hexgrid = turf.count(hexgrid, results['download'], download_props['count']);
+	elapsed(start);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_count.geojson', JSON.stringify(hexgrid));
+	console.log('* Normalizing download throughput data.');
+	hexgrid = normalize(hexgrid, download_props);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_count-normalized.geojson', JSON.stringify(hexgrid));
+
+	console.log('* Counting upload throughput points in each hex cell.');
+	var start = new Date();
+	hexgrid = turf.count(hexgrid, results['upload'], upload_props['count']);
+	elapsed(start);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_count.geojson', JSON.stringify(hexgrid));
+	console.log('* Normalizing upload throughput data.');
+	hexgrid = normalize(hexgrid, upload_props);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_count-normalized.geojson', JSON.stringify(hexgrid));
+
+	hexgrid = turf_average(hexgrid, results['download'], download_props);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_average.geojson', JSON.stringify(hexgrid));
+
+	hexgrid = turf_average(hexgrid, results['upload'], upload_props);
+	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_average.geojson', JSON.stringify(hexgrid));
+
 }
 
 
@@ -217,7 +232,9 @@ function get_csv(path, query) {
 function turf_average(hexgrid, geojson, props) {
 
 	props.averages.forEach( function (field) {
-		console.log('  * Averaging ' + field + '.');
+		console.log('* Averaging ' + field + '.');
+		var start = new Date();
+		elapsed(start);
 		turfgrid = turf.average(hexgrid, geojson, field, field + '_avg');
 	});
 
@@ -235,10 +252,10 @@ function turf_average(hexgrid, geojson, props) {
 function normalize(geojson, props) {
 
 	for ( var i = 0; i < geojson.features.length; i++ ) {
-		if ( geojson.features[i].properties[props.count] < min_test_cnt ) {
+		if ( geojson.features[i].properties[props['count']] < min_test_cnt ) {
 			geojson.features.splice(i, 1);
 		} else {
-			props.averages.forEach( function (field) {
+			props['averages'].forEach( function (field) {
 				if ( geojson.features[i].properties[field] ) {
 					var numeric_val = Number(geojson.features[i].properties[field]);
 					geojson.features[i].properties[field] = numeric_val;
@@ -262,6 +279,21 @@ function elapsed(start) {
 	var hours = Math.floor(elapsed / 3600) + 'h ';
 	var minutes = Math.floor((elapsed % 3600) / 60) + 'm ';
 	var seconds = Math.floor((elapsed % 3600) % 60) + 's';
-	console.log('    ... operation completed in ' + hours + minutes + seconds); 
+	console.log('  ... operation completed in ' + hours + minutes + seconds); 
+
+}
+
+/*
+ * Create a directory
+ */
+function create_dir(dir) {
+
+	try {
+		fs.mkdirSync(dir);
+	} catch(err) {
+		if ( err.code != 'EEXIST' ) {
+			throw err;
+		}
+	}
 
 }
