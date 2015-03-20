@@ -44,6 +44,19 @@ var min_test_cnt = 30;
 var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
 var cellWidth = 0.5;
 
+// When running aggregate functions on the data, these are the various
+// properties that should be added to the GeoJSON for the download and upload
+// throughput tests, respectively. 'count', as the name implies, will host the
+// value of how many data points per hex cell there are for that test.
+// 'averages' is an array that holds the fields that need to be averaged.
+var download_props = {
+	'count' : 'download_count',
+	'averages' : ['download_throughput', 'rtt_average']
+}
+var upload_props = {
+	'count' : 'upload_count',
+	'averages' : ['upload_throughput']
+}
 
 //
 // STOP
@@ -133,23 +146,39 @@ for ( var i = 0; i < months.length; i++ ) {
 	// Convert CSV to GeoJSON and then process with Turf
 	async.parallel({
 		'download' : function(callback) {
+			console.log('Converting download throughput CSV data to GeoJSON.');
 			csv2geojson(csv_down, function(err, geojson) {
-				console.log('Converting download throughput CSV data to GeoJSON.');
+				console.log('  * Normalizing download throughput data.');
+				geojson = normalize(geojson, download_props);
+				console.log('  * Counting dowload throughput points in each hex cell.');
+				var start = new Date();
+				geojson = turf.count(hexgrid, geojson, download_props.count);
+				elapsed(start);
 				callback(null, geojson);
 			});
 		},
 		'upload' : function(callback) {
+			console.log('Converting upload throughput CSV data to GeoJSON.');
 			csv2geojson(csv_up, function(err, geojson) {
-				console.log('Converting upload throughput CSV data to GeoJSON.');
+				console.log('  * Normalizing upload throughput data.');
+				geojson = normalize(geojson, upload_props);
+				console.log('  * Counting upload throughput points in each hex cell.');
+				var start = new Date();
+				geojson = turf.count(hexgrid, geojson, upload_props.count);
+				elapsed(start);
 				callback(null, geojson);
 			});
 		}
 	},
 		function (err, results) {
-			console.log('Turfizing download throughput data.');
-			hexgrid = turfize(hexgrid, results.download, ['download_throughput', 'rtt_average']);
-			console.log('Turfizing upload throughput data.');
-			hexgrid = turfize(hexgrid, results.upload, ['upload_throughput']);
+			console.log('Averaging download throughput and RTT data.');
+			var start = new Date();
+			hexgrid = turf_average(hexgrid, results.download, download_props);
+			elapsed(start);
+			console.log('Averaging upload throughput data.');
+			var start = new Date();
+			hexgrid = turf_average(hexgrid, results.upload, upload_props);
+			elapsed(start);
 	});
 
 	// Stringify GeoJSON and write it to the file system
@@ -182,19 +211,12 @@ function get_csv(path, query) {
 
 
 /*
- * Analyze the BigQuery data with Turf.js, adding various properties to the
- * GeoJSON
+ * Average any properties that require this operation, and add a corresponding
+ * property to the GeoJSON.
  */
-function turfize(hexgrid, geojson, fields) {
+function turf_average(hexgrid, geojson, props) {
 
-	console.log('  * Counting points in each cell.');
-	// Add a property for how many tests occur in each cell
-	var turfgrid = turf.count(hexgrid, geojson, 'count');
-		
-	console.log('  * Normalizing GeoJSON data.');
-	turfgrid = normalize_geojson(turfgrid, fields);
-
-	fields.forEach( function (field) {
+	props.averages.forEach( function (field) {
 		console.log('  * Averaging ' + field + '.');
 		turfgrid = turf.average(hexgrid, geojson, field, field + '_avg');
 	});
@@ -210,12 +232,13 @@ function turfize(hexgrid, geojson, fields) {
  * any any values to a number so that Turf.js can perform math on it properly:
  * https://github.com/mapbox/csv2geojson/issues/31
  */
-function normalize_geojson(geojson, fields) {
+function normalize(geojson, props) {
+
 	for ( var i = 0; i < geojson.features.length; i++ ) {
-		if ( geojson.features[i].properties['count'] < min_test_cnt ) {
+		if ( geojson.features[i].properties[props.count] < min_test_cnt ) {
 			geojson.features.splice(i, 1);
 		} else {
-			fields.forEach( function (field) {
+			props.averages.forEach( function (field) {
 				if ( geojson.features[i].properties[field] ) {
 					var numeric_val = Number(geojson.features[i].properties[field]);
 					geojson.features[i].properties[field] = numeric_val;
@@ -223,5 +246,22 @@ function normalize_geojson(geojson, fields) {
 			});
 		}
 	};
+
 	return geojson
+
+}
+
+
+/*
+ * Simple function to return elapsed time in hours, minutes, seconds.
+ */
+function elapsed(start) {
+
+	var end = new Date();
+	var elapsed = (end.getTime() - start.getTime()) / 1000;
+	var hours = Math.floor(elapsed / 3600) + 'h ';
+	var minutes = Math.floor((elapsed % 3600) / 60) + 'm ';
+	var seconds = Math.floor((elapsed % 3600) % 60) + 's';
+	console.log('    ... operation completed in ' + hours + minutes + seconds); 
+
 }
