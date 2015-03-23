@@ -32,7 +32,7 @@ you started:
 * $ cd bigquery
 * $ cp bq_download-dist bq_download
 * $ cp bq_upload-dist bq_upload
-# Edit bq_download and bq_upload as necessary
+* # Edit bq_download and bq_upload as necessary
 * $ node index.js year [month month month ...]
 
 The script index.js requires a year argument, and of course it must be a year
@@ -44,13 +44,13 @@ number (e.g., 01 03 08 11).  If you don't pass a month argument, then the
 script assumes you want all twelve months. 
 
 index.js will create three directories: ./bigquery/csv/, ./html/geojson/,
-and ./tmp/. The CSV directory will contain the CSV data from BigQuery, the
+and ./tmp/. The csv/ directory will contain the CSV data from BigQuery, the
 the geojson/ directory will contain the GeoJSON files processed by Turf.js,
 and the tmp/ directory will contain various intermediate files based on the
-various steps between CSV and GeoJSON.  Files in the ./tmp/ directory may be
-useful for debugging and may perhaps be used to avoid rerunning the same
-lengthy operation on some data if the overall process gets interrupted for some
-reason before the final GeoJSON file is written.  Some of the Turf.js
+various steps between CSV and GeoJSON.  Files in the tmp/ directory may be
+useful for debugging and may perhaps be used at some point to avoid rerunning
+the same lengthy operations on some data if the overall process gets interrupted
+for some reason before the final GeoJSON file is written.  Some of the Turf.js
 operations can take quite a long time to complete, especially if your bounding
 box is large and your cellWidth is small.
 
