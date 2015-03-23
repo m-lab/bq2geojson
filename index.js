@@ -34,9 +34,9 @@ var bq_opts='-n 1000000 --format csv --quiet --headless';
 // something fails, these won't have to be generated again, potentially.  And
 // maybe useful for debugging.
 var dirs = {
-	'csv' : './bigquery/csv/',
-	'geojson' : './html/geojson/',
-	'tmp' : './tmp/'
+	csv : './bigquery/csv/',
+	geojson : './html/geojson/',
+	tmp : './tmp/'
 }
 
 // Minimun tests per cell.  If the number of tests in a given hex cell is less
@@ -51,22 +51,60 @@ var min_test_cnt = 30;
 // area, then it will take Turf.js a _long_ time to process the data. A
 // suitable cellWidth at the country level could be around 0.5, state level
 // around .1, and city level around 0.3
-var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
-var cellWidth = 0.5;
+//var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
+var bbox = [-123.134765625,46.9352608806,-121.1791992188,48.3051207214]; // Seattle
+var cellWidth = 0.03;
 
 // When running aggregate functions on the data, these are the various
 // properties that should be added to the GeoJSON for the download and upload
 // throughput tests, respectively. 'count', as the name implies, will host the
 // value of how many data points per hex cell there are for that test.
 // 'averages' is an array that holds the fields that need to be averaged.
-var download_props = {
-	'count' : 'download_count',
-	'averages' : ['download_throughput', 'rtt_average']
+var properties = {
+	download : {
+		count : 'download_count',
+		averages : ['download_throughput', 'rtt_average']
+	},
+	upload : {
+		count : 'upload_count',
+		averages : ['upload_throughput']
+	}
 }
-var upload_props = {
-	'count' : 'upload_count',
-	'averages' : ['upload_throughput']
+
+// This defines the aggregate calculations that need to happen on each data
+// set: http://turfjs.org/examples/turf-aggregate/
+aggregations = {
+	download : [
+		{
+			aggregation : 'count',
+			inField : 'download_throughput',
+			outField : 'download_count'
+		},
+		{
+			aggregation : 'average',
+			inField : 'download_throughput',
+			outField : 'download_avg'
+		},
+		{
+			aggregation : 'average',
+			inField : 'rtt_average',
+			outField : 'rtt_avg'
+		}
+	],
+	upload : [
+		{
+			aggregation : 'count',
+			inField : 'upload_throughput',
+			outField : 'upload_count'
+		},
+		{
+			aggregation : 'average',
+			inField : 'upload_throughput',
+			outField : 'upload_avg'
+		}
+	]
 }
+
 
 //
 // STOP
@@ -124,7 +162,7 @@ for ( var i = 0; i < months.length; i++ ) {
 
 	// Some convenient variables to have on hand
 	var sub_dir = year + '_' + months[i];
-	var csv_path = dirs['csv'] + sub_dir;
+	var csv_path = dirs.csv + sub_dir;
 
 	create_dir(csv_path);
 
@@ -145,26 +183,33 @@ for ( var i = 0; i < months.length; i++ ) {
 
 	// Convert CSV to GeoJSON and then process with Turf
 	async.parallel({
-		'download' : function(callback) {
+		download : function(callback) {
 			console.log('* Converting download throughput CSV data to GeoJSON.');
 			csv2geojson(csv_down, function(err, geojson) {
 				callback(null, geojson);
 			});
 		},
-		'upload' : function(callback) {
+		upload : function(callback) {
 			console.log('* Converting upload throughput CSV data to GeoJSON.');
 			csv2geojson(csv_up, function(err, geojson) {
 				callback(null, geojson);
 			});
 		}
 	}, function (err, results) {
-		turfize(results);
+		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
+		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
+		console.log('* Aggregating download throughput data.');
+		aggregate(results.download, properties.download, aggregations.download);
+		fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate.geojson', JSON.stringify(hexgrid));
+		console.log('* Aggregating upload throughput data.');
+		aggregate(results.upload, properties.upload, aggregations.upload);
+		fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate.geojson', JSON.stringify(hexgrid));
 	});
 
 	// Stringify GeoJSON and write it to the file system
 	var hexgrid_serial = JSON.stringify(hexgrid);
-	fs.writeFileSync(dirs['geojson'] + sub_dir + '.geojson', hexgrid_serial);
-	console.log('* Wrote file ' + dirs['geojson'] + sub_dir + '.geojson');
+	fs.writeFileSync(dirs.geojson + sub_dir + '.geojson', hexgrid_serial);
+	console.log('* Wrote file ' + dirs.geojson + sub_dir + '.geojson');
 
 }
 
@@ -173,6 +218,7 @@ for ( var i = 0; i < months.length; i++ ) {
  * Do the actual fetching of data from BigQuery
  */
 function get_csv(path, query) {
+
 	try {
 		fs.statSync(path).isFile();
 		console.log('* CSV file ' + path + ' already exists. Skipping ...'); 
@@ -186,85 +232,58 @@ function get_csv(path, query) {
 	fs.writeFileSync(path, result);
 	console.log('* Wrote CSV file ' + down_path + '.');
 	return result;
-}
-
-
-/*
- * Run the normalized GeoJSON through Turf.js. Measures and displays elapsed
- * time each Turf.js operation for the benefit of the user, since some
- * operations can take quite a while.  Writes intermediate stages of hexgrid to
- * files for debugging or timesaving by loading them instead of reprocessing
- * the same data twice (not yet implemented).
- */
-function turfize(results) {
-
-	console.log('* Counting dowload throughput points in each hex cell.');
-	var start = new Date();
-	hexgrid = turf.count(hexgrid, results['download'], download_props['count']);
-	elapsed(start);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_count.geojson', JSON.stringify(hexgrid));
-	console.log('* Normalizing download throughput data.');
-	hexgrid = normalize(hexgrid, download_props);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_count-normalized.geojson', JSON.stringify(hexgrid));
-
-	console.log('* Counting upload throughput points in each hex cell.');
-	var start = new Date();
-	hexgrid = turf.count(hexgrid, results['upload'], upload_props['count']);
-	elapsed(start);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_count.geojson', JSON.stringify(hexgrid));
-	console.log('* Normalizing upload throughput data.');
-	hexgrid = normalize(hexgrid, upload_props);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_count-normalized.geojson', JSON.stringify(hexgrid));
-
-	hexgrid = turf_average(hexgrid, results['download'], download_props);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-download_average.geojson', JSON.stringify(hexgrid));
-
-	hexgrid = turf_average(hexgrid, results['upload'], upload_props);
-	fs.writeFileSync(dirs['tmp'] + sub_dir + '-upload_average.geojson', JSON.stringify(hexgrid));
 
 }
 
 
 /*
- * Average any properties that require this operation, and add a corresponding
- * property to the GeoJSON.
+ * Aggregate the various properties of the GeoJSON. hexgrid is a global
+ * variable in this script so this function modified that object but doesn't
+ * return anything.
  */
-function turf_average(hexgrid, geojson, props) {
+function aggregate(json, fields, aggs) {
 
-	props['averages'].forEach( function (field) {
-		console.log('* Averaging ' + field + '.');
-		var start = new Date();
-		turfgrid = turf.average(hexgrid, geojson, field, field + '_avg');
-		elapsed(start);
-	});
+	json = make_numeric(json, fields.averages);
+	fs.writeFileSync(dirs.tmp + sub_dir + '-numeric.geojson', JSON.stringify(json));
 
-	return turfgrid;
+	var start = new Date();
+	var json = turf.aggregate(hexgrid, json, aggs);
+	elapsed(start);
 
+	hexgrid = normalize(json, fields.count);
+		
+}
+
+
+/*
+ * While we're looping through the object, also take the opportunity to covert
+ * any any values to a number so that Turf.js can perform math on it properly:
+ * https://github.com/mapbox/csv2geojson/issues/31
+ */
+function make_numeric(json, fields) {
+	
+	for ( var i = 0; i < json.features.length; i++ ) { 
+		for ( var field in fields ) {
+			var numeric_val = Number(json.features[i].properties[fields[field]]);
+			json.features[i].properties[fields[field]] = numeric_val;
+		}
+	}
+	return json;
 }
 
 
 /*
  * Remove cells where the test count is less than a predefined minumum number.
- * While we're looping through the object, also take the opportunity to covert
- * any any values to a number so that Turf.js can perform math on it properly:
- * https://github.com/mapbox/csv2geojson/issues/31
  */
-function normalize(geojson, props) {
+function normalize(json, field) {
 
-	for ( var i = geojson.features.length -1; i >=0; i-- ) {
-		if ( geojson.features[i].properties[props['count']] < min_test_cnt ) {
-			geojson.features.splice(i, 1);
-		} else {
-			props['averages'].forEach( function (field) {
-				if ( geojson.features[i].properties[field] ) {
-					var numeric_val = Number(geojson.features[i].properties[field]);
-					geojson.features[i].properties[field] = numeric_val;
-				}
-			});
+	for ( var i = json.features.length -1; i >=0; i-- ) {
+		if ( json.features[i].properties[field] < min_test_cnt ) {
+			json.features.splice(i, 1);
 		}
 	};
 
-	return geojson
+	return json;
 
 }
 
