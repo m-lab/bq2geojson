@@ -51,9 +51,8 @@ var min_test_cnt = 30;
 // area, then it will take Turf.js a _long_ time to process the data. A
 // suitable cellWidth at the country level could be around 0.5, state level
 // around .1, and city level around 0.3
-//var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
-var bbox = [-123.134765625,46.9352608806,-121.1791992188,48.3051207214]; // Seattle
-var cellWidth = 0.03;
+var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
+var cellWidth = 0.5;
 
 // When running aggregate functions on the data, these are the various
 // properties that should be added to the GeoJSON for the download and upload
@@ -228,7 +227,9 @@ function get_csv(path, query) {
 			throw err;
 		} }
 	console.log('* Querying BigQuery for ' + months[i] + '/' + year + '.');
+	var start = new Date();
 	var result = exec('bq query ' + bq_opts + ' "' + query + '"', {'encoding' : 'utf8'});
+	elapsed(start);
 	fs.writeFileSync(path, result);
 	console.log('* Wrote CSV file ' + down_path + '.');
 	return result;
