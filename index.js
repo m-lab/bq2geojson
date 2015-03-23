@@ -177,7 +177,9 @@ for ( var i = 0; i < months.length; i++ ) {
 		.replace('TABLENAME', sub_dir);
 
 	// Get CSV from BigQuery
+	console.log('* Querying BigQuery for download throughput data for ' + months[i] + '/' + year + '.');
 	var csv_down = get_csv(down_path, down_query);
+	console.log('* Querying BigQuery for upload throughput data for ' + months[i] + '/' + year + '.');
 	var csv_up = get_csv(up_path, up_query);
 
 	// Convert CSV to GeoJSON and then process with Turf
@@ -226,12 +228,11 @@ function get_csv(path, query) {
 		if ( ! err.code == 'ENOENT' ) {
 			throw err;
 		} }
-	console.log('* Querying BigQuery for ' + months[i] + '/' + year + '.');
 	var start = new Date();
 	var result = exec('bq query ' + bq_opts + ' "' + query + '"', {'encoding' : 'utf8'});
 	elapsed(start);
 	fs.writeFileSync(path, result);
-	console.log('* Wrote CSV file ' + down_path + '.');
+	console.log('* Wrote CSV file ' + path + '.');
 	return result;
 
 }
