@@ -12,6 +12,12 @@ var fs = require('fs');
 var async = require('async');
 var exec = require('child_process').execSync;
 
+// Minimun tests per cell.  If the number of tests in a given hex cell is less
+// than this, then remove data for the cell.  This should be used to make sure
+// that very small sample sizes for given hex cell don't skew or distort the
+// overall picture on the map with misleading results.
+var min_test_cnt = 30;
+
 // Options passed to the bq client.
 // -n: defines arbitrarily high number of results to return that we should
 // never surpass in practice, and just makes sure we get everything.
@@ -38,21 +44,6 @@ var dirs = {
 	geojson : './html/geojson/',
 	tmp : './tmp/'
 }
-
-// Minimun tests per cell.  If the number of tests in a given hex cell is less
-// than this, then remove data for the cell.  This should be used to make sure
-// that very small sample sizes for given hex cell don't skew or distort the
-// overall picture on the map with misleading results.
-var min_test_cnt = 30;
-
-// Create the bounding box for the grid.  This should be set according to the
-// region you are expecting data for http://boundingbox.klokantech.com/
-// Be careful setting cellWidth.  If you set it too small over too large an
-// area, then it will take Turf.js a _long_ time to process the data. A
-// suitable cellWidth at the country level could be around 0.5, state level
-// around .1, and city level around 0.02
-var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
-var cellWidth = 0.5;
 
 // When running aggregate functions on the data, these are the various
 // properties that should be added to the GeoJSON for the download and upload
@@ -149,10 +140,9 @@ for (var dir in dirs) {
 	create_dir(dirs[dir]);
 }
 
-// Create the intial grid of hexagons within our bounding box.  This variable
-// will get passed around quite a few time as it steps through the process of
-// creating the final GeoJSON file.
-var hexgrid = turf.hex(bbox, cellWidth, 'miles');
+// Define hexgrid as a global variable which will be accessed in various
+// places.
+var hexgrid;
 
 //  The year will never change for a given run, so loop through all the months
 //  and use the year_month combination to determine which tables to query in
@@ -170,7 +160,7 @@ for ( var i = 0; i < months.length; i++ ) {
 	var up_path = csv_path + '/upload.csv';
 
 	// Read in query files and substitute the table placeholder with the actual
-	// table named, based on the current month/year of the loop
+	// table name, based on the current month/year of the loop
 	var down_query = fs.readFileSync('bigquery/bq_download', encoding='utf8')
 		.replace('TABLENAME', sub_dir);
 	var up_query = fs.readFileSync('bigquery/bq_upload', encoding='utf8')
@@ -197,6 +187,10 @@ for ( var i = 0; i < months.length; i++ ) {
 			});
 		}
 	}, function (err, results) {
+		// Create the hexgrid based on the download throughput data.  This runs
+		// the (slight?) risk of excluding some upload throughput data that
+		// might fall outside of this grid.  Is there a better way to do this?
+		hexgrid = create_hexgrid(results.download);
 		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
 		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
 		console.log('* Aggregating download throughput data.');
@@ -214,6 +208,30 @@ for ( var i = 0; i < months.length; i++ ) {
 
 }
 
+/*
+ * Takes a feature collection and creates a bounding box that contains all of
+ * the features, auto-calculates an appropriate cell width based on the width
+ * of the box, then turns creates a hexgrid.
+ */
+function create_hexgrid(json) {
+
+	var bbox = turf.extent(json);
+	var bbox_poly = turf.bboxPolygon(bbox);
+	var point1 = turf.point(bbox_poly.geometry.coordinates[0][0]);
+	var point2 = turf.point(bbox_poly.geometry.coordinates[0][1]);
+	var distance = turf.distance(point1, point2, 'miles');
+
+	var cellWidth = distance > 2000 ? 1 :
+		distance > 1000 ? 0.5 :
+		distance > 500 ? 0.3 :
+		distance > 250 ? 0.1 :
+		distance > 100 ? 0.05 :
+		distance > 50 ? 0.03 :
+		distance > 25 ? 0.02 : 0.01;
+
+	return turf.hex(bbox, cellWidth, 'miles');
+
+}
 
 /*
  * Do the actual fetching of data from BigQuery
