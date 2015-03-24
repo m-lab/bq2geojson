@@ -3,8 +3,8 @@
 <html>
 
 <head>
-	<meta charset=utf-8 />
-	<title>M-Lab hexbinned map using Turf.js</title>
+	<meta charset='utf-8' />
+	<title>M-Lab hexbinned maps using Turf.js</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
 	<link href='mlab.css' rel='stylesheet' />
@@ -51,7 +51,7 @@ var baseLayers = {
 }
 
 L.control.layers(baseLayers).addTo(map);
-getHexLayer(defaultDataUrl, 'download_avg');
+getHexLayer(defaultDataUrl, 'download_avg', 'low');
 addLegend();
 
 </script>
@@ -59,18 +59,38 @@ addLegend();
 <div id="controls">
 
 	<form id="selectDate" name="selectDate" action="#">
-		<select name="yearMonth" onchange="updateHexLayer(this.value, document.forms.selectMetric.metric.value);">
-			<option value="<Path to GeoJSON file>">Description</option>
+		<select name="date" onchange="updateHexLayer(this.value, document.forms.selectMetric.metric.value, document.forms.selectRes.resolution.value);">
+			<option value="geojson/2014_01-RESOLUTION.geojson">Jan 2014</option>
+			<option value="geojson/2014_02-RESOLUTION.geojson">Feb 2014</option>
+			<option value="geojson/2014_03-RESOLUTION.geojson">Mar 2014</option>
+			<option value="geojson/2014_04-RESOLUTION.geojson">Apr 2014</option>
+			<option value="geojson/2014_05-RESOLUTION.geojson">May 2014</option>
+			<option value="geojson/2014_06-RESOLUTION.geojson">Jun 2014</option>
+			<option value="geojson/2014_07-RESOLUTION.geojson">Jul 2014</option>
+			<option value="geojson/2014_08-RESOLUTION.geojson">Aug 2014</option>
+			<option value="geojson/2014_09-RESOLUTION.geojson">Sep 2014</option>
+			<option value="geojson/2014_10-RESOLUTION.geojson">Oct 2014</option>
+			<option value="geojson/2014_11-RESOLUTION.geojson">Nov 2014</option>
+			<option value="geojson/2014_12-RESOLUTION.geojson">Dec 2014</option>
 		</select>
 	</form>
 
-	<form id="selectMetric" name="selectMetric" action="#">
-		<select name="metric" onchange="updateHexLayer(document.forms.selectDate.yearMonth.value, this.value);">
+	<form id="selectMetric" name="selectMetric" action="#" style="float: left;">
+		<select name="metric"
+			onchange="updateHexLayer(document.forms.selectDate.date.value, this.value, document.forms.selectRes.resolution.value);">
 			<option value="download_avg">Download throughput</option>
 			<option value="upload_avg">Upload throughput</option>
-			<!-- TODO: Add ability to map count
+			<!-- TODO: Add ability to map counts
 			<option value="download_count">Test count</option>
 			-->
+		</select>
+	</form>
+
+	<form id="selectRes" name="selectRes" action="#">
+		<select name="resolution" onchange="updateHexLayer(document.forms.selectDate.date.value, document.forms.selectMetric.metric.value, this.value);">
+			<option value="low">Low</option>
+			<option value="medium">Medium</option>
+			<option value="high">High</option>
 		</select>
 	</form>
 

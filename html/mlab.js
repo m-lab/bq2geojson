@@ -27,7 +27,10 @@ function getHexColor(val) {
            val > 0   ? 'red' : 'transparent';
 }
 
-function getHexLayer(url, metric) {
+function getHexLayer(url, metric, resolution) {
+
+	// Replace resolution placeholder in URL, if necessary.
+	url = url.replace('RESOLUTION', resolution);
 
 	document.getElementById('spinner').style.display = 'block';
 
@@ -37,7 +40,7 @@ function getHexLayer(url, metric) {
 			if ( xhr.status === 200 ) {
 				setHexLayer(xhr.responseText, metric);
 			} else {
-				console.log(xhr.statusText);
+				console.log(url + ': ' + xhr.statusText);
 			}
 		}
 	}
@@ -63,7 +66,6 @@ function setHexLayer(geoJson, metric) {
 			hexStyle.fillOpacity = 0;
 		} else {
 			hexStyle.color = getHexColor(value);
-			console.log('VAL: ' + value + '; COLOR: ' + hexStyle.color);
 		}
 
 	});
@@ -91,7 +93,7 @@ function make_popup(props) {
 
 }
 
-function updateHexLayer(url, metric) {
+function updateHexLayer(url, metric, resolution) {
 	map.removeLayer(hexLayer);
-	getHexLayer(url, metric);
+	getHexLayer(url, metric, resolution);
 }
