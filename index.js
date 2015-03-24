@@ -203,6 +203,12 @@ for ( var i = 0; i < months.length; i++ ) {
 	});
 }
 
+// Write the center point of the first hexgrid to a file that will be used to
+// center the map in more or less the right place automatically rather than
+// having to manually set the variable.
+var lon = turf.center(hexgrids.low).geometry.coordinates[0];
+var lat = turf.center(hexgrids.low).geometry.coordinates[1];
+fs.writeFileSync('./html/center.js', 'var center = [' + lat + ',' + lon + '];');
 
 /*
  * Takes a feature collection and creates a bounding box that contains all of
