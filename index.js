@@ -185,11 +185,8 @@ for ( var i = 0; i < months.length; i++ ) {
 	}, function (err, results) {
 		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
 		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
-		// Create the hexgrids based on the download throughput data.  This
-		// runs the (slight?) risk of excluding some upload throughput data
-		// that might fall outside of this grid.  Is there a better way to do
-		// this?
-		hexgrids = create_hexgrids(results.download);
+
+		hexgrids = create_hexgrids(results);
 
 		for ( hexgrid in hexgrids ) {
 			console.log('* Aggregating download throughput data at ' + hexgrid + ' resolution.');
@@ -214,7 +211,10 @@ for ( var i = 0; i < months.length; i++ ) {
  */
 function create_hexgrids(json) {
 
-	var bbox = turf.extent(json);
+	// Create the bounding box using features from both the download and upload
+	// throughput data.
+	var updown = turf.featurecollection(json.download.features.concat(json.upload.features));
+	var bbox = turf.extent(updown);
 	var bbox_poly = turf.bboxPolygon(bbox);
 	var point1 = turf.point(bbox_poly.geometry.coordinates[0][0]);
 	var point2 = turf.point(bbox_poly.geometry.coordinates[0][1]);
