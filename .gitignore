@@ -2,3 +2,6 @@ csv/
 geojson/
 node_modules/
 *.swp
+bigquery/bq_download
+bigquery/bq_upload
+tmp/

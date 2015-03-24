@@ -5,8 +5,8 @@ connection_spec.client_geolocation.longitude AS longitude,
 (web100_log_entry.snap.SndLimTimeRwin +
 web100_log_entry.snap.SndLimTimeCwnd +
 web100_log_entry.snap.SndLimTimeSnd)) AS download_throughput,
-(web100_log_entry.snap.SumRTT / web100_log_entry.snap.CountRTT) AS avg_rtt
-FROM [measurement-lab:m_lab.tablename]
+(web100_log_entry.snap.SumRTT / web100_log_entry.snap.CountRTT) AS rtt_average
+FROM [plx.google:m_lab.TABLENAME.all]
 WHERE
 IS_EXPLICITLY_DEFINED(web100_log_entry.snap.SndLimTimeRwin) AND
 IS_EXPLICITLY_DEFINED(web100_log_entry.snap.SndLimTimeCwnd) AND

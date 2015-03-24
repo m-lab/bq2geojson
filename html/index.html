@@ -6,11 +6,10 @@
 	<meta charset=utf-8 />
 	<title>M-Lab hexbinned map using Turf.js</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-	<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
-	<script src='mlab.js'></script>
-	<link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
-	<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
 	<link href='mlab.css' rel='stylesheet' />
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+	<script src='mlab.js'></script>
 </head>
 
 <body>
@@ -25,11 +24,11 @@
 <script>
 
 // Default hex layer data file
-var defaultDataUrl = "";
+var defaultDataUrl = "default.geojson";
 
 // Center and zoom level of map
 var center = [38.8961302513129,-99.04025268554688]; //USA
-var zoom = 4; 
+var zoom = 4;
 
 // Create the map
 var map = L.map('map').setView(center, zoom);
@@ -52,18 +51,29 @@ var baseLayers = {
 }
 
 L.control.layers(baseLayers).addTo(map);
-setHexLayer(defaultDataUrl);
+getHexLayer(defaultDataUrl, 'download_avg');
 addLegend();
 
 </script>
 
 <div id="controls">
 
-	<form name="selectDate" action="#">
-		<select name="yearMonth" onchange="updateHexLayer(this.value);">
-			<option value="<URL to GeoJSON file>">My Description</option>
+	<form id="selectDate" name="selectDate" action="#">
+		<select name="yearMonth" onchange="updateHexLayer(this.value, document.forms.selectMetric.metric.value);">
+			<option value="<Path to GeoJSON file>">Description</option>
 		</select>
 	</form>
+
+	<form id="selectMetric" name="selectMetric" action="#">
+		<select name="metric" onchange="updateHexLayer(document.forms.selectDate.yearMonth.value, this.value);">
+			<option value="download_avg">Download throughput</option>
+			<option value="upload_avg">Upload throughput</option>
+			<!-- TODO: Add ability to map count
+			<option value="download_count">Test count</option>
+			-->
+		</select>
+	</form>
+
 
 </div>
 
