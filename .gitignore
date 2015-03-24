@@ -5,3 +5,4 @@ node_modules/
 bigquery/bq_download
 bigquery/bq_upload
 tmp/
+html/center.js
