@@ -50,7 +50,7 @@ var min_test_cnt = 30;
 // Be careful setting cellWidth.  If you set it too small over too large an
 // area, then it will take Turf.js a _long_ time to process the data. A
 // suitable cellWidth at the country level could be around 0.5, state level
-// around .1, and city level around 0.3
+// around .1, and city level around 0.02
 var bbox = [-132.5390604, 21.0770910032, -63.281248, 54.2381742779]; // USA
 var cellWidth = 0.5;
 
