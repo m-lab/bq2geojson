@@ -140,10 +140,6 @@ for (var dir in dirs) {
 	create_dir(dirs[dir]);
 }
 
-// Define hexgrid as a global variable which will be accessed in various
-// places.
-var hexgrid;
-
 //  The year will never change for a given run, so loop through all the months
 //  and use the year_month combination to determine which tables to query in
 //  BigQuery, and also use it for the directory structure that gets created.
@@ -187,33 +183,36 @@ for ( var i = 0; i < months.length; i++ ) {
 			});
 		}
 	}, function (err, results) {
-		// Create the hexgrid based on the download throughput data.  This runs
-		// the (slight?) risk of excluding some upload throughput data that
-		// might fall outside of this grid.  Is there a better way to do this?
-		hexgrid = create_hexgrid(results.download);
 		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
 		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
-		console.log('* Aggregating download throughput data.');
-		aggregate(results.download, properties.download, aggregations.download);
-		fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate.geojson', JSON.stringify(hexgrid));
-		console.log('* Aggregating upload throughput data.');
-		aggregate(results.upload, properties.upload, aggregations.upload);
-		fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate.geojson', JSON.stringify(hexgrid));
+		// Create the hexgrids based on the download throughput data.  This
+		// runs the (slight?) risk of excluding some upload throughput data
+		// that might fall outside of this grid.  Is there a better way to do
+		// this?
+		hexgrids = create_hexgrids(results.download);
+
+		for ( hexgrid in hexgrids ) {
+			console.log('* Aggregating download throughput data at ' + hexgrid + ' resolution.');
+			hexgrids[hexgrid] = aggregate(hexgrids[hexgrid], results.download, properties.download, aggregations.download);
+			fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate-' + hexgrid + '.geojson', JSON.stringify(hexgrids[hexgrid]));
+			console.log('* Aggregating upload throughput data at ' + hexgrid + ' resolution.');
+			hexgrids[hexgrid] = aggregate(hexgrids[hexgrid], results.upload, properties.upload, aggregations.upload);
+			fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate-' + hexgrid + '.geojson', JSON.stringify(hexgrids[hexgrid]));
+			// Stringify GeoJSON and write it to the file system
+			var hexgrid_serial = JSON.stringify(hexgrids[hexgrid]);
+			fs.writeFileSync(dirs.geojson + sub_dir + '-' + hexgrid + '.geojson', hexgrid_serial);
+			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' + hexgrid + '.geojson');
+		}
 	});
-
-	// Stringify GeoJSON and write it to the file system
-	var hexgrid_serial = JSON.stringify(hexgrid);
-	fs.writeFileSync(dirs.geojson + sub_dir + '.geojson', hexgrid_serial);
-	console.log('* Wrote file ' + dirs.geojson + sub_dir + '.geojson');
-
 }
+
 
 /*
  * Takes a feature collection and creates a bounding box that contains all of
  * the features, auto-calculates an appropriate cell width based on the width
  * of the box, then turns creates a hexgrid.
  */
-function create_hexgrid(json) {
+function create_hexgrids(json) {
 
 	var bbox = turf.extent(json);
 	var bbox_poly = turf.bboxPolygon(bbox);
@@ -221,15 +220,21 @@ function create_hexgrid(json) {
 	var point2 = turf.point(bbox_poly.geometry.coordinates[0][1]);
 	var distance = turf.distance(point1, point2, 'miles');
 
-	var cellWidth = distance > 2000 ? 1 :
-		distance > 1000 ? 0.5 :
-		distance > 500 ? 0.3 :
+	var cellWidth = distance > 2000 ? 0.5 :
+		distance > 1000 ? 0.3 :
+		distance > 500 ? 0.2 :
 		distance > 250 ? 0.1 :
 		distance > 100 ? 0.05 :
 		distance > 50 ? 0.03 :
 		distance > 25 ? 0.02 : 0.01;
 
-	return turf.hex(bbox, cellWidth, 'miles');
+	var hexgrids =  {
+		low : turf.hex(bbox, cellWidth, 'miles'),
+		medium : turf.hex(bbox, cellWidth * 0.75, 'miles'),
+		high : turf.hex(bbox, cellWidth * 0.5, 'miles'),
+	}
+
+	return hexgrids;
 
 }
 
@@ -261,16 +266,17 @@ function get_csv(path, query) {
  * variable in this script so this function modified that object but doesn't
  * return anything.
  */
-function aggregate(json, fields, aggs) {
+function aggregate(grid, json, fields, aggs) {
 
 	json = make_numeric(json, fields.averages);
-	fs.writeFileSync(dirs.tmp + sub_dir + '-numeric.geojson', JSON.stringify(json));
 
 	var start = new Date();
-	var json = turf.aggregate(hexgrid, json, aggs);
+	var json = turf.aggregate(grid, json, aggs);
 	elapsed(start);
 
-	hexgrid = normalize(json, fields.count);
+	grid = normalize(json, fields.count);
+
+	return grid;
 		
 }
 
