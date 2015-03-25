@@ -27,18 +27,39 @@ function getHexColor(val) {
            val > 0   ? 'red' : 'transparent';
 }
 
-function getHexLayer(url, metric, resolution) {
+function setHexLayer(urlBase, metric, resolution) {
 
 	// Replace resolution placeholder in URL, if necessary.
-	url = url.replace('RESOLUTION', resolution);
+	var hex_url = urlBase.replace('PLACEHOLDER', resolution);
 
 	document.getElementById('spinner').style.display = 'block';
+
+	getLayerData(hex_url, function(response) {
+		showHexLayer(response, metric);
+	});
+
+}
+
+function setPlotLayer(urlBase) {
+
+	var plot_url = urlBase.replace('PLACEHOLDER', 'plot');
+
+	document.getElementById('spinner').style.display = 'block';
+
+	getLayerData(plot_url, function(response) {
+		showPlotLayer(response);
+	});
+
+}
+
+function getLayerData(url, callback) {
 
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if ( xhr.readyState === 4 ) {
 			if ( xhr.status === 200 ) {
-				setHexLayer(xhr.responseText, metric);
+				callback(JSON.parse(xhr.responseText));
+				console.log('Got: ' + url + ': ' + xhr.statusText);
 			} else {
 				console.log(url + ': ' + xhr.statusText);
 			}
@@ -49,11 +70,29 @@ function getHexLayer(url, metric, resolution) {
 
 }
 
-function setHexLayer(geoJson, metric) {
 
-	var hexgrid = JSON.parse(geoJson);
+// Display a scatter plot of all data points.
+function showPlotLayer(geoJson) {
 
-	hexgrid.features.forEach( function(cell) {
+	var plotLayer = L.geoJson(geoJson, {
+		pointToLayer: function(feature, latlon) {
+			return L.circleMarker(latlon, {
+				radius: 0.5,
+				fillColor: '#000000',
+				fillOpacity: 1,
+				stroke: false
+			});
+		}
+	});
+
+	map.addLayer(plotLayer);
+
+}
+
+
+function showHexLayer(geoJson, metric) {
+
+	geoJson.features.forEach( function(cell) {
 
 		var value = cell.properties[metric];
 		var hexStyle = cell.hexStyle = {};
@@ -70,7 +109,7 @@ function setHexLayer(geoJson, metric) {
 
 	});
 
-	hexLayer = L.geoJson(hexgrid).eachLayer( function(l) {
+	var hexLayer = L.geoJson(geoJson).eachLayer( function(l) {
 		l.bindPopup(make_popup(l.feature.properties));
 		l.setStyle(l.feature['hexStyle']);
 	});

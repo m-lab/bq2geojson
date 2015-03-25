@@ -25,14 +25,15 @@
 <script>
 
 // Default hex layer data file
-var defaultDataUrl = "default.geojson";
+//var defaultDataUrl = "default.geojson";
+var defaultDataUrl = "geojson/2014_01-PLACEHOLDER.geojson";
 
 // Center and zoom level of map.  center should be pulled in via center.js, but
 // if not then just set it to the center of the USA
 if ( typeof center == 'undefined' ) {
 	var center = [38.8961302513129,-99.04025268554688]; //USA
 }
-var zoom = 4;
+var zoom = 9;
 
 // Create the map
 var map = L.map('map').setView(center, zoom);
@@ -55,7 +56,8 @@ var baseLayers = {
 }
 
 L.control.layers(baseLayers).addTo(map);
-getHexLayer(defaultDataUrl, 'download_avg', 'low');
+setHexLayer(defaultDataUrl, 'download_avg', 'low');
+setPlotLayer(defaultDataUrl);
 addLegend();
 
 </script>
@@ -64,18 +66,18 @@ addLegend();
 
 	<form id="selectDate" name="selectDate" action="#">
 		<select name="date" onchange="updateHexLayer(this.value, document.forms.selectMetric.metric.value, document.forms.selectRes.resolution.value);">
-			<option value="geojson/2014_01-RESOLUTION.geojson">Jan 2014</option>
-			<option value="geojson/2014_02-RESOLUTION.geojson">Feb 2014</option>
-			<option value="geojson/2014_03-RESOLUTION.geojson">Mar 2014</option>
-			<option value="geojson/2014_04-RESOLUTION.geojson">Apr 2014</option>
-			<option value="geojson/2014_05-RESOLUTION.geojson">May 2014</option>
-			<option value="geojson/2014_06-RESOLUTION.geojson">Jun 2014</option>
-			<option value="geojson/2014_07-RESOLUTION.geojson">Jul 2014</option>
-			<option value="geojson/2014_08-RESOLUTION.geojson">Aug 2014</option>
-			<option value="geojson/2014_09-RESOLUTION.geojson">Sep 2014</option>
-			<option value="geojson/2014_10-RESOLUTION.geojson">Oct 2014</option>
-			<option value="geojson/2014_11-RESOLUTION.geojson">Nov 2014</option>
-			<option value="geojson/2014_12-RESOLUTION.geojson">Dec 2014</option>
+			<option value="geojson/2014_01-PLACEHOLDER.geojson">Jan 2014</option>
+			<option value="geojson/2014_02-PLACEHOLDER.geojson">Feb 2014</option>
+			<option value="geojson/2014_03-PLACEHOLDER.geojson">Mar 2014</option>
+			<option value="geojson/2014_04-PLACEHOLDER.geojson">Apr 2014</option>
+			<option value="geojson/2014_05-PLACEHOLDER.geojson">May 2014</option>
+			<option value="geojson/2014_06-PLACEHOLDER.geojson">Jun 2014</option>
+			<option value="geojson/2014_07-PLACEHOLDER.geojson">Jul 2014</option>
+			<option value="geojson/2014_08-PLACEHOLDER.geojson">Aug 2014</option>
+			<option value="geojson/2014_09-PLACEHOLDER.geojson">Sep 2014</option>
+			<option value="geojson/2014_10-PLACEHOLDER.geojson">Oct 2014</option>
+			<option value="geojson/2014_11-PLACEHOLDER.geojson">Nov 2014</option>
+			<option value="geojson/2014_12-PLACEHOLDER.geojson">Dec 2014</option>
 		</select>
 	</form>
 

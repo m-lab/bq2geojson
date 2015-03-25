@@ -183,6 +183,7 @@ for ( var i = 0; i < months.length; i++ ) {
 			});
 		}
 	}, function (err, results) {
+
 		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
 		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
 
@@ -220,6 +221,9 @@ function create_hexgrids(json) {
 	// Create the bounding box using features from both the download and upload
 	// throughput data.
 	var updown = turf.featurecollection(json.download.features.concat(json.upload.features));
+	// The combined up/down features will be used to add a map layer with a
+	// scatter plot of all the data points.
+	fs.writeFileSync(dirs.geojson + sub_dir + '-plot.geojson', JSON.stringify(updown));
 	var bbox = turf.extent(updown);
 	var bbox_poly = turf.bboxPolygon(bbox);
 	var point1 = turf.point(bbox_poly.geometry.coordinates[0][0]);
