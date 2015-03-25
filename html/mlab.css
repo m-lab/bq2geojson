@@ -74,8 +74,6 @@ html, body {
 	text-align: center;
 }
 
-#selectDate,
-#selectMetric,
-#selectRes {
+.mapControls {
 	font-size: x-small;
 }

@@ -62,10 +62,9 @@ var baseLayers = {
 }
 
 L.control.layers(baseLayers).addTo(map);
-setHexLayer(defaultDataUrl, 'download_avg', 'low');
-//setPlotLayer(defaultDataUrl);
 addLegend();
 addControls(dates);
+setHexLayer(defaultDataUrl, 'download_avg', 'low');
 
 </script>
 
