@@ -1,26 +1,19 @@
-body {
+html, body {
+	height: 100%;
 	margin: 0;
 	padding: 0;
 }
 
-#controls {
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	height: 40px;
-	background: #000;
-}
-
 #map {
-	position: absolute;
-	top: 0;
-	bottom: 40px;
-	width:100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 .legend {
 	text-align: left;
-	line-height: 18px;
+	line-height: 1;
+	font-size: 10px;
 	color: #555;
 }
 
@@ -29,10 +22,10 @@ body {
 }
 
 .legend i {
-	width: 18px;
-	height: 18px;
+	width: 10px;
+	height: 10px;
 	float: left;
-	margin-right: 8px;
+	margin: 0 5px 2px;
 	opacity: 0.5;
 }
 
@@ -81,6 +74,8 @@ body {
 	text-align: center;
 }
 
-#selectDate {
-	float: left;
+#selectDate,
+#selectMetric,
+#selectRes {
+	font-size: x-small;
 }

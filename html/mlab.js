@@ -6,7 +6,7 @@ function addLegend() {
 
 	var legend = L.control({position: 'bottomright'});
 
-	legend.onAdd = function (map) {
+	legend.onAdd = function(map) {
 	    var div = L.DomUtil.create('div', 'info legend'),
 	        grades = [0, 5, 10, 25, 50];
 
@@ -19,6 +19,47 @@ function addLegend() {
 	};
 	legend.addTo(map);
 
+}
+
+function addControls(dates) {
+
+	var controls = L.control({position: 'bottomleft'});
+
+	controls.onAdd = function(map) {
+		var controls = L.DomUtil.create('div', 'info controls');
+		var selectDate = L.DomUtil.create('select', 'selectDate', controls);
+		var selectMetric = L.DomUtil.create('select', 'selectMetric', controls);
+		var selectRes = L.DomUtil.create('select', 'selectRes', controls);
+
+		var date_options = '';
+		for ( year in dates ) {
+			for ( i = 0; i < dates[year].length; i++ ) {
+				date_options += '<option value="geojson/' + year + '_' + dates[year][i] + '-PLACEHOLDER.geojson">' + dates[year][i] + '/' + year + '</option>';
+			}
+		}
+
+		selectDate.innerHTML = date_options;
+		selectDate.setAttribute('id', 'selectDate');
+
+		selectMetric.innerHTML = '<option value="download_avg">DL throughput</option><option value="upload_avg">UL throughput</option>';
+		selectMetric.setAttribute('id', 'selectMetric');
+
+		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
+		selectRes.setAttribute('id', 'selectRes');
+
+		[selectDate, selectMetric, selectRes].forEach( function(element) {
+			element.addEventListener('change', function() {
+				updateHexLayer(
+					document.getElementById('selectDate').value,
+					document.getElementById('selectMetric').value,
+					document.getElementById('selectRes').value
+				);
+			}, false);
+		});
+
+		return controls;
+	};
+	controls.addTo(map);
 }
 
 function getHexColor(val) {
