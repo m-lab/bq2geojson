@@ -27,9 +27,12 @@ function addControls(dates) {
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls');
-		var selectDate = L.DomUtil.create('select', 'mapControls', controls);
-		var selectMetric = L.DomUtil.create('select', 'mapControls', controls);
-		var selectRes = L.DomUtil.create('select', 'mapControls', controls);
+		var divDate = L.DomUtil.create('div', 'mapControls', controls);
+		var divMetric = L.DomUtil.create('div', 'mapControls', controls);
+		var divRes = L.DomUtil.create('div', 'mapControls', controls);
+		var selectDate = L.DomUtil.create('select', 'mapControls', divDate);
+		var selectMetric = L.DomUtil.create('select', 'mapControls', divMetric);
+		var selectRes = L.DomUtil.create('select', 'mapControls', divRes);
 		var checkHex = L.DomUtil.create('div', 'mapControls', controls);
 		var checkPlot = L.DomUtil.create('div', 'mapControls', controls);
 
@@ -69,7 +72,9 @@ function addControls(dates) {
 		return controls;
 	};
 	controls.addTo(map);
+
 }
+
 
 function getHexColor(val) {
     return val > 50 ? 'blue' :
