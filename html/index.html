@@ -61,10 +61,16 @@ var baseLayers = {
 	"Mapbox" : mapboxLayer
 }
 
-L.control.layers(baseLayers).addTo(map);
+// Global overlay layer variables
+var hexLayer,
+	plotLayer;
+
+var overlays = L.control.layers(baseLayers);
+overlays.addTo(map);
 addLegend();
 addControls(dates);
-setHexLayer(defaultDataUrl, 'download_avg', 'low');
+setHexLayer(defaultDataUrl, 'download_avg', 'low', 'new');
+setPlotLayer(defaultDataUrl, 'new');
 
 </script>
 

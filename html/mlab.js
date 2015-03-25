@@ -1,7 +1,3 @@
-// Global variables
-var hexLayer,
-	plotLayer;
-
 function addLegend() {
 
 	var legend = L.control({position: 'bottomright'});
@@ -27,14 +23,9 @@ function addControls(dates) {
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls');
-		var divDate = L.DomUtil.create('div', 'mapControls', controls);
-		var divMetric = L.DomUtil.create('div', 'mapControls', controls);
-		var divRes = L.DomUtil.create('div', 'mapControls', controls);
-		var selectDate = L.DomUtil.create('select', 'mapControls', divDate);
-		var selectMetric = L.DomUtil.create('select', 'mapControls', divMetric);
-		var selectRes = L.DomUtil.create('select', 'mapControls', divRes);
-		var checkHex = L.DomUtil.create('div', 'mapControls', controls);
-		var checkPlot = L.DomUtil.create('div', 'mapControls', controls);
+		var selectDate = L.DomUtil.create('select', 'mapControls', controls);
+		var selectMetric = L.DomUtil.create('select', 'mapControls', controls);
+		var selectRes = L.DomUtil.create('select', 'mapControls', controls);
 
 		var date_options = '';
 		for ( year in dates ) {
@@ -52,25 +43,21 @@ function addControls(dates) {
 		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
 		selectRes.setAttribute('id', 'selectRes');
 
-		[selectDate, selectMetric, selectRes, checkHex].forEach( function(element) {
+		[selectDate, selectMetric, selectRes].forEach( function(element) {
 			element.addEventListener('change', function() {
-				updateHexLayer(
+				setHexLayer(
 					document.getElementById('selectDate').value,
 					document.getElementById('selectMetric').value,
-					document.getElementById('selectRes').value
+					document.getElementById('selectRes').value,
+					'update'
 				);
+				setPlotLayer(document.getElementById('selectDate').value, 'update');
 			}, false);
-		});
-
-		checkHex.innerHTML = '<input id="checkHex" type="checkbox" checked="checked"> Show hex layer';
-
-		checkPlot.innerHTML = '<input id="checkPlot" type="checkbox"> Show scatter plot';
-		checkPlot.addEventListener('change', function() {
-			updatePlotLayer(document.getElementById('selectDate').value);
 		});
 
 		return controls;
 	};
+
 	controls.addTo(map);
 
 }
@@ -84,34 +71,95 @@ function getHexColor(val) {
            val > 0   ? 'red' : 'transparent';
 }
 
-function setHexLayer(urlBase, metric, resolution) {
 
-	// Replace resolution placeholder in URL, if necessary.
-	var hex_url = urlBase.replace('PLACEHOLDER', resolution);
+function setHexLayer(urlBase, metric, resolution, mode) {
 
 	document.getElementById('spinner').style.display = 'block';
 
+	// Replace resolution placeholder in URL.
+	var hex_url = urlBase.replace('PLACEHOLDER', resolution);
+
+	if ( mode == 'update' ) {
+		overlays.removeLayer(hexLayer);
+	}
+
 	getLayerData(hex_url, function(response) {
-		showHexLayer(response, metric);
+		response.features.forEach( function(cell) {
+
+			var value = cell.properties[metric];
+			var hexStyle = cell.hexStyle = {};
+
+			hexStyle.weight = 1;
+			hexStyle.fillOpacity = 0.3;
+
+			if ( ! value ) {
+				hexStyle.weight = 0;
+				hexStyle.fillOpacity = 0;
+			} else {
+				hexStyle.color = getHexColor(value);
+			}
+
+		});
+
+		if ( map.hasLayer(hexLayer) ) {
+			map.removeLayer(hexLayer);
+			var hexLayerVisible = true;
+		}
+
+		hexLayer = L.geoJson(response).eachLayer( function(l) {
+			l.bindPopup(make_popup(l.feature.properties));
+			l.setStyle(l.feature['hexStyle']);
+		});
+
+		overlays.addOverlay(hexLayer, 'Hex layer');
+		if ( hexLayerVisible || mode == 'new' ) {
+			map.addLayer(hexLayer);
+		}
+
+		document.getElementById('spinner').style.display = 'none';
+
 	});
 
 }
 
-function setPlotLayer(urlBase) {
 
-	if ( ! document.getElementById('checkPlot').checked ) {
-		return false;
-	}
+function setPlotLayer(urlBase, mode) {
+
+	document.getElementById('spinner').style.display = 'block';
 
 	var plot_url = urlBase.replace('PLACEHOLDER', 'plot');
 
-	document.getElementById('spinner').style.display = 'block';
+	if ( mode == 'update' ) {
+		overlays.removeLayer(plotLayer);
+	}
 
 	getLayerData(plot_url, function(response) {
-		showPlotLayer(response);
+
+		if ( map.hasLayer(plotLayer) ) {
+			map.removeLayer(plotLayer);
+			var plotLayerVisible = true;
+		}
+
+		plotLayer = L.geoJson(response, {
+			pointToLayer: function(feature, latlon) {
+				return L.circleMarker(latlon, {
+					radius: 0.5,
+					fillColor: '#000000',
+					fillOpacity: 1,
+					stroke: false
+				});
+			}
+		});
+
+		overlays.addOverlay(plotLayer, 'Scatter plot');
+		if ( plotLayerVisible ) {
+			map.addLayer(plotLayer);
+		}
+
 	});
 
 }
+
 
 function getLayerData(url, callback) {
 
@@ -132,58 +180,6 @@ function getLayerData(url, callback) {
 }
 
 
-// Display a scatter plot of all data points.
-function showPlotLayer(geoJson) {
-
-	plotLayer = L.geoJson(geoJson, {
-		pointToLayer: function(feature, latlon) {
-			return L.circleMarker(latlon, {
-				radius: 0.5,
-				fillColor: '#000000',
-				fillOpacity: 1,
-				stroke: false
-			});
-		}
-	});
-
-	document.getElementById('spinner').style.display = 'none';
-
-	map.addLayer(plotLayer);
-
-}
-
-
-function showHexLayer(geoJson, metric) {
-
-	geoJson.features.forEach( function(cell) {
-
-		var value = cell.properties[metric];
-		var hexStyle = cell.hexStyle = {};
-
-		hexStyle.weight = 1;
-		hexStyle.fillOpacity = 0.3;
-
-		if ( ! value ) {
-			hexStyle.weight = 0;
-			hexStyle.fillOpacity = 0;
-		} else {
-			hexStyle.color = getHexColor(value);
-		}
-
-	});
-
-	hexLayer = L.geoJson(geoJson).eachLayer( function(l) {
-		l.bindPopup(make_popup(l.feature.properties));
-		l.setStyle(l.feature['hexStyle']);
-	});
-
-	document.getElementById('spinner').style.display = 'none';
-
-	map.addLayer(hexLayer);
-
-}
-
-
 function make_popup(props) {
 
 	var popup = 'DL throughput: ' + Math.round(props.download_avg * 10) / 10 + '<br/>';
@@ -195,39 +191,3 @@ function make_popup(props) {
 	return popup;
 
 }
-
-
-function updateHexLayer(url, metric, resolution) {
-
-	// Don't try to remove a layer that doesn't yet exist
-	if ( typeof hexLayer != 'undefined' ) {
-		map.removeLayer(hexLayer);
-	}
-
-	// If the checkbox for this layer isn't checked, then just remove the layer
-	// and return
-	if ( document.getElementById('checkHex').checked === false ) {
-		return;
-	}
-
-	setHexLayer(url, metric, resolution);
-}
-
-
-function updatePlotLayer(url) {
-
-	// Don't try to remove a layer that doesn't yet exist
-	if ( typeof plotLayer != 'undefined' ) {
-		map.removeLayer(plotLayer);
-	}
-
-	// If the checkbox for this layer isn't checked, then just remove the layer
-	// and return
-	if ( document.getElementById('checkPlot').checked === false ) {
-		return;
-	}
-
-	setPlotLayer(url);
-
-}
-
