@@ -1,4 +1,6 @@
-var hexLayer = "";
+// Global variables
+var hexLayer,
+	plotLayer;
 
 function addLegend() {
 
@@ -59,7 +61,7 @@ function getLayerData(url, callback) {
 		if ( xhr.readyState === 4 ) {
 			if ( xhr.status === 200 ) {
 				callback(JSON.parse(xhr.responseText));
-				console.log('Got: ' + url + ': ' + xhr.statusText);
+				console.log(url + ': ' + xhr.statusText);
 			} else {
 				console.log(url + ': ' + xhr.statusText);
 			}
@@ -74,7 +76,7 @@ function getLayerData(url, callback) {
 // Display a scatter plot of all data points.
 function showPlotLayer(geoJson) {
 
-	var plotLayer = L.geoJson(geoJson, {
+	plotLayer = L.geoJson(geoJson, {
 		pointToLayer: function(feature, latlon) {
 			return L.circleMarker(latlon, {
 				radius: 0.5,
@@ -109,7 +111,7 @@ function showHexLayer(geoJson, metric) {
 
 	});
 
-	var hexLayer = L.geoJson(geoJson).eachLayer( function(l) {
+	hexLayer = L.geoJson(geoJson).eachLayer( function(l) {
 		l.bindPopup(make_popup(l.feature.properties));
 		l.setStyle(l.feature['hexStyle']);
 	});
@@ -134,5 +136,5 @@ function make_popup(props) {
 
 function updateHexLayer(url, metric, resolution) {
 	map.removeLayer(hexLayer);
-	getHexLayer(url, metric, resolution);
+	setHexLayer(url, metric, resolution);
 }
