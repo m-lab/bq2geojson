@@ -18,6 +18,15 @@ var exec = require('child_process').execSync;
 // overall picture on the map with misleading results.
 var min_test_cnt = 30;
 
+// The three cell widths, in miles, used to make the low, medium and high
+// resolution hex layers:
+// http://turfjs.org/static/docs/module-turf_hex-grid.html
+var cell_widths = {
+	low : 0.01,
+	medium : 0.0075,
+	high : 0.005
+}
+
 // Options passed to the bq client.
 // -n: defines arbitrarily high number of results to return that we should
 // never surpass in practice, and just makes sure we get everything.
@@ -239,9 +248,9 @@ function create_hexgrids(json) {
 		distance > 25 ? 0.02 : 0.01;
 
 	var hexgrids =  {
-		low : turf.hex(bbox, cellWidth, 'miles'),
-		medium : turf.hex(bbox, cellWidth * 0.75, 'miles'),
-		high : turf.hex(bbox, cellWidth * 0.5, 'miles'),
+		low : turf.hex(bbox, cell_widths.low, 'miles'),
+		medium : turf.hex(bbox, cell_widths.medium, 'miles'),
+		high : turf.hex(bbox, cell_widths.high, 'miles'),
 	}
 
 	return hexgrids;
