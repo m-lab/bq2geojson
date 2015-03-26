@@ -143,7 +143,7 @@ function setPlotLayer(urlBase, mode) {
 		plotLayer = L.geoJson(response, {
 			pointToLayer: function(feature, latlon) {
 				return L.circleMarker(latlon, {
-					radius: 0.5,
+					radius: 1,
 					fillColor: '#000000',
 					fillOpacity: 1,
 					stroke: false
