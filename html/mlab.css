@@ -39,14 +39,12 @@ html, body {
 
 #spinner {
 	display: none;
-	position:fixed;
-	height:100%;
-	width:100%;
-	left:0;
-	top:0;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
 	z-index: 1 !important;
-	background-color: black;
-	opacity: 0.75;
 	padding-top: 10em;
 }
 
@@ -56,7 +54,7 @@ html, body {
 	height: 30px;
 	border-width: 2px;
 	border-style: solid;
-	border-color: #FFF #DDD #BBB #999;
+	border-color: #BBB #999 #666 #222;
 	border-radius: 40px;
 	animation: spin 1s linear infinite; 
 }
@@ -70,7 +68,7 @@ html, body {
 #loading {
 	margin: 10px auto;
 	font: 10pt sans-serif;
-	color: #999;
+	color: #222;
 	text-align: center;
 }
 
