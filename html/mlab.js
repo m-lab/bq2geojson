@@ -27,8 +27,8 @@ function addControls(dates) {
 		var selectYear = L.DomUtil.create('select', 'mapControls', controls);
 		var selectMetric = L.DomUtil.create('select', 'mapControls', controls);
 		var selectRes = L.DomUtil.create('select', 'mapControls', controls);
-		var sliderMonth = L.DomUtil.create('div', 'sliderMonth', controls);
-		var checkAnimate = L.DomUtil.create('div', 'checkAnimate', controls);
+		var sliderMonth = L.DomUtil.create('div', 'mapControls', controls);
+		var checkAnimate = L.DomUtil.create('div', 'mapControls', controls);
 
 		var date_options = '';
 		for ( year in dates ) {
@@ -105,6 +105,10 @@ function addControls(dates) {
 			);
 		}
 	});
+
+	// Add Pips and labels to slider
+	// https://simeydotme.github.io/jQuery-ui-Slider-Pips/
+	$('#sliderMonth').slider().slider('pips');
 
 }
 
