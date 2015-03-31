@@ -54,14 +54,14 @@ function addControls(dates) {
 			element.addEventListener('change', function() {
 				setHexLayer(
 					document.getElementById('selectYear').value,
-					$('#sliderMonth').slider('value') < 10 ? '0' + $('#sliderMonth').slider('value') : $('#sliderMonth').slider('value'),
+					$('#sliderMonth').slider('value'),
 					document.getElementById('selectMetric').value,
 					document.getElementById('selectRes').value,
 					'update'
 				);
 				setPlotLayer(
 					document.getElementById('selectYear').value,
-					$('#sliderMonth').slider('value') < 10 ? '0' + $('#sliderMonth').slider('value') : $('#sliderMonth').slider('value'),
+					$('#sliderMonth').slider('value'),
 					'update'
 				);
 			}, false);
@@ -93,14 +93,14 @@ function addControls(dates) {
 		change: function(event, ui) {
 			setHexLayer(
 				document.getElementById('selectYear').value,
-				ui.value < 10 ? '0' + ui.value : ui.value,
+				ui.value,
 				document.getElementById('selectMetric').value,
 				document.getElementById('selectRes').value,
 				'update'
 			);
 			setPlotLayer(
 				document.getElementById('selectYear').value,
-				ui.value < 10 ? '0' + ui.value : ui.value,
+				ui.value,
 				'update'
 			);
 		}
@@ -126,6 +126,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 
 	document.getElementById('spinner').style.display = 'block';
 
+	month = month < 10 ? '0' + month : month;
 	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.geojson';
 
 	if ( mode == 'update' ) {
@@ -176,6 +177,7 @@ function setPlotLayer(year, month, mode) {
 
 	document.getElementById('spinner').style.display = 'block';
 
+	month = month < 10 ? '0' + month : month;
 	var plot_url = 'geojson/' + year + '_' + month + '-plot.geojson';
 
 	if ( mode == 'update' ) {
