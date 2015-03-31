@@ -17,25 +17,32 @@ function addLegend() {
 
 }
 
+
 function addControls(dates) {
 
 	var controls = L.control({position: 'bottomleft'});
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls');
-		var selectDate = L.DomUtil.create('select', 'mapControls', controls);
+		var selectYear = L.DomUtil.create('select', 'mapControls', controls);
 		var selectMetric = L.DomUtil.create('select', 'mapControls', controls);
 		var selectRes = L.DomUtil.create('select', 'mapControls', controls);
+		var sliderMonth = L.DomUtil.create('div', 'sliderMonth', controls);
+		var checkAnimate = L.DomUtil.create('div', 'checkAnimate', controls);
 
 		var date_options = '';
 		for ( year in dates ) {
-			for ( i = 0; i < dates[year].length; i++ ) {
-				date_options += '<option value="geojson/' + year + '_' + dates[year][i] + '-PLACEHOLDER.geojson">' + dates[year][i] + '/' + year + '</option>';
-			}
+			date_options += '<option value="' + year + '">' + year + '</option>';
 		}
 
-		selectDate.innerHTML = date_options;
-		selectDate.setAttribute('id', 'selectDate');
+		checkAnimate.innerHTML = '<input id="checkAnimate" type="checkbox" />Animate map';
+		
+		sliderMonth.setAttribute('id', 'sliderMonth');
+		// Prevent the entire map from dragging when the slider is dragged.
+		L.DomEvent.disableClickPropagation(sliderMonth);
+
+		selectYear.innerHTML = date_options;
+		selectYear.setAttribute('id', 'selectYear');
 
 		selectMetric.innerHTML = '<option value="download_avg">DL throughput</option><option value="upload_avg">UL throughput</option>';
 		selectMetric.setAttribute('id', 'selectMetric');
@@ -43,15 +50,20 @@ function addControls(dates) {
 		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
 		selectRes.setAttribute('id', 'selectRes');
 
-		[selectDate, selectMetric, selectRes].forEach( function(element) {
+		[selectYear, selectMetric, selectRes].forEach( function(element) {
 			element.addEventListener('change', function() {
 				setHexLayer(
-					document.getElementById('selectDate').value,
+					document.getElementById('selectYear').value,
+					$('#sliderMonth').slider('value') < 10 ? '0' + $('#sliderMonth').slider('value') : $('#sliderMonth').slider('value'),
 					document.getElementById('selectMetric').value,
 					document.getElementById('selectRes').value,
 					'update'
 				);
-				setPlotLayer(document.getElementById('selectDate').value, 'update');
+				setPlotLayer(
+					document.getElementById('selectYear').value,
+					$('#sliderMonth').slider('value') < 10 ? '0' + $('#sliderMonth').slider('value') : $('#sliderMonth').slider('value'),
+					'update'
+				);
 			}, false);
 		});
 
@@ -59,6 +71,40 @@ function addControls(dates) {
 	};
 
 	controls.addTo(map);
+
+	var clearId;
+	document.getElementById('checkAnimate').addEventListener('change', function() {
+		if ( document.getElementById('checkAnimate').checked == true ) {
+			var i = 0;
+			clearId = setInterval( function() {
+				$('#sliderMonth').slider('value', i + 1);
+				i = (i + 1) % dates[year].length;
+			}, 2000);
+		} else {
+			clearInterval(clearId);
+		}
+	});
+
+	// Can't instantiate the slider until after "controls" is actually added to
+	// the map.
+	$('#sliderMonth').slider({
+		min: 1,
+		max: 12,
+		change: function(event, ui) {
+			setHexLayer(
+				document.getElementById('selectYear').value,
+				ui.value < 10 ? '0' + ui.value : ui.value,
+				document.getElementById('selectMetric').value,
+				document.getElementById('selectRes').value,
+				'update'
+			);
+			setPlotLayer(
+				document.getElementById('selectYear').value,
+				ui.value < 10 ? '0' + ui.value : ui.value,
+				'update'
+			);
+		}
+	});
 
 }
 
@@ -72,12 +118,11 @@ function getHexColor(val) {
 }
 
 
-function setHexLayer(urlBase, metric, resolution, mode) {
+function setHexLayer(year, month, metric, resolution, mode) {
 
 	document.getElementById('spinner').style.display = 'block';
 
-	// Replace resolution placeholder in URL.
-	var hex_url = urlBase.replace('PLACEHOLDER', resolution);
+	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.geojson';
 
 	if ( mode == 'update' ) {
 		overlays.removeLayer(hexLayer);
@@ -123,11 +168,11 @@ function setHexLayer(urlBase, metric, resolution, mode) {
 }
 
 
-function setPlotLayer(urlBase, mode) {
+function setPlotLayer(year, month, mode) {
 
 	document.getElementById('spinner').style.display = 'block';
 
-	var plot_url = urlBase.replace('PLACEHOLDER', 'plot');
+	var plot_url = 'geojson/' + year + '_' + month + '-plot.geojson';
 
 	if ( mode == 'update' ) {
 		overlays.removeLayer(plotLayer);

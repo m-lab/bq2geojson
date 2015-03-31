@@ -11,6 +11,9 @@
 	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 	<script src='mlab.js'></script>
 	<script src='center.js'></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -25,8 +28,8 @@
 <script>
 
 // Default hex layer data file
-//var defaultDataUrl = "default.geojson";
-var defaultDataUrl = "geojson/2014_01-PLACEHOLDER.geojson";
+var defaultYear = "2014";
+var defaultMonth = "01";
 
 // An object with the years and months we have data for.  This will be used to
 // auto-generate various form controls.
@@ -69,9 +72,8 @@ var overlays = L.control.layers(baseLayers);
 overlays.addTo(map);
 addLegend();
 addControls(dates);
-setHexLayer(defaultDataUrl, 'download_avg', 'low', 'new');
-setPlotLayer(defaultDataUrl, 'new');
-
+setHexLayer(defaultYear, defaultMonth, 'download_avg', 'low', 'new');
+setPlotLayer(defaultYear, defaultMonth, 'new');
 </script>
 
 </body>
