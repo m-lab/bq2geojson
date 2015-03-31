@@ -70,7 +70,7 @@ var baseLayers = {
 var hexLayer,
 	plotLayer;
 
-var overlays = L.control.layers(baseLayers);
+var overlays = L.control.layers(baseLayers, null, { collapsed: false });
 overlays.addTo(map);
 addLegend();
 addControls(dates);
