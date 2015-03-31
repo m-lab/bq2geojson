@@ -75,7 +75,7 @@ function addControls(dates) {
 	var clearId;
 	document.getElementById('checkAnimate').addEventListener('change', function() {
 		if ( document.getElementById('checkAnimate').checked == true ) {
-			var i = 0;
+			var i = $('#sliderMonth').slider('value');
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[year].length;
