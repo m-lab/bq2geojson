@@ -45,6 +45,11 @@ var dates = {
 // displayed or will be displayed with a different styling.
 var min_data_points = 30;
 
+// Whether to load and display a scatter plot layer option.  The scatter plot
+// files can be large, slow to load, and are likely not useful for highly
+// zoomed maps (e.g, down to city level).
+var include_plot_layer = false;
+
 // Center and zoom level of map.  center should be pulled in via center.js, but
 // if not then just set it to the center of the USA
 if ( typeof center == 'undefined' ) {
@@ -85,7 +90,9 @@ overlays.addTo(map);
 addLegend();
 addControls(dates);
 setHexLayer(defaultYear, defaultMonth, 'download_median', 'low', 'new');
-setPlotLayer(defaultYear, defaultMonth, 'new');
+if ( include_plot_layer ) {
+	setPlotLayer(defaultYear, defaultMonth, 'new');
+}
 </script>
 
 </body>

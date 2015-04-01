@@ -116,7 +116,9 @@ function updateLayers(e, mode) {
 	var month = $('#sliderMonth').slider('value');
 
 	setHexLayer(year, month, metric, resolution, mode);
-	setPlotLayer(year, month, mode);
+	if ( include_plot_layer ) {
+		setPlotLayer(year, month, mode);
+	}
 
 }
 
