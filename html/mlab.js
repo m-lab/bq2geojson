@@ -66,7 +66,7 @@ function addControls(dates) {
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[document.getElementById('selectYear').value].length;
-			}, 2000);
+			}, 1000);
 		} else {
 			clearInterval(clearId);
 		}
