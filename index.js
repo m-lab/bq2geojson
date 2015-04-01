@@ -239,14 +239,6 @@ function create_hexgrids(json) {
 	var point2 = turf.point(bbox_poly.geometry.coordinates[0][1]);
 	var distance = turf.distance(point1, point2, 'miles');
 
-	var cellWidth = distance > 2000 ? 0.5 :
-		distance > 1000 ? 0.3 :
-		distance > 500 ? 0.2 :
-		distance > 250 ? 0.1 :
-		distance > 100 ? 0.05 :
-		distance > 50 ? 0.03 :
-		distance > 25 ? 0.02 : 0.01;
-
 	var hexgrids =  {
 		low : turf.hex(bbox, cell_widths.low, 'miles'),
 		medium : turf.hex(bbox, cell_widths.medium, 'miles'),
