@@ -44,7 +44,7 @@ function addControls(dates) {
 		selectYear.innerHTML = date_options;
 		selectYear.setAttribute('id', 'selectYear');
 
-		selectMetric.innerHTML = '<option value="download_avg">DL throughput</option><option value="upload_avg">UL throughput</option>';
+		selectMetric.innerHTML = '<option value="download_median">DL throughput</option><option value="upload_median">UL throughput</option>';
 		selectMetric.setAttribute('id', 'selectMetric');
 
 		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
@@ -233,11 +233,13 @@ function getLayerData(url, callback) {
 
 function make_popup(props) {
 
-	var popup = 'DL throughput: ' + Math.round(props.download_avg * 10) / 10 + '<br/>';
-	popup += 'DL data points: ' + Math.round(props.download_count * 10) / 10 + '<br/>';
-	popup += 'UL throughput: ' + Math.round(props.upload_avg * 10) / 10 + '<br/>';
-	popup += 'UL data points: ' + Math.round(props.upload_count * 10) / 10 + '<br/>';
-	popup += 'Average RTT: ' + Math.round(props.rtt_avg);
+	var popup = 'DL median: ' + Math.round(props.download_median * 10) / 10 + '<br/>';
+	popup += 'DL avg: ' + Math.round(props.download_avg * 10) / 10 + '<br/>';
+	popup += 'DL data pts: ' + Math.round(props.download_count * 10) / 10 + '<br/>';
+	popup += 'UL median: ' + Math.round(props.upload_median * 10) / 10 + '<br/>';
+	popup += 'UL avg: ' + Math.round(props.upload_avg * 10) / 10 + '<br/>';
+	popup += 'UL data pts: ' + Math.round(props.upload_count * 10) / 10 + '<br/>';
+	popup += 'Avg RTT: ' + Math.round(props.rtt_avg);
 
 	return popup;
 

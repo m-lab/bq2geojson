@@ -80,6 +80,11 @@ aggregations = {
 			outField : 'download_count'
 		},
 		{
+			aggregation : 'median',
+			inField : 'download_throughput',
+			outField : 'download_median'
+		},
+		{
 			aggregation : 'average',
 			inField : 'download_throughput',
 			outField : 'download_avg'
@@ -95,6 +100,11 @@ aggregations = {
 			aggregation : 'count',
 			inField : 'upload_throughput',
 			outField : 'upload_count'
+		},
+		{
+			aggregation : 'median',
+			inField : 'upload_throughput',
+			outField : 'upload_median'
 		},
 		{
 			aggregation : 'average',
