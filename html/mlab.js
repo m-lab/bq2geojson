@@ -118,7 +118,10 @@ function getHexColor(val) {
 
 function setHexLayer(year, month, metric, resolution, mode) {
 
-	document.getElementById('spinner').style.display = 'block';
+	// Don't display spinner if animation is happening
+	if ( document.getElementById('checkAnimate').checked !== true ) {
+		document.getElementById('spinner').style.display = 'block';
+	}
 
 	month = month < 10 ? '0' + month : month;
 	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.geojson';
@@ -169,7 +172,10 @@ function setHexLayer(year, month, metric, resolution, mode) {
 
 function setPlotLayer(year, month, mode) {
 
-	document.getElementById('spinner').style.display = 'block';
+	// Don't display spinner if animation is happening
+	if ( document.getElementById('checkAnimate').checked !== true ) {
+		document.getElementById('spinner').style.display = 'block';
+	}
 
 	month = month < 10 ? '0' + month : month;
 	var plot_url = 'geojson/' + year + '_' + month + '-plot.geojson';
