@@ -31,7 +31,7 @@ function addControls(dates) {
 		var checkAnimate = L.DomUtil.create('div', 'mapControls', controls);
 
 		var date_options = '';
-		for ( year in dates ) {
+		for ( var year in dates ) {
 			date_options += '<option value="' + year + '">' + year + '</option>';
 		}
 
@@ -50,27 +50,14 @@ function addControls(dates) {
 		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
 		selectRes.setAttribute('id', 'selectRes');
 
-		[selectYear, selectMetric, selectRes].forEach( function(element) {
-			element.addEventListener('change', function() {
-				setHexLayer(
-					document.getElementById('selectYear').value,
-					$('#sliderMonth').slider('value'),
-					document.getElementById('selectMetric').value,
-					document.getElementById('selectRes').value,
-					'update'
-				);
-				setPlotLayer(
-					document.getElementById('selectYear').value,
-					$('#sliderMonth').slider('value'),
-					'update'
-				);
-			}, false);
-		});
-
 		return controls;
 	};
 
 	controls.addTo(map);
+
+	[selectYear, selectMetric, selectRes].forEach( function(elem) {
+		elem.addEventListener('change', function (e) { updateLayers(e, 'update'); });
+	});
 
 	var clearId;
 	document.getElementById('checkAnimate').addEventListener('change', function() {
@@ -78,7 +65,7 @@ function addControls(dates) {
 			var i = $('#sliderMonth').slider('value');
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
-				i = (i + 1) % dates[year].length;
+				i = (i + 1) % dates[document.getElementById('selectYear').value].length;
 			}, 2000);
 		} else {
 			clearInterval(clearId);
@@ -88,37 +75,44 @@ function addControls(dates) {
 	// Can't instantiate the slider until after "controls" is actually added to
 	// the map.
 	$('#sliderMonth').slider({
-		min: 1,
-		max: 12,
-		change: function(event, ui) {
-			setHexLayer(
-				document.getElementById('selectYear').value,
-				ui.value,
-				document.getElementById('selectMetric').value,
-				document.getElementById('selectRes').value,
-				'update'
-			);
-			setPlotLayer(
-				document.getElementById('selectYear').value,
-				ui.value,
-				'update'
-			);
-		}
+		min: Number(dates[defaultYear][0]),
+		max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
+		change: function (e, ui) { updateLayers(e, 'update'); }
 	});
 
-	// Add Pips and labels to slider
+	// Add Pips and labels to slider.
 	// https://simeydotme.github.io/jQuery-ui-Slider-Pips/
 	$('#sliderMonth').slider().slider('pips');
 
 }
 
 
+function updateLayers(e, mode) {
+
+	var year = document.getElementById('selectYear').value;
+	var month = $('#sliderMonth').slider('value');
+	var metric = document.getElementById('selectMetric').value;
+	var resolution = document.getElementById('selectRes').value;
+
+	setHexLayer(year, month, metric, resolution, mode);
+	setPlotLayer(year, month, mode);
+	if ( e.target.id == 'selectYear' ) {
+		$('#sliderMonth').slider('option', 'min', Number(dates[year][0]));
+		$('#sliderMonth').slider('option', 'max', Number(dates[year][dates[year].length - 1]));
+		$('#sliderMonth').slider().slider('pips');
+	}
+
+}
+
+
 function getHexColor(val) {
+
     return val > 50 ? 'blue' :
            val > 25  ? 'green' :
            val > 10  ? 'purple' :
            val > 5  ? 'yellow' :
            val > 0   ? 'red' : 'transparent';
+
 }
 
 
