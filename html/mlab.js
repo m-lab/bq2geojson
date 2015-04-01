@@ -24,8 +24,11 @@ function addControls() {
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls');
+		var labelYear = L.DomUtil.create('span', 'mapControls', controls);
 		var selectYear = L.DomUtil.create('select', 'mapControls', controls);
+		var labelMetric = L.DomUtil.create('span', 'mapControls', controls);
 		var selectMetric = L.DomUtil.create('select', 'mapControls', controls);
+		var labelRes = L.DomUtil.create('span', 'mapControls', controls);
 		var selectRes = L.DomUtil.create('select', 'mapControls', controls);
 		var sliderMonth = L.DomUtil.create('div', 'mapControls', controls);
 		var checkAnimate = L.DomUtil.create('div', 'mapControls', controls);
@@ -41,12 +44,15 @@ function addControls() {
 		// Prevent the entire map from dragging when the slider is dragged.
 		L.DomEvent.disableClickPropagation(sliderMonth);
 
+		labelYear.innerHTML = 'Year';
 		selectYear.innerHTML = date_options;
 		selectYear.setAttribute('id', 'selectYear');
 
+		labelMetric.innerHTML = 'Metric';
 		selectMetric.innerHTML = '<option value="download_median">DL throughput</option><option value="upload_median">UL throughput</option>';
 		selectMetric.setAttribute('id', 'selectMetric');
 
+		labelRes.innerHTML = 'Res.';
 		selectRes.innerHTML = '<option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>';
 		selectRes.setAttribute('id', 'selectRes');
 
