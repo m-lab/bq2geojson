@@ -129,7 +129,7 @@ function getHexColor(val) {
 function setHexLayer(year, month, metric, resolution, mode) {
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') ) {
+	if ( $('#checkAnimate').prop('checked') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
@@ -183,7 +183,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 function setPlotLayer(year, month, mode) {
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') ) {
+	if ( $('#checkAnimate').prop('checked') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
