@@ -74,12 +74,14 @@ html, body {
 
 .mapControls {
 	font-size: x-small;
+	margin: 0 5px;
 }
 
 #sliderMonth {
 	margin-top: 5px;
+	width: 25em;
 }
 
 #checkAnimate {
-	margin-top: 10px;
+	margin-top: 15px;
 }

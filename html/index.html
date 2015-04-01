@@ -47,6 +47,10 @@ if ( typeof center == 'undefined' ) {
 }
 var zoom = 10;
 
+// These are the labels that will be used for the month slider in the control
+// box in the lower right corner.
+var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 // Create the map
 var map = L.map('map').setView(center, zoom);
 

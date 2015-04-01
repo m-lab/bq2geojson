@@ -74,15 +74,16 @@ function addControls() {
 
 	// Can't instantiate the slider until after "controls" is actually added to
 	// the map.
-	$('#sliderMonth').slider({
-		min: Number(dates[defaultYear][0]),
-		max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
-		change: function (e, ui) { updateLayers(e, 'update'); }
-	});
-
-	// Add Pips and labels to slider.
-	// https://simeydotme.github.io/jQuery-ui-Slider-Pips/
-	$('#sliderMonth').slider().slider('pips');
+	$('#sliderMonth')
+		.slider({
+			min: Number(dates[defaultYear][0]),
+			max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
+			change: function (e, ui) { updateLayers(e, 'update'); }
+		})
+		.slider('pips', {
+			rest: 'label',
+			labels: monthNames.slice(0, dates[defaultYear].length)
+		});;
 
 }
 
@@ -96,10 +97,14 @@ function updateLayers(e, mode) {
 	// If the year was changed then we need to update the slider and set it's
 	// value to the first configured month for that year.
 	if ( e.target.id == 'selectYear' ) {
-		$('#sliderMonth').slider('option', 'min', Number(dates[year][0]));
-		$('#sliderMonth').slider('option', 'max', Number(dates[year][dates[year].length - 1]));
-		$('#sliderMonth').slider().slider('pips');
-		$('#sliderMonth').slider('value', dates[year][0])
+		$('#sliderMonth')
+			.slider('option', 'min', Number(dates[year][0]))
+			.slider('option', 'max', Number(dates[year][dates[year].length - 1]))
+			.slider().slider('pips', {
+				rest: 'label',
+				labels: monthNames.slice(0, dates[year].length)
+			})
+			.slider('value', dates[year][0]);
 	}
 
 	var month = $('#sliderMonth').slider('value');
