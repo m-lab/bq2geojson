@@ -18,7 +18,7 @@ function addLegend() {
 }
 
 
-function addControls(dates) {
+function addControls() {
 
 	var controls = L.control({position: 'bottomleft'});
 
@@ -60,12 +60,12 @@ function addControls(dates) {
 	});
 
 	var clearId;
-	document.getElementById('checkAnimate').addEventListener('change', function() {
-		if ( document.getElementById('checkAnimate').checked == true ) {
+	$('#checkAnimate').change( function() {
+		if ( $('#checkAnimate').prop('checked') ) {
 			var i = $('#sliderMonth').slider('value');
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
-				i = (i + 1) % dates[document.getElementById('selectYear').value].length;
+				i = (i + 1) % dates[$('#selectYear').val()].length;
 			}, 1000);
 		} else {
 			clearInterval(clearId);
@@ -89,9 +89,9 @@ function addControls(dates) {
 
 function updateLayers(e, mode) {
 
-	var year = document.getElementById('selectYear').value;
-	var metric = document.getElementById('selectMetric').value;
-	var resolution = document.getElementById('selectRes').value;
+	var year = $('#selectYear').val();
+	var metric = $('#selectMetric').val();
+	var resolution = $('#selectRes').val();
 
 	// If the year was changed then we need to update the slider and set it's
 	// value to the first configured month for that year.
@@ -124,8 +124,8 @@ function getHexColor(val) {
 function setHexLayer(year, month, metric, resolution, mode) {
 
 	// Don't display spinner if animation is happening
-	if ( document.getElementById('checkAnimate').checked !== true ) {
-		document.getElementById('spinner').style.display = 'block';
+	if ( $('#checkAnimate').prop('checked') ) {
+		$('#spinner').css('display', 'block');
 	}
 
 	month = month < 10 ? '0' + month : month;
@@ -135,7 +135,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 		overlays.removeLayer(hexLayer);
 	}
 
-	getLayerData(hex_url, function(response) {
+	$.get(hex_url, function(response) {
 		response.features.forEach( function(cell) {
 
 			var value = cell.properties[metric];
@@ -168,9 +168,9 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			map.addLayer(hexLayer);
 		}
 
-		document.getElementById('spinner').style.display = 'none';
+		$('#spinner').css('display', 'none');
 
-	});
+	}, 'json');
 
 }
 
@@ -178,8 +178,8 @@ function setHexLayer(year, month, metric, resolution, mode) {
 function setPlotLayer(year, month, mode) {
 
 	// Don't display spinner if animation is happening
-	if ( document.getElementById('checkAnimate').checked !== true ) {
-		document.getElementById('spinner').style.display = 'block';
+	if ( $('#checkAnimate').prop('checked') ) {
+		$('#spinner').css('display', 'block');
 	}
 
 	month = month < 10 ? '0' + month : month;
@@ -189,7 +189,7 @@ function setPlotLayer(year, month, mode) {
 		overlays.removeLayer(plotLayer);
 	}
 
-	getLayerData(plot_url, function(response) {
+	$.get(plot_url, function(response) {
 
 		if ( map.hasLayer(plotLayer) ) {
 			map.removeLayer(plotLayer);
@@ -212,26 +212,7 @@ function setPlotLayer(year, month, mode) {
 			map.addLayer(plotLayer);
 		}
 
-	});
-
-}
-
-
-function getLayerData(url, callback) {
-
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if ( xhr.readyState === 4 ) {
-			if ( xhr.status === 200 ) {
-				callback(JSON.parse(xhr.responseText));
-				console.log(url + ': ' + xhr.statusText);
-			} else {
-				console.log(url + ': ' + xhr.statusText);
-			}
-		}
-	}
-	xhr.open('GET', url);
-	xhr.send();
+	}, 'json');
 
 }
 
