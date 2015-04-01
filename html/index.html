@@ -40,6 +40,11 @@ var dates = {
 	2015 : ['1','2','3']
 }
 
+// The minimum number of data points in any given hex cell for a cell to be
+// considered statistically relevant.  These cells will either not be
+// displayed or will be displayed with a different styling.
+var min_data_points = 30;
+
 // Center and zoom level of map.  center should be pulled in via center.js, but
 // if not then just set it to the center of the USA
 if ( typeof center == 'undefined' ) {

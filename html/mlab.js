@@ -153,11 +153,19 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			var hexStyle = cell.hexStyle = {};
 
 			hexStyle.weight = 1;
-			hexStyle.fillOpacity = 0.3;
+			hexStyle.fillOpacity = 0.5;
 
 			if ( ! value ) {
 				hexStyle.weight = 0;
 				hexStyle.fillOpacity = 0;
+			} else if ( metric == 'download_median' && cell.properties['download_count'] < 30 ) {
+				hexStyle.weight = 0.5;
+				hexStyle.fillOpacity = 0.05;
+				hexStyle.color = 'black';
+			} else if ( metric == 'upload_median' && cell.properties['upload_count'] < 30 ) {
+				hexStyle.weight = 0.5;
+				hexStyle.fillOpacity = 0.05;
+				hexStyle.color = 'black';
 			} else {
 				hexStyle.color = getHexColor(value);
 			}

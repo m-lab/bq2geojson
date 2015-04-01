@@ -6,18 +6,6 @@
  * https://creativecommons.org/publicdomain/zero/1.0/
  */
 
-var turf = require('turf');
-var csv2geojson = require('csv2geojson').csv2geojson;
-var fs = require('fs');
-var async = require('async');
-var exec = require('child_process').execSync;
-
-// Minimun tests per cell.  If the number of tests in a given hex cell is less
-// than this, then remove data for the cell.  This should be used to make sure
-// that very small sample sizes for given hex cell don't skew or distort the
-// overall picture on the map with misleading results.
-var min_test_cnt = 30;
-
 // The three cell widths, in miles, used to make the low, medium and high
 // resolution hex layers:
 // http://turfjs.org/static/docs/module-turf_hex-grid.html
@@ -114,6 +102,12 @@ aggregations = {
 	]
 }
 
+// Require any dependencies
+var turf = require('turf');
+var csv2geojson = require('csv2geojson').csv2geojson;
+var fs = require('fs');
+var async = require('async');
+var exec = require('child_process').execSync;
 
 //
 // STOP
@@ -283,9 +277,7 @@ function get_csv(path, query) {
 
 
 /*
- * Aggregate the various properties of the GeoJSON. hexgrid is a global
- * variable in this script so this function modified that object but doesn't
- * return anything.
+ * Aggregate the various properties of the GeoJSON.
  */
 function aggregate(grid, json, fields, aggs) {
 
@@ -294,8 +286,6 @@ function aggregate(grid, json, fields, aggs) {
 	var start = new Date();
 	var json = turf.aggregate(grid, json, aggs);
 	elapsed(start);
-
-	grid = normalize(json, fields.count);
 
 	return grid;
 		
@@ -316,22 +306,6 @@ function make_numeric(json, fields) {
 		}
 	}
 	return json;
-}
-
-
-/*
- * Remove cells where the test count is less than a predefined minumum number.
- */
-function normalize(json, field) {
-
-	for ( var i = json.features.length -1; i >=0; i-- ) {
-		if ( json.features[i].properties[field] < min_test_cnt ) {
-			json.features.splice(i, 1);
-		}
-	};
-
-	return json;
-
 }
 
 
