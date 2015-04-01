@@ -90,17 +90,22 @@ function addControls(dates) {
 function updateLayers(e, mode) {
 
 	var year = document.getElementById('selectYear').value;
-	var month = $('#sliderMonth').slider('value');
 	var metric = document.getElementById('selectMetric').value;
 	var resolution = document.getElementById('selectRes').value;
 
-	setHexLayer(year, month, metric, resolution, mode);
-	setPlotLayer(year, month, mode);
+	// If the year was changed then we need to update the slider and set it's
+	// value to the first configured month for that year.
 	if ( e.target.id == 'selectYear' ) {
 		$('#sliderMonth').slider('option', 'min', Number(dates[year][0]));
 		$('#sliderMonth').slider('option', 'max', Number(dates[year][dates[year].length - 1]));
 		$('#sliderMonth').slider().slider('pips');
+		$('#sliderMonth').slider('value', dates[year][0])
 	}
+
+	var month = $('#sliderMonth').slider('value');
+
+	setHexLayer(year, month, metric, resolution, mode);
+	setPlotLayer(year, month, mode);
 
 }
 
