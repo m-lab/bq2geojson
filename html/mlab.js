@@ -86,9 +86,7 @@ function addControls() {
 			min: Number(dates[defaultYear][0]),
 			max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
 			change: function (e, ui) {
-				if ( e.originalEvent ) {
-					updateLayers(e, 'update');
-				}
+				updateLayers(e, 'update');
 			}
 		})
 		.slider('pips', {
@@ -114,8 +112,18 @@ function updateLayers(e, mode) {
 			.slider().slider('pips', {
 				rest: 'label',
 				labels: monthNames.slice(0, dates[year].length)
-			})
-			.slider('value', dates[year][0]);
+			});
+
+		// This is a really ugly hack, but we don't want the onchange event to
+		// fire when changing the slider value from within the updateLayers()
+		// function, else changing the slider value actually triggers the
+		// updateLayers() function to run a second time.  There must be a
+		// better way to do this, but for now just remove the onchange event
+		// function, change the value, then re-add it.
+		$('#sliderMonth').slider('option', 'change', function(){});
+		$('#sliderMonth').slider('value', dates[year][0]);
+		$('#sliderMonth').slider('option', 'change', function(e, ui){ updateLayers(e, 'update')});
+
 		if ( seedCache ) {
 			seedLayerCache(year);
 		}
