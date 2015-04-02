@@ -56,10 +56,17 @@ var overlays = {
 		defaultOn: true
 	},
 	plot: {
-		enabled: true,
+		enabled: false,
 		defaultOn: false
 	}
 }
+
+// If set to true, then prefetch the low resolution hex GeoJSON files into a
+// local cache.  WARNING: You may not want to enable if you expect mobile, low
+// bandwidth, or otherwise bandwidth restricted users, as this can pull in many
+// megabytes of data.
+var seedCache = true;
+
 
 // Center and zoom level of map.  center should be pulled in via center.js, but
 // if not then just set it to the center of the USA
@@ -110,6 +117,9 @@ if ( overlays['hex']['enabled'] ) {
 }
 if ( overlays['plot']['enabled'] ) {
 	setPlotLayer(defaultYear, defaultMonth, 'new');
+}
+if ( seedCache ) {
+	seedLayerCache(defaultYear);
 }
 </script>
 

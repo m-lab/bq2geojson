@@ -85,7 +85,11 @@ function addControls() {
 		.slider({
 			min: Number(dates[defaultYear][0]),
 			max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
-			change: function (e, ui) { updateLayers(e, 'update'); }
+			change: function (e, ui) {
+				if ( e.originalEvent ) {
+					updateLayers(e, 'update');
+				}
+			}
 		})
 		.slider('pips', {
 			rest: 'label',
@@ -112,6 +116,9 @@ function updateLayers(e, mode) {
 				labels: monthNames.slice(0, dates[year].length)
 			})
 			.slider('value', dates[year][0]);
+		if ( seedCache ) {
+			seedLayerCache(year);
+		}
 	}
 
 	var month = $('#sliderMonth').slider('value');
@@ -281,6 +288,22 @@ function visibleOverlayCount() {
 	return i;
 
 }
+
+
+// Takes a year and attempts to load the low resolution hex data layer into
+// memory in the background to speed switching between months for the current
+// year.
+function seedLayerCache(year) {
+
+	var months = dates[year].slice(1);
+	for ( i = 0; i < months.length; i++ ) {
+		month = months[i] < 10 ? '0' + months[i] : months[i];
+		var url = 'geojson/' + year + '_' + month + '-low.geojson';
+		getLayerData(url, function(){});
+	}
+
+}
+
 
 function make_popup(props) {
 
