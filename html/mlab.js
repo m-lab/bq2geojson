@@ -6,10 +6,11 @@ function addLegend() {
 	    var div = L.DomUtil.create('div', 'info legend'),
 	        grades = [0, 5, 10, 25, 50];
 
+		div.innerHTML = '<i style="background: black"></i>Insuff. data<br/>';
 	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
 	            '<i style="background:' + getHexColor(grades[i] + 1) + '"></i> ' +
-				(i == 0 ? '0' : grades[i])  + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' mb/s<br>' : '+ mb/s');
+				(i == 0 ? '0' : grades[i])  + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' mb/s<br/>' : '+ mb/s');
 	    }
 	    return div;
 	};
@@ -184,7 +185,13 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			l.setStyle(l.feature['hexStyle']);
 		});
 
-		overlays.addOverlay(hexLayer, 'Hex layer');
+		// No need to show a switch for this layer in the layers control if
+		// it's the only layer.  This will need to be improved if/when more
+		// optional layers other than just a plot layer are included.
+		if ( include_plot_layer ) {
+			overlays.addOverlay(hexLayer, 'Hex layer');
+		}
+
 		if ( hexLayerVisible || mode == 'new' ) {
 			map.addLayer(hexLayer);
 		}
@@ -241,11 +248,11 @@ function setPlotLayer(year, month, mode) {
 function make_popup(props) {
 
 	var popup = 'DL: median:' + Math.round(props.download_median * 10) / 10;
-	popup += '/mean:' + Math.round(props.download_avg * 10) / 10;
-	popup += '/pts:' + Math.round(props.download_count * 10) / 10 + '<br/>';
+	popup += ' / mean:' + Math.round(props.download_avg * 10) / 10;
+	popup += ' / pts:' + Math.round(props.download_count * 10) / 10 + '<br/>';
 	popup += 'UL: median:' + Math.round(props.upload_median * 10) / 10;
-	popup += '/mean:' + Math.round(props.upload_avg * 10) / 10;
-	popup += '/pts:' + Math.round(props.upload_count * 10) / 10 + '<br/>';
+	popup += ' / mean:' + Math.round(props.upload_avg * 10) / 10;
+	popup += ' / pts:' + Math.round(props.upload_count * 10) / 10 + '<br/>';
 	popup += 'RTT (mean): ' + Math.round(props.rtt_avg);
 
 	return popup;
