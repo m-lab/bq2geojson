@@ -176,7 +176,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 	}
 
 	month = month < 10 ? '0' + month : month;
-	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.geojson';
+	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.json';
 
 	if ( mode == 'update' ) {
 		layerCtrl.removeLayer(hexLayer);
@@ -244,7 +244,7 @@ function setPlotLayer(year, month, mode) {
 	}
 
 	month = month < 10 ? '0' + month : month;
-	var plot_url = 'geojson/' + year + '_' + month + '-plot.geojson';
+	var plot_url = 'geojson/' + year + '_' + month + '-plot.json';
 
 	if ( mode == 'update' ) {
 		layerCtrl.removeLayer(plotLayer);
@@ -306,7 +306,7 @@ function seedLayerCache(year) {
 	var months = dates[year].slice(1);
 	for ( i = 0; i < months.length; i++ ) {
 		month = months[i] < 10 ? '0' + months[i] : months[i];
-		var url = 'geojson/' + year + '_' + month + '-low.geojson';
+		var url = 'geojson/' + year + '_' + month + '-low.json';
 		getLayerData(url, function(){});
 	}
 

@@ -197,22 +197,22 @@ for ( var i = 0; i < months.length; i++ ) {
 		}
 	}, function (err, results) {
 
-		fs.writeFileSync(dirs.tmp + sub_dir + '-download.geojson', JSON.stringify(results.download));
-		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.geojson', JSON.stringify(results.upload));
+		fs.writeFileSync(dirs.tmp + sub_dir + '-download.json', JSON.stringify(results.download));
+		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.json', JSON.stringify(results.upload));
 
 		hexgrids = create_hexgrids(results);
 
 		for ( hexgrid in hexgrids ) {
 			console.log('* Aggregating download throughput data at ' + hexgrid + ' resolution.');
 			hexgrids[hexgrid] = aggregate(hexgrids[hexgrid], results.download, properties.download, aggregations.download);
-			fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate-' + hexgrid + '.geojson', JSON.stringify(hexgrids[hexgrid]));
+			fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate-' + hexgrid + '.json', JSON.stringify(hexgrids[hexgrid]));
 			console.log('* Aggregating upload throughput data at ' + hexgrid + ' resolution.');
 			hexgrids[hexgrid] = aggregate(hexgrids[hexgrid], results.upload, properties.upload, aggregations.upload);
-			fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate-' + hexgrid + '.geojson', JSON.stringify(hexgrids[hexgrid]));
+			fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate-' + hexgrid + '.json', JSON.stringify(hexgrids[hexgrid]));
 			// Stringify GeoJSON and write it to the file system
 			var hexgrid_serial = JSON.stringify(hexgrids[hexgrid]);
-			fs.writeFileSync(dirs.geojson + sub_dir + '-' + hexgrid + '.geojson', hexgrid_serial);
-			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' + hexgrid + '.geojson');
+			fs.writeFileSync(dirs.geojson + sub_dir + '-' + hexgrid + '.json', hexgrid_serial);
+			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' + hexgrid + '.json');
 		}
 	});
 }
@@ -236,7 +236,7 @@ function create_hexgrids(json) {
 	var updown = turf.featurecollection(json.download.features.concat(json.upload.features));
 	// The combined up/down features will be used to add a map layer with a
 	// scatter plot of all the data points.
-	fs.writeFileSync(dirs.geojson + sub_dir + '-plot.geojson', JSON.stringify(updown));
+	fs.writeFileSync(dirs.geojson + sub_dir + '-plot.json', JSON.stringify(updown));
 	var bbox = turf.extent(updown);
 	var bbox_poly = turf.bboxPolygon(bbox);
 	var point1 = turf.point(bbox_poly.geometry.coordinates[0][0]);
