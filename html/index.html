@@ -61,6 +61,11 @@ var zoom = 10;
 // box in the lower right corner.
 var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+// An object which will hold cached GeoJSON files so that we don't have to
+// fetch them from the server more than once.  This could potentially be
+// problematic if there are many files and they are large.
+var geoJsonCache = {};
+
 // Create the map
 var map = L.map('map').setView(center, zoom);
 

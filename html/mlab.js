@@ -135,6 +135,22 @@ function getHexColor(val) {
 }
 
 
+function getLayerData(url, callback) {
+
+	if ( geoJsonCache[url] ) {
+		console.log('Using cached version of ' + url);
+		callback(geoJsonCache[url]);
+	} else {
+		console.log('Fetching and caching ' + url);
+		$.get(url, function(response) {
+			geoJsonCache[url] = response;
+			callback(response)
+		}, 'json');
+	}
+
+}
+
+
 function setHexLayer(year, month, metric, resolution, mode) {
 
 	// Don't display spinner if animation is happening
@@ -149,7 +165,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 		overlays.removeLayer(hexLayer);
 	}
 
-	$.get(hex_url, function(response) {
+	getLayerData(hex_url, function(response) {
 		response.features.forEach( function(cell) {
 
 			var value = cell.properties[metric];
@@ -198,7 +214,7 @@ function setHexLayer(year, month, metric, resolution, mode) {
 
 		$('#spinner').css('display', 'none');
 
-	}, 'json');
+	});
 
 }
 
@@ -217,7 +233,7 @@ function setPlotLayer(year, month, mode) {
 		overlays.removeLayer(plotLayer);
 	}
 
-	$.get(plot_url, function(response) {
+	getLayerData(plot_url, function(response) {
 
 		if ( map.hasLayer(plotLayer) ) {
 			map.removeLayer(plotLayer);
@@ -240,7 +256,7 @@ function setPlotLayer(year, month, mode) {
 			map.addLayer(plotLayer);
 		}
 
-	}, 'json');
+	});
 
 }
 
