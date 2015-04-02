@@ -73,7 +73,7 @@ function addControls() {
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[$('#selectYear').val()].length;
-			}, 1000);
+			}, animateInterval);
 		} else {
 			clearInterval(clearId);
 		}
