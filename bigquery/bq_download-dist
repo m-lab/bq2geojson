@@ -1,7 +1,7 @@
 SELECT
 connection_spec.client_geolocation.latitude AS latitude,
 connection_spec.client_geolocation.longitude AS longitude,
-(125 * web100_log_entry.snap.HCThruOctetsAcked/
+8 * (web100_log_entry.snap.HCThruOctetsAcked/
 (web100_log_entry.snap.SndLimTimeRwin +
 web100_log_entry.snap.SndLimTimeCwnd +
 web100_log_entry.snap.SndLimTimeSnd)) AS download_throughput,
