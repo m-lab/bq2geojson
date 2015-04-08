@@ -10,7 +10,7 @@ function addLegend() {
 	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
 	            '<i style="background:' + getHexColor(grades[i] + 1) + '"></i> ' +
-				(i == 0 ? '0' : grades[i])  + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' mb/s<br/>' : '+ mb/s');
+				(i == 0 ? '0' : grades[i])  + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' Mbps<br/>' : '+ Mbps');
 	    }
 	    return div;
 	};
