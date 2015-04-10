@@ -322,13 +322,13 @@ function seedLayerCache(year) {
 
 function make_popup(props) {
 
-	var popup = 'DL: median:' + Math.round(props.download_median * 10) / 10;
-	popup += ' / mean:' + Math.round(props.download_avg * 10) / 10;
+	var popup = 'DL: median:' + Math.round(props.download_median * 10) / 10 + ' Mbps';
+	popup += ' / mean:' + Math.round(props.download_avg * 10) / 10 + ' Mbps';
 	popup += ' / pts:' + Math.round(props.download_count * 10) / 10 + '<br/>';
-	popup += 'UL: median:' + Math.round(props.upload_median * 10) / 10;
-	popup += ' / mean:' + Math.round(props.upload_avg * 10) / 10;
+	popup += 'UL: median:' + Math.round(props.upload_median * 10) / 10 + ' Mbps';
+	popup += ' / mean:' + Math.round(props.upload_avg * 10) / 10 + ' Mbps';
 	popup += ' / pts:' + Math.round(props.upload_count * 10) / 10 + '<br/>';
-	popup += 'RTT (mean): ' + Math.round(props.rtt_avg);
+	popup += 'RTT (mean): ' + Math.round(props.rtt_avg) + ' ms';
 
 	return popup;
 
