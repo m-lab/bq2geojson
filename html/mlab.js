@@ -6,7 +6,7 @@ function addLegend() {
 	    var div = L.DomUtil.create('div', 'info legend'),
 	        grades = [0, 5, 10, 25, 50];
 
-		div.innerHTML = '<i style="background: black"></i>Insuff. data<br/>';
+		div.innerHTML = '<i style="background: black; opacity: .2"></i>Insuff. data<br/>';
 	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
 	            '<i style="background:' + getHexColor(grades[i] + 1) + '"></i> ' +
