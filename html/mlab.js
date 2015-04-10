@@ -214,7 +214,12 @@ function setHexLayer(year, month, metric, resolution, mode) {
 		}
 
 		hexLayer = L.geoJson(response).eachLayer( function(l) {
-			l.bindPopup(make_popup(l.feature.properties));
+			if ( metric = "download_median" && l.feature.properties.download_count > 0 ) {
+				l.bindPopup(make_popup(l.feature.properties));
+			}
+			if ( metric = "upload_median" && l.feature.properties.upload_count > 0 ) {
+				l.bindPopup(make_popup(l.feature.properties));
+			}
 			l.setStyle(l.feature['hexStyle']);
 		});
 
