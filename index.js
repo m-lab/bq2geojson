@@ -6,9 +6,13 @@
  * https://creativecommons.org/publicdomain/zero/1.0/
  */
 
-// The three cell widths, in miles, used to make the low, medium and high
+// The three cell widths (in degrees) used to make the low, medium and high
 // resolution hex layers:
 // http://turfjs.org/static/docs/module-turf_hex-grid.html
+// Some example suitable values might be:
+// * City level: 0.01, 0.0075, 0.005
+// * State level: 0.05, 0.0375, 0.025
+// * USA level: 
 var cell_widths = {
 	low : 0.01,
 	medium : 0.0075,
@@ -287,7 +291,7 @@ function aggregate(grid, json, fields, aggs) {
 	var json = turf.aggregate(grid, json, aggs);
 	elapsed(start);
 
-	return grid;
+	return json;
 		
 }
 
