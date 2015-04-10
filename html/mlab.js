@@ -283,7 +283,7 @@ function setPlotLayer(year, month, mode) {
 
 	});
 
-	$('#spinner').css('display', 'block');
+	$('#spinner').css('display', 'none');
 
 }
 
