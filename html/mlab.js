@@ -234,9 +234,9 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			map.addLayer(hexLayer);
 		}
 
-		$('#spinner').css('display', 'none');
-
 	});
+
+	$('#spinner').css('display', 'none');
 
 }
 
@@ -282,6 +282,8 @@ function setPlotLayer(year, month, mode) {
 		}
 
 	});
+
+	$('#spinner').css('display', 'block');
 
 }
 
