@@ -17,6 +17,6 @@ WHERE
         AND web100_log_entry.snap.State <= 11))
   AND web100_log_entry.snap.Duration >= 9000000
   AND web100_log_entry.snap.Duration < 3600000000
-  AND connection_spec.client_geolocation.country_code = '<country_code>'
+  AND connection_spec.client_geolocation.country_code3 = '<country_code>'
   AND connection_spec.client_geolocation.region = '<region_state>'
   AND connection_spec.client_geolocation.city = '<city>'

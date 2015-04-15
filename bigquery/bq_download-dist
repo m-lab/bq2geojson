@@ -28,6 +28,6 @@ WHERE
   AND (web100_log_entry.snap.SndLimTimeRwin +
        web100_log_entry.snap.SndLimTimeCwnd +
        web100_log_entry.snap.SndLimTimeSnd) < 3600000000
-  AND connection_spec.client_geolocation.country_code = '<country_code>'
+  AND connection_spec.client_geolocation.country_code3 = '<country_code>'
   AND connection_spec.client_geolocation.region = '<region_state>'
   AND connection_spec.client_geolocation.city = '<city>'
