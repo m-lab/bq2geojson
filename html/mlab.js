@@ -223,13 +223,6 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			l.setStyle(l.feature['hexStyle']);
 		});
 
-		// No need to show a switch for this layer in the layers control if
-		// it's the only layer.  This will need to be improved if/when more
-		// optional layers other than just a plot layer are included.
-		if ( visibleOverlayCount() > 1 ) {
-			layerCtrl.addOverlay(hexLayer, 'Hex layer');
-		}
-
 		if ( hexLayerVisible || (mode == 'new' && overlays['hex']['defaultOn']) ) {
 			map.addLayer(hexLayer);
 		}
@@ -273,10 +266,6 @@ function setPlotLayer(year, month, mode) {
 			}
 		});
 
-		if ( visibleOverlayCount() > 1 ) {
-			layerCtrl.addOverlay(plotLayer, 'Scatter plot');
-		}
-
 		if ( plotLayerVisible || (mode == 'new' && overlays['plot']['defaultOn']) ) {
 			map.addLayer(plotLayer);
 		}
@@ -286,24 +275,6 @@ function setPlotLayer(year, month, mode) {
 	$('#spinner').css('display', 'none');
 
 }
-
-
-// Simple function to determine how many layers have been configured to be
-// displayed.  At the moment, the only reason this exists is to determine if
-// only a single layer is set to be visible, in which case there is no need to
-// add a checkbox to the layers control for showing or hiding it.
-function visibleOverlayCount() {
-
-	i = 0;
-	for ( var overlay in overlays ) {
-		if ( overlays[overlay]['enabled'] === true ) {
-			i++;
-		}
-	}
-	return i;
-
-}
-
 
 // Takes a year and attempts to load the low resolution hex data layer into
 // memory in the background to speed switching between months for the current
