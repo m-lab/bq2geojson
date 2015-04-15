@@ -223,6 +223,8 @@ function setHexLayer(year, month, metric, resolution, mode) {
 			l.setStyle(l.feature['hexStyle']);
 		});
 
+		layerCtrl.addOverlay(hexLayer, 'Hex layer');
+
 		if ( hexLayerVisible || (mode == 'new' && overlays['hex']['defaultOn']) ) {
 			map.addLayer(hexLayer);
 		}
@@ -265,6 +267,8 @@ function setPlotLayer(year, month, mode) {
 				});
 			}
 		});
+
+		layerCtrl.addOverlay(plotLayer, 'Plot layer');
 
 		if ( plotLayerVisible || (mode == 'new' && overlays['plot']['defaultOn']) ) {
 			map.addLayer(plotLayer);
