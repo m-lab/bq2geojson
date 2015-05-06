@@ -15,49 +15,43 @@ var polygon_type = "hex";
 // An array of absolute paths to polygon files, if polygon_type == "file".
 var polygon_files = [];
 
-/**
- * If polygon_type == 'hex', the three cell widths used to make the low, medium
- * and high resolution hex layers:
- * http://turfjs.org/static/docs/module-turf_hex-grid.html
- * Some suitable values might be:
- *   > City level: 0.01, 0.0075, 0.005
- *   > State level: 0.05, 0.0375, 0.025
- *   > USA level: 
- */
+// If polygon_type == 'hex', the three cell widths used to make the low, medium
+// and high resolution hex layers:
+// http://turfjs.org/static/docs/module-turf_hex-grid.html
+// Some suitable values might be:
+//   > City level: 0.01, 0.0075, 0.005
+//   > State level: 0.05, 0.0375, 0.025
+//   > USA level: 
 var cell_widths = {
 	low : 0.01,
 	medium : 0.0075,
 	high : 0.005
 };
 
-/**
- * Directories where CSV and GeoJSON output get written to files.
- *
- * 'csv': Where the CSV files from BigQuery will be written. By defaul they
- * will go in the bigquery/ directory since, well, it is BigQuery data.
- *
- * 'geojson': Where to write GeoJSON files. By default they will go in the
- * ./html/ directory since they will be consumed by a browser. Please not that
- * if you change this you will also have to change some front-end code in the
- * html/ directory.
- *
- * 'tmp': Temporary directory where intermediate files are stored.  In case
- * something fails, these won't have to be generated again, potentially.  And
- * maybe useful for debugging.
- */
+// Directories where CSV and GeoJSON output get written to files.
+//
+// 'csv': Where the CSV files from BigQuery will be written. By defaul they
+// will go in the bigquery/ directory since, well, it is BigQuery data.
+//
+// 'geojson': Where to write GeoJSON files. By default they will go in the
+// ./html/ directory since they will be consumed by a browser. Please not that
+// if you change this you will also have to change some front-end code in the
+// html/ directory.
+//
+// 'tmp': Temporary directory where intermediate files are stored.  In case
+// something fails, these won't have to be generated again, potentially.  And
+// maybe useful for debugging.
 var dirs = {
 	csv : './bigquery/csv/',
 	geojson : './html/geojson/',
 	tmp : './tmp/'
 };
 
-/**
- * When running aggregate functions on the data, these are the various
- * properties that should be added to the GeoJSON for the download and upload
- * throughput tests, respectively. 'count', as the name implies, will host the
- * value of how many data points per hex cell there are for that test.
- * 'averages' is an array that holds the fields that need to be averaged.
- */
+// When running aggregate functions on the data, these are the various
+// properties that should be added to the GeoJSON for the download and upload
+// throughput tests, respectively. 'count', as the name implies, will host the
+// value of how many data points per hex cell there are for that test.
+// 'averages' is an array that holds the fields that need to be averaged.
 var properties = {
 	download : {
 		count : 'download_count',
@@ -113,12 +107,10 @@ aggregations = {
 	]
 };
 
-/**
- * STOP
- *
- * All user-defined variables are set above.  You probably shouldn't edit below
- * this line unless you want to modify the overall behavior of the program.
- */
+// STOP
+//
+// All user-defined variables are set above.  You probably shouldn't edit below
+// this line unless you want to modify the overall behavior of the program.
 
 // Require any dependencies
 var turf = require('turf');
@@ -181,11 +173,9 @@ for (var dir in dirs) {
 	create_dir(dirs[dir]);
 }
 
-/**
- * The year will never change for a given run, so loop through all the months
- * and use the year_month combination to determine which tables to query in
- * BigQuery, and also use it for the directory structure that gets created.
- */
+// The year will never change for a given run, so loop through all the months
+// and use the year_month combination to determine which tables to query in
+// BigQuery, and also use it for the directory structure that gets created.
 for ( var i = 0; i < months.length; i++ ) {
 	// Some convenient variables to have on hand
 	var sub_dir = year + '_' + months[i];
@@ -242,12 +232,10 @@ for ( var i = 0; i < months.length; i++ ) {
 			updown));
 		console.log('* Wrote file ' + dirs.geojson + sub_dir + '-plot.json');
 
-		/**
-		 * We do this here instead of in the same place as if polygon_type ==
-		 * "file" because the hexgrid is not a fixed size, but is only as
-		 * large as needed based on the data points, which may save processing
-		 * time and files size.
-		 */
+		// We do this here instead of in the same place as if polygon_type ==
+		// "file" because the hexgrid is not a fixed size, but is only as
+		// large as needed based on the data points, which may save processing
+		// time and files size.
 		if (polygon_type == 'hex') {
 			polygons = create_hexgrids(updown);
 		}
@@ -274,21 +262,23 @@ for ( var i = 0; i < months.length; i++ ) {
 	});
 }
 
-/**
- * Write the center point of one of the polygon objects to a file that will be
- * used to center the map in more or less the right place automatically rather
- * than having to manually set the variable. NOTE: this could be unreliable
- * because we can't be sure how the object keys are ordered.
- */
-var lon = turf.center(polygons[Object.keys(polygons)[0]]).geometry.coordinates[0];
-var lat = turf.center(polygons[Object.keys(polygons)[0]]).geometry.coordinates[1];
-fs.writeFileSync('./html/js/center.js', 'var center = [' + lat + ',' + lon + '];');
+// Write the center point of one of the polygon objects to a file that will be
+// used to center the map in more or less the right place automatically rather
+// than having to manually set the variable. NOTE: this could be unreliable
+// because we can't be sure how the object keys are ordered.
+var lon = turf.center(polygons[Object.keys(
+	polygons)[0]]).geometry.coordinates[0];
+var lat = turf.center(polygons[Object.keys(
+	polygons)[0]]).geometry.coordinates[1];
+fs.writeFileSync('./html/js/center.js', 'var center = [' + lat +
+	',' + lon + '];');
 console.log('* Wrote file ./html/js/center.js');
 
-/*
+/**
  * Takes a FeatureCollection and creates a bounding box that contains all of
  * the features, auto-calculates an appropriate cell width based on the width
  * of the box, then turns creates a hexgrid.
+ *
  * @param {object} json GeoJSON FeatureCollection
  * @returns {array} Array of 3 GeoJSON objects at various resolutions.
  */
@@ -311,25 +301,24 @@ function create_hexgrids(json) {
 
 }
 
-/*
+/**
  * Do the actual fetching of data from BigQuery
+ *
  * @param {string} path Path to BigQuery CSV output file
  * @param {string} query The query to run
  * @returns {string} Result from BigQuery in CSV format
  */
 function get_csv(path, query) {
-	/**
-	 * Options passed to the bq client. These probably shouldn't be changed
-	 *  -n: defines an arbitrarily high number of results to return that we should
-	 * never surpass in practice, and just makes sure we get everything.
-	 * 
-	 * --format csv: output format should be CSV.
-	 *
-	 * --quiet: don't output status messages, since they'd end up in the CSV.
-	 *
-	 * --headless: don't know what effect this has, but seems good since this may
-	 * possibly be automated in some way.
-	 */
+	// Options passed to the bq client. These probably shouldn't be changed -n:
+	// defines an arbitrarily high number of results to return that we should
+	// never surpass in practice, and just makes sure we get everything.
+	// 
+	// --format csv: output format should be CSV.
+	//
+	// --quiet: don't output status messages, since they'd end up in the CSV.
+	//
+	// --headless: don't know what effect this has, but seems good since this
+	// may possibly be automated in some way.
 	var bq_opts='-n 1000000 --format csv --quiet --headless';
 
 	try {
@@ -352,8 +341,9 @@ function get_csv(path, query) {
 	return result;
 }
 
-/*
+/**
  * Aggregate the various properties of the GeoJSON.
+ *
  * @param {object} polygon Polygon object in GeoJSON format 
  * @param {object} json GeoJSON object containing data to analyze
  * @param {object} fields Which properties of json to process
@@ -371,10 +361,11 @@ function aggregate(polygon, json, fields, aggs) {
 }
 
 
-/*
+/**
  * While we're looping through the object, also take the opportunity to covert
  * any any values to a number so that Turf.js can perform math on it properly:
  * https://github.com/mapbox/csv2geojson/issues/31
+ *
  * @param {object} json GeoJSON object with data to be processed
  * @param {object} fields Which properties of json to process
  * @returns {object} GeoJSON data with numeric values coverted to Numbers
@@ -391,8 +382,9 @@ function make_numeric(json, fields) {
 }
 
 
-/*
+/**
  * Simple function to return elapsed time in hours, minutes, seconds.
+ *
  * @param {object} start Date object representing start time
  */
 function elapsed(start) {
@@ -404,8 +396,9 @@ function elapsed(start) {
 	console.log('  ... operation completed in ' + hours + minutes + seconds); 
 }
 
-/*
+/**
  * Create a directory
+ *
  * @param {string} dir Path and name of directory to create
  */
 function create_dir(dir) {
