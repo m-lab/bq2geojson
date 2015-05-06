@@ -29,7 +29,7 @@
 
 <script>
 
-// Default hex layer data file
+// Specify default year and month for initial display
 var defaultYear = "2014";
 var defaultMonth = "1";
 
@@ -38,18 +38,18 @@ var defaultMonth = "1";
 var dates = {
 	2014 : ['1','2','3','4','5','6','7','8','9','10','11','12'],
 	2015 : ['1','2','3']
-}
+};
 
 // The minimum number of data points in any given hex cell for a cell to be
-// considered statistically relevant.  These cells will either not be
-// displayed or will be displayed with a different styling.
+// considered statistically relevant.  These cells will either not be displayed
+// or will be displayed with a different styling.
 var min_data_points = 30;
 
 // Defines how each overlay is treated on load.  If an overlay is enabled, then
-// there will be a checkbox for it in the layers control. 'defaultOn'
-// determines whether it will be displayed by default. NOTE: If only a single
-// overlay is enabled, then no checkbox will be displayed, since it doesn't
-// make much sense to disable the only meaningful layer that exists.
+// there will be a checkbox for it in the layers control. 'defaultOn' determines
+// whether it will be displayed by default. NOTE: If only a single overlay is
+// enabled, then no checkbox will be displayed, since it doesn't make much sense
+// to disable the only meaningful layer that exists.
 var overlays = {
 	hex: {
 		enabled: true,
@@ -59,7 +59,7 @@ var overlays = {
 		enabled: true,
 		defaultOn: false
 	}
-}
+};
 
 // If set to true, then prefetch the low resolution hex GeoJSON files into a
 // local cache.  WARNING: You may not want to enable if you expect mobile, low
@@ -81,9 +81,9 @@ var zoom = 10;
 // box in the lower right corner.
 var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-// An object which will hold cached GeoJSON files so that we don't have to
-// fetch them from the server more than once.  This could potentially be
-// problematic if there are many files and they are large.
+// An object which will hold cached GeoJSON files so that we don't have to fetch
+// them from the server more than once.  This could potentially be problematic
+// if there are many files and they are large.
 var geoJsonCache = {};
 
 // Create the map
@@ -91,11 +91,11 @@ var map = L.map('map').setView(center, zoom);
 
 var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-})
+});
 
 var mapboxLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/newamerica.lcl1jan5/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://mapbox.com/">Mapbox</a>'
-})
+});
 
 // Set the default base tile layer
 map.addLayer(mapboxLayer);
@@ -104,11 +104,10 @@ map.addLayer(mapboxLayer);
 var baseLayers = {
 	"OpenStreetMap" : osmLayer,
 	"Mapbox" : mapboxLayer
-}
+};
 
 // Global overlay layer variables
-var hexLayer,
-	plotLayer;
+var hexLayer, plotLayer;
 
 var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
