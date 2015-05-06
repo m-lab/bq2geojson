@@ -12,8 +12,6 @@ Several [Node.js](https://nodejs.org/) modules are required.
 * [csv2geojson](https://github.com/mapbox/csv2geojson)
 * [Turf.js](http://turfjs.org/)
 * [async](https://www.npmjs.com/package/async)
-* [exec](https://www.npmjs.com/package/exec)
-* [fs](https://www.npmjs.com/package/fs)
 
 These should be automatically installed in the local directory ./node_modules/
 when you run "npm install" later.
