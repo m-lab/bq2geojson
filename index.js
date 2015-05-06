@@ -282,8 +282,8 @@ for ( var i = 0; i < months.length; i++ ) {
  */
 var lon = turf.center(polygons[Object.keys(polygons)[0]]).geometry.coordinates[0];
 var lat = turf.center(polygons[Object.keys(polygons)[0]]).geometry.coordinates[1];
-fs.writeFileSync('./html/center.js', 'var center = [' + lat + ',' + lon + '];');
-console.log('* Wrote file ./html/center.js');
+fs.writeFileSync('./html/js/center.js', 'var center = [' + lat + ',' + lon + '];');
+console.log('* Wrote file ./html/js/center.js');
 
 /*
  * Takes a FeatureCollection and creates a bounding box that contains all of
