@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset='utf-8' />
-	<title>M-Lab hexbinned maps using Turf.js</title>
+	<title>M-Lab polygon-binned maps using Turf.js</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
 	<link href='css/mlab.css' rel='stylesheet' />
@@ -29,6 +29,15 @@
 
 <script>
 
+// If set to 'hex' then GeoJSON files are assumed to be named like
+// 'YYYY_MM-<resolution>.json', where 3 files exist for each of resolutions
+// 'low', 'medium', 'high'.  If anything other than 'hex', then this value is
+// the MMMM_YY- suffix to look for. For example:
+// If set to 'city-council-districts.geojson', then the system will look for
+// GeoJSON files like 'MMMM_YY-city-council-districts.geojson.json'.
+//var polygon_type = 'seattle_council_districts.geojson';
+var polygon_type = 'hex';
+
 // Specify default year and month for initial display
 var defaultYear = "2014";
 var defaultMonth = "1";
@@ -40,7 +49,7 @@ var dates = {
 	2015 : ['1','2','3']
 };
 
-// The minimum number of data points in any given hex cell for a cell to be
+// The minimum number of data points in any given polygon for a it to be
 // considered statistically relevant.  These cells will either not be displayed
 // or will be displayed with a different styling.
 var min_data_points = 30;
@@ -51,7 +60,7 @@ var min_data_points = 30;
 // enabled, then no checkbox will be displayed, since it doesn't make much sense
 // to disable the only meaningful layer that exists.
 var overlays = {
-	hex: {
+	polygon: {
 		enabled: true,
 		defaultOn: true
 	},
@@ -61,25 +70,25 @@ var overlays = {
 	}
 };
 
-// If set to true, then prefetch the low resolution hex GeoJSON files into a
-// local cache.  WARNING: You may not want to enable if you expect mobile, low
-// bandwidth, or otherwise bandwidth restricted users, as this can pull in many
-// megabytes of data.
+// If set to true, then prefetch the GeoJSON files into a local cache.  WARNING:
+// You may not want to enable if you expect mobile, low bandwidth, or otherwise
+// bandwidth restricted users, as this can pull in many megabytes of data.
 var seedCache = false;
 
 // The inteval (in milliseconds) to use when animating the map.
 var animateInterval = 1500;
 
-// Center and zoom level of map.  center should be pulled in via center.js, but
-// if not then just set it to the center of the USA
+// Center and zoom level of map.  center may be pulled in via js/center.js, but
+// if not then just set it to the center of the USA.
 if ( typeof center == 'undefined' ) {
 	var center = [38.8961302513129,-99.04025268554688]; //USA
 }
 var zoom = 10;
 
 // These are the labels that will be used for the month slider in the control
-// box in the lower right corner.
-var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+// box in the lower left corner.
+var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
+	'Nov','Dec'];
 
 // An object which will hold cached GeoJSON files so that we don't have to fetch
 // them from the server more than once.  This could potentially be problematic
@@ -90,10 +99,12 @@ var geoJsonCache = {};
 var map = L.map('map').setView(center, zoom);
 
 var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' +
+		'contributors'
 });
 
-var mapboxLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/newamerica.lcl1jan5/{z}/{x}/{y}.png', {
+var mapboxLayer = L.tileLayer(
+		'https://{s}.tiles.mapbox.com/v3/newamerica.lcl1jan5/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://mapbox.com/">Mapbox</a>'
 });
 
@@ -107,14 +118,14 @@ var baseLayers = {
 };
 
 // Global overlay layer variables
-var hexLayer, plotLayer;
+var polygonLayer, plotLayer;
 
 var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-if ( overlays['hex']['enabled'] ) {
-	setHexLayer(defaultYear, defaultMonth, 'download_median', 'low', 'new');
+if ( overlays['polygon']['enabled'] ) {
+	setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
 }
 if ( overlays['plot']['enabled'] ) {
 	setPlotLayer(defaultYear, defaultMonth, 'new');

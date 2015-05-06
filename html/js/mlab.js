@@ -14,7 +14,7 @@ function addLegend() {
 			'</i>Insuff. data<br/>';
 	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
-	            '<i style="background:' + getHexColor(grades[i] + 1) +
+	            '<i style="background:' + getPolygonColor(grades[i] + 1) +
 				'"></i> ' + (i == 0 ? '0' : grades[i]) + (grades[i + 1] ?
 				'&ndash;' + grades[i + 1] + ' Mbps<br/>' : '+ Mbps');
 	    }
@@ -36,10 +36,19 @@ function addControls() {
 			labelYear = L.DomUtil.create('span', 'mapControls', controls),
 			selectYear = L.DomUtil.create('select', 'mapControls', controls),
 			labelMetric = L.DomUtil.create('span', 'mapControls', controls),
-			selectMetric = L.DomUtil.create('select', 'mapControls', controls),
-			labelRes = L.DomUtil.create('span', 'mapControls', controls),
-			selectRes = L.DomUtil.create('select', 'mapControls', controls),
-			sliderMonth = L.DomUtil.create('div', 'mapControls', controls),
+			selectMetric = L.DomUtil.create('select', 'mapControls', controls);
+
+		if ( polygon_type == 'hex' ) {
+			var labelRes = L.DomUtil.create('span', 'mapControls', controls),
+				selectRes = L.DomUtil.create('select', 'mapControls', controls);
+			labelRes.innerHTML = 'Res.';
+			selectRes.innerHTML = '<option value="low">Low</option>' +
+				'<option value="medium">Medium</option>' +
+				'<option value="high">High</option>';
+			selectRes.setAttribute('id', 'selectRes');
+		}
+
+		var	sliderMonth = L.DomUtil.create('div', 'mapControls', controls),
 			checkAnimate = L.DomUtil.create('div', 'mapControls', controls),
 			date_options = '';
 
@@ -65,18 +74,19 @@ function addControls() {
 			'UL throughput</option>';
 		selectMetric.setAttribute('id', 'selectMetric');
 
-		labelRes.innerHTML = 'Res.';
-		selectRes.innerHTML = '<option value="low">Low</option>' +
-			'<option value="medium">Medium</option>' +
-			'<option value="high">High</option>';
-		selectRes.setAttribute('id', 'selectRes');
 
 		return controls;
 	};
 
 	controls.addTo(map);
 
-	[selectYear, selectMetric, selectRes].forEach( function(elem) {
+	var elems;
+	if ( polygon_type != 'hex' ) {
+		elems = [selectYear, selectMetric];
+	} else {
+		elems = [selectYear, selectMetric, selectRes];
+	}
+	elems.forEach( function(elem) {
 		elem.addEventListener('change',
 			function (e) { updateLayers(e, 'update'); });
 	});
@@ -152,8 +162,8 @@ function updateLayers(e, mode) {
 
 	var month = $('#sliderMonth').slider('value');
 
-	if ( overlays['hex']['enabled'] ) {
-		setHexLayer(year, month, metric, resolution, mode);
+	if ( overlays['polygon']['enabled'] ) {
+		setPolygonLayer(year, month, metric, mode, resolution);
 	}
 	if ( overlays['plot']['enabled'] ) {
 		setPlotLayer(year, month, mode);
@@ -166,7 +176,7 @@ function updateLayers(e, mode) {
  * @param {number} val Metric to evaluate
  * @returns {string} A string representing the color
  */
-function getHexColor(val) {
+function getPolygonColor(val) {
     return val > 50 ? 'blue' :
            val > 25  ? 'green' :
            val > 10  ? 'purple' :
@@ -199,10 +209,11 @@ function getLayerData(url, callback) {
  * @param {string} year Year of layer to set
  * @param {string} month Month of layer to set
  * @param {string} metric Metric to be represented in layer
- * @param {string} resolution For hexbinned map, granularity of hex layer
  * @param {string" mode What state are we in? New or update?
+ * @param {string} [resolution] For hexbinned map, granularity of hex layer
  */
-function setHexLayer(year, month, metric, resolution, mode) {
+function setPolygonLayer(year, month, metric, mode, resolution) {
+	var polygon_url;
 
 	// Don't display spinner if animation is happening
 	if ( $('#checkAnimate').prop('checked') === false ) {
@@ -210,61 +221,65 @@ function setHexLayer(year, month, metric, resolution, mode) {
 	}
 
 	month = month < 10 ? '0' + month : month;
-	var hex_url = 'geojson/' + year + '_' + month + '-' + resolution + '.json';
-
-	if ( mode == 'update' ) {
-		layerCtrl.removeLayer(hexLayer);
+	if ( polygon_type != 'hex' ) {
+		polygon_url = 'geojson/' + year + '_' + month + '-' + polygon_type + '.json';
+	} else {
+		polygon_url = 'geojson/' + year + '_' + month + '-' + resolution + '.json';
 	}
 
-	getLayerData(hex_url, function(response) {
+	if ( mode == 'update' ) {
+		layerCtrl.removeLayer(polygonLayer);
+	}
+
+	getLayerData(polygon_url, function(response) {
 		response.features.forEach( function(cell) {
 
-			var value = cell.properties[metric];
-			var hexStyle = cell.hexStyle = {};
+			var value = cell.properties[metric],
+				polygonStyle = cell.polygonStyle = {};
 
-			hexStyle.weight = 1;
-			hexStyle.fillOpacity = 0.5;
+			polygonStyle.weight = 1;
+			polygonStyle.fillOpacity = 0.5;
 
 			if ( ! value ) {
-				hexStyle.weight = 0;
-				hexStyle.fillOpacity = 0;
+				polygonStyle.weight = 0;
+				polygonStyle.fillOpacity = 0;
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < 30 ) {
-				hexStyle.weight = 0.5;
-				hexStyle.fillOpacity = 0.05;
-				hexStyle.color = 'black';
+				polygonStyle.weight = 0.5;
+				polygonStyle.fillOpacity = 0.05;
+				polygonStyle.color = 'black';
 			} else if ( metric == 'upload_median' &&
 					cell.properties['upload_count'] < 30 ) {
-				hexStyle.weight = 0.5;
-				hexStyle.fillOpacity = 0.05;
-				hexStyle.color = 'black';
+				polygonStyle.weight = 0.5;
+				polygonStyle.fillOpacity = 0.05;
+				polygonStyle.color = 'black';
 			} else {
-				hexStyle.color = getHexColor(value);
+				polygonStyle.color = getPolygonColor(value);
 			}
 		});
 
-		if ( map.hasLayer(hexLayer) ) {
-			map.removeLayer(hexLayer);
-			var hexLayerVisible = true;
+		if ( map.hasLayer(polygonLayer) ) {
+			map.removeLayer(polygonLayer);
+			var polygonLayerVisible = true;
 		}
 
-		hexLayer = L.geoJson(response).eachLayer( function(l) {
-			if ( metric = "download_median" &&
+		polygonLayer = L.geoJson(response).eachLayer( function(l) {
+			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(make_popup(l.feature.properties));
 			}
-			if ( metric = "upload_median" &&
+			if ( metric == "upload_median" &&
 					l.feature.properties.upload_count > 0 ) {
 				l.bindPopup(make_popup(l.feature.properties));
 			}
-			l.setStyle(l.feature['hexStyle']);
+			l.setStyle(l.feature['polygonStyle']);
 		});
 
-		layerCtrl.addOverlay(hexLayer, 'Hex layer');
+		layerCtrl.addOverlay(polygonLayer, 'Polygon layer');
 
-		if ( hexLayerVisible || (mode == 'new' &&
-				overlays['hex']['defaultOn']) ) {
-			map.addLayer(hexLayer);
+		if ( polygonLayerVisible || (mode == 'new' &&
+				overlays['polygon']['defaultOn']) ) {
+			map.addLayer(polygonLayer);
 		}
 
 	});
@@ -322,18 +337,23 @@ function setPlotLayer(year, month, mode) {
 }
 
 /**
- * Takes a year and attempts to load the low resolution hex data layer into
- * memory in the background to speed switching between months for the current
- * year.
+ * Takes a year and attempts to load the base layer date  into memory in the
+ * background to speed switching between months for the current year.
  * 
- * @param {string} year Year of layer to set
+ * @param {string} year Year of layer to seed cache for
  */
 function seedLayerCache(year) {
-	var months = dates[year].slice(1);
+	var months = dates[year].slice(1),
+		url;
 	for ( i = 0; i < months.length; i++ ) {
 		month = months[i] < 10 ? '0' + months[i] : months[i];
-		var url = 'geojson/' + year + '_' + month + '-low.json';
-		getLayerData(url, function(){});
+		if ( polygon_type != 'hex' ) {
+			url = 'geojson/' + year + '_' + month + '-' + polygon_type +
+				'.json';
+		} else {
+			url = 'geojson/' + year + '_' + month + '-low.json';
+		}
+		getLayerData(url, function(){ return false; });
 	}
 }
 
