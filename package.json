@@ -1,7 +1,7 @@
 {
 	"name": "bq2geojson",
-	"version": "0.1.0",
-	"description": "Convert M-Lab BigQuery CSV files into hexbinned GeoJSON files.",
+	"version": "0.2.0",
+	"description": "Convert M-Lab BigQuery CSV files into polygon-binned GeoJSON files.",
 	"main": "index.js",
 	"author": "Nathan Kinkade",
 	"license": "CC0",
