@@ -94,6 +94,8 @@ function addControls() {
 	var clearId;
 	$('#checkAnimate').change( function() {
 		if ( $('#checkAnimate').prop('checked') ) {
+			$('.leaflet-control-layers').removeClass(
+				"leaflet-control-layers-expanded");
 			var i = $('#sliderMonth').slider('value');
 			clearId = setInterval( function() {
 				$('#sliderMonth').slider('value', i + 1);
@@ -101,6 +103,8 @@ function addControls() {
 			}, animateInterval);
 		} else {
 			clearInterval(clearId);
+			$('.leaflet-control-layers').addClass(
+				"leaflet-control-layers-expanded");
 		}
 	});
 
