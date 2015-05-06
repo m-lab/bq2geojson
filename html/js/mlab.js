@@ -49,7 +49,7 @@ function addControls() {
 		}
 
 		checkAnimate.innerHTML = '<input id="checkAnimate"' +
-			type="checkbox" />Animate map';
+			'type="checkbox" />Animate map';
 		
 		sliderMonth.setAttribute('id', 'sliderMonth');
 		// Prevent the entire map from dragging when the slider is dragged.
@@ -120,7 +120,7 @@ function addControls() {
 function updateLayers(e, mode) {
 	var year = $('#selectYear').val(),
 		metric = $('#selectMetric').val(),
-		resolution = $('#selectRes').val(),
+		resolution = $('#selectRes').val();
 
 	// If the year was changed then we need to update the slider and set it's
 	// value to the first configured month for that year.
