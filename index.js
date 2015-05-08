@@ -33,7 +33,7 @@ var cellWidths = {
 // 'csv': Where the CSV files from BigQuery will be written. By defaul they
 // will go in the bigquery/ directory since, well, it is BigQuery data.
 //
-// 'geojson': Where to write GeoJSON files. By default they will go in the
+// 'json': Where to write Topo/GeoJSON files. By default they will go in the
 // ./html/ directory since they will be consumed by a browser. Please not that
 // if you change this you will also have to change some front-end code in the
 // html/ directory.
@@ -43,7 +43,7 @@ var cellWidths = {
 // maybe useful for debugging.
 var dirs = {
 	csv : './bigquery/csv/',
-	geojson : './html/geojson/',
+	json : './html/json/',
 	tmp : './tmp/'
 };
 
@@ -233,9 +233,9 @@ for ( var i = 0; i < months.length; i++ ) {
 		// scatter plot of all the data points.
 		var updown = turf.featurecollection(results.download.features.concat(
 			results.upload.features));
-		fs.writeFileSync(dirs.geojson + subDir + '-plot.json', JSON.stringify(
+		fs.writeFileSync(dirs.json + subDir + '-plot.json', JSON.stringify(
 			updown));
-		console.log('* Wrote file ' + dirs.geojson + subDir + '-plot.json');
+		console.log('* Wrote file ' + dirs.json + subDir + '-plot.json');
 
 		// Record the lat/lon of the center of the combined polygons.  Later we
 		// will write these to a file that can be used by the front-end to more
@@ -268,9 +268,9 @@ for ( var i = 0; i < months.length; i++ ) {
 				polygon + '.json', JSON.stringify(polygons[polygon]));
 			// Stringify GeoJSON and write it to the file system
 			var polygonSerial = JSON.stringify(polygons[polygon]);
-			fs.writeFileSync(dirs.geojson + subDir + '-' + polygon + '.json',
+			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.json',
 				polygonSerial);
-			console.log('* Wrote file ' + dirs.geojson + subDir + '-' +
+			console.log('* Wrote file ' + dirs.json + subDir + '-' +
 				polygon + '.json');
 
 			// The process of coverting to TopoJSON is destructive to the input
@@ -286,9 +286,9 @@ for ( var i = 0; i < months.length; i++ ) {
 				}
 			);
 			var topojsonSerial = JSON.stringify(topojsonResult);
-			fs.writeFileSync(dirs.geojson + subDir + '-' + polygon + '.topojson',
+			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.topojson',
 				topojsonSerial);
-			console.log('* Wrote file ' + dirs.geojson + subDir + '-' +
+			console.log('* Wrote file ' + dirs.json + subDir + '-' +
 				polygon + '.topojson');
 		}
 	});
