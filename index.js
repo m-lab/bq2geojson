@@ -162,7 +162,9 @@ if (polygonType == 'file') {
 		try {
 			fs.statSync(polygonFile).isFile();
 			console.log('* Reading polygon file ' + polygonFile); 
-			var fileName = polygonFile.split('/').pop();
+			// Strip off path and any file extension, and use that as the object
+			// key.
+			var fileName = polygonFile.split('/').pop().split('.')[0];
 			polygons[fileName] = JSON.parse(fs.readFileSync(polygonFile,
 				encoding='utf8'));
 		} catch(err) {
