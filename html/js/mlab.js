@@ -226,9 +226,9 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygon_type != 'hex' ) {
-		polygon_url = 'geojson/' + year + '_' + month + '-' + polygon_type + '.json';
+		polygon_url = 'json/' + year + '_' + month + '-' + polygon_type + '.geojson';
 	} else {
-		polygon_url = 'geojson/' + year + '_' + month + '-' + resolution + '.json';
+		polygon_url = 'json/' + year + '_' + month + '-' + resolution + '.geojson';
 	}
 
 	if ( mode == 'update' ) {
@@ -306,7 +306,7 @@ function setPlotLayer(year, month, mode) {
 	}
 
 	month = month < 10 ? '0' + month : month;
-	var plot_url = 'geojson/' + year + '_' + month + '-plot.json';
+	var plot_url = 'json/' + year + '_' + month + '-plot.geojson';
 
 	if ( mode == 'update' ) {
 		layerCtrl.removeLayer(plotLayer);
@@ -352,10 +352,10 @@ function seedLayerCache(year) {
 	for ( i = 0; i < months.length; i++ ) {
 		month = months[i] < 10 ? '0' + months[i] : months[i];
 		if ( polygon_type != 'hex' ) {
-			url = 'geojson/' + year + '_' + month + '-' + polygon_type +
-				'.json';
+			url = 'json/' + year + '_' + month + '-' + polygon_type +
+				'.geojson';
 		} else {
-			url = 'geojson/' + year + '_' + month + '-low.json';
+			url = 'json/' + year + '_' + month + '-low.geojson';
 		}
 		getLayerData(url, function(){ return false; });
 	}
