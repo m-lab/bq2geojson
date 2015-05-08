@@ -114,10 +114,15 @@ aggregations = {
 
 // Require any dependencies
 var turf = require('turf');
-var csv2geojson = require('csv2geojson').csv2geojson;
-var fs = require('fs');
-var async = require('async');
-var exec = require('child_process').execSync;
+	csv2geojson = require('csv2geojson').csv2geojson,
+	topojson = require('topojson').topology,
+	fs = require('fs'),
+	async = require('async'),
+	exec = require('child_process').execSync;
+
+// Define variables
+var	centerLat,
+	centerLon;
 
 // Validate the year passed, minimally.
 if ( process.argv[2] ) {
@@ -232,11 +237,20 @@ for ( var i = 0; i < months.length; i++ ) {
 			updown));
 		console.log('* Wrote file ' + dirs.geojson + sub_dir + '-plot.json');
 
+		// Record the lat/lon of the center of the combined polygons.  Later we
+		// will write these to a file that can be used by the front-end to more
+		// or less center the map correct (though not perfectly). These will, of
+		// course, get overwritten for very iteration of the loop but it doesn't
+		// matter since we only care about the approximate center, and the
+		// processing for this should be minimal.
+		centerLon = turf.center(updown).geometry.coordinates[0];
+		centerLat = turf.center(updown).geometry.coordinates[1];
+
 		// We do this here instead of in the same place as if polygon_type ==
 		// "file" because the hexgrid is not a fixed size, but is only as
 		// large as needed based on the data points, which may save processing
 		// time and files size.
-		if (polygon_type == 'hex') {
+		if ( polygon_type == 'hex' ) {
 			polygons = create_hexgrids(updown);
 		}
 
@@ -258,20 +272,33 @@ for ( var i = 0; i < months.length; i++ ) {
 				polygon_serial);
 			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' +
 				polygon + '.json');
+
+			// The process of coverting to TopoJSON is destructive to the input
+			// GeoJSON, so it happens last.
+			var topojsonResult = topojson(
+				{
+					'collection': polygons[polygon]
+				},
+				{
+					'property-transform': function(feature) {
+						return feature.properties;
+					}
+				}
+			);
+			var topojsonSerial = JSON.stringify(topojsonResult);
+			fs.writeFileSync(dirs.geojson + sub_dir + '-' + polygon + '.topojson',
+				topojsonSerial);
+			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' +
+				polygon + '.topojson');
 		}
 	});
 }
 
 // Write the center point of one of the polygon objects to a file that will be
 // used to center the map in more or less the right place automatically rather
-// than having to manually set the variable. NOTE: this could be unreliable
-// because we can't be sure how the object keys are ordered.
-var lon = turf.center(polygons[Object.keys(
-	polygons)[0]]).geometry.coordinates[0];
-var lat = turf.center(polygons[Object.keys(
-	polygons)[0]]).geometry.coordinates[1];
-fs.writeFileSync('./html/js/center.js', 'var center = [' + lat +
-	',' + lon + '];');
+// than having to manually set the variable.
+fs.writeFileSync('./html/js/center.js', 'var center = [' + centerLat +
+	',' + centerLon + '];');
 console.log('* Wrote file ./html/js/center.js');
 
 /**
