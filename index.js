@@ -224,18 +224,18 @@ for ( var i = 0; i < months.length; i++ ) {
 		}
 	}, function (err, results) {
 
-		fs.writeFileSync(dirs.tmp + subDir + '-download.json', JSON.stringify(
+		fs.writeFileSync(dirs.tmp + subDir + '-download.geojson', JSON.stringify(
 			results.download));
-		fs.writeFileSync(dirs.tmp + subDir + '-upload.json', JSON.stringify(
+		fs.writeFileSync(dirs.tmp + subDir + '-upload.geojson', JSON.stringify(
 			results.upload));
 
 		// The combined up/down features will be used to add a map layer with a
 		// scatter plot of all the data points.
 		var updown = turf.featurecollection(results.download.features.concat(
 			results.upload.features));
-		fs.writeFileSync(dirs.json + subDir + '-plot.json', JSON.stringify(
+		fs.writeFileSync(dirs.json + subDir + '-plot.geojson', JSON.stringify(
 			updown));
-		console.log('* Wrote file ' + dirs.json + subDir + '-plot.json');
+		console.log('* Wrote file ' + dirs.json + subDir + '-plot.geojson');
 
 		// Record the lat/lon of the center of the combined polygons.  Later we
 		// will write these to a file that can be used by the front-end to more
@@ -260,18 +260,18 @@ for ( var i = 0; i < months.length; i++ ) {
 			polygons[polygon] = aggregate(polygons[polygon], results.download,
 				properties.download, aggregations.download);
 			fs.writeFileSync(dirs.tmp + subDir + '-download-aggregate-' +
-				polygon + '.json', JSON.stringify(polygons[polygon]));
+				polygon + '.geojson', JSON.stringify(polygons[polygon]));
 			console.log('* Aggregating upload throughput data for ' + polygon);
 			polygons[polygon] = aggregate(polygons[polygon], results.upload,
 				properties.upload, aggregations.upload);
 			fs.writeFileSync(dirs.tmp + subDir + '-final-aggregate-' +
-				polygon + '.json', JSON.stringify(polygons[polygon]));
+				polygon + '.geojson', JSON.stringify(polygons[polygon]));
 			// Stringify GeoJSON and write it to the file system
 			var polygonSerial = JSON.stringify(polygons[polygon]);
-			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.json',
+			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.geojson',
 				polygonSerial);
 			console.log('* Wrote file ' + dirs.json + subDir + '-' +
-				polygon + '.json');
+				polygon + '.geojson');
 
 			// The process of coverting to TopoJSON is destructive to the input
 			// GeoJSON, so it happens last.
