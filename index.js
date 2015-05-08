@@ -9,20 +9,20 @@
 // Where polygon objects will live.
 var polygons = {};
 
-// Can be one of "file" or "hex".  If file, then set polygon_file.
-var polygon_type = "hex";
+// Can be one of "file" or "hex".  If file, then set polygonFile.
+var polygonType = "hex";
 
-// An array of absolute paths to polygon files, if polygon_type == "file".
-var polygon_files = [];
+// An array of absolute paths to polygon files, if polygonType == "file".
+var polygonFiles = [];
 
-// If polygon_type == 'hex', the three cell widths used to make the low, medium
+// If polygonType == 'hex', the three cell widths used to make the low, medium
 // and high resolution hex layers:
 // http://turfjs.org/static/docs/module-turf_hex-grid.html
 // Some suitable values might be:
 //   > City level: 0.01, 0.0075, 0.005
 //   > State level: 0.05, 0.0375, 0.025
 //   > USA level: 
-var cell_widths = {
+var cellWidths = {
 	low : 0.01,
 	medium : 0.0075,
 	high : 0.005
@@ -157,13 +157,13 @@ if ( process.argv[3] ) {
 
 // Make sure polygon file exists, if specified, and if so, read it into the
 // polygons object.
-if (polygon_type == 'file') {
-	polygon_files.forEach( function(polygon_file) {
+if (polygonType == 'file') {
+	polygonFiles.forEach( function(polygonFile) {
 		try {
-			fs.statSync(polygon_file).isFile();
-			console.log('* Reading polygon file ' + polygon_file); 
-			var file_name = polygon_file.split('/').pop();
-			polygons[file_name] = JSON.parse(fs.readFileSync(polygon_file,
+			fs.statSync(polygonFile).isFile();
+			console.log('* Reading polygon file ' + polygonFile); 
+			var fileName = polygonFile.split('/').pop();
+			polygons[fileName] = JSON.parse(fs.readFileSync(polygonFile,
 				encoding='utf8'));
 		} catch(err) {
 			if ( ! err.code == 'ENOENT' ) {
@@ -175,7 +175,7 @@ if (polygon_type == 'file') {
 
 // Make the necessary base directories.
 for (var dir in dirs) {
-	create_dir(dirs[dir]);
+	createDir(dirs[dir]);
 }
 
 // The year will never change for a given run, so loop through all the months
@@ -183,59 +183,59 @@ for (var dir in dirs) {
 // BigQuery, and also use it for the directory structure that gets created.
 for ( var i = 0; i < months.length; i++ ) {
 	// Some convenient variables to have on hand
-	var sub_dir = year + '_' + months[i];
-	var csv_path = dirs.csv + sub_dir;
+	var subDir = year + '_' + months[i];
+	var csvPath = dirs.csv + subDir;
 
-	create_dir(csv_path);
+	createDir(csvPath);
 
 	// Calculate CSV file paths for convenience
-	var down_path = csv_path + '/download.csv';
-	var up_path = csv_path + '/upload.csv';
+	var downPath = csvPath + '/download.csv';
+	var upPath = csvPath + '/upload.csv';
 
 	// Read in query files and substitute the table placeholder with the actual
 	// table name, based on the current month/year of the loop
-	var down_query = fs.readFileSync('bigquery/bq_download', encoding='utf8')
-		.replace('TABLENAME', sub_dir);
-	var up_query = fs.readFileSync('bigquery/bq_upload', encoding='utf8')
-		.replace('TABLENAME', sub_dir);
+	var downQuery = fs.readFileSync('bigquery/bq_download', encoding='utf8')
+		.replace('TABLENAME', subDir);
+	var upQuery = fs.readFileSync('bigquery/bq_upload', encoding='utf8')
+		.replace('TABLENAME', subDir);
 
 	// Get CSV from BigQuery
 	console.log('* Querying BigQuery for download throughput data for ' +
 		months[i] + '/' + year + '.');
-	var csv_down = get_csv(down_path, down_query);
+	var csvDown = getCsv(downPath, downQuery);
 	console.log('* Querying BigQuery for upload throughput data for ' +
 		months[i] + '/' + year + '.');
-	var csv_up = get_csv(up_path, up_query);
+	var csvUp = getCsv(upPath, upQuery);
 
 	// Convert CSV to GeoJSON and then process with Turf
 	async.parallel({
 		download : function(callback) {
 			console.log('* Converting download throughput CSV data to ' +
 				'GeoJSON.');
-			csv2geojson(csv_down, function(err, geojson) {
+			csv2geojson(csvDown, function(err, geojson) {
 				callback(null, geojson);
 			});
 		},
 		upload : function(callback) {
 			console.log('* Converting upload throughput CSV data to GeoJSON.');
-			csv2geojson(csv_up, function(err, geojson) {
+			csv2geojson(csvUp, function(err, geojson) {
 				callback(null, geojson);
 			});
 		}
 	}, function (err, results) {
 
-		fs.writeFileSync(dirs.tmp + sub_dir + '-download.json', JSON.stringify(
+		fs.writeFileSync(dirs.tmp + subDir + '-download.json', JSON.stringify(
 			results.download));
-		fs.writeFileSync(dirs.tmp + sub_dir + '-upload.json', JSON.stringify(
+		fs.writeFileSync(dirs.tmp + subDir + '-upload.json', JSON.stringify(
 			results.upload));
 
 		// The combined up/down features will be used to add a map layer with a
 		// scatter plot of all the data points.
 		var updown = turf.featurecollection(results.download.features.concat(
 			results.upload.features));
-		fs.writeFileSync(dirs.geojson + sub_dir + '-plot.json', JSON.stringify(
+		fs.writeFileSync(dirs.geojson + subDir + '-plot.json', JSON.stringify(
 			updown));
-		console.log('* Wrote file ' + dirs.geojson + sub_dir + '-plot.json');
+		console.log('* Wrote file ' + dirs.geojson + subDir + '-plot.json');
 
 		// Record the lat/lon of the center of the combined polygons.  Later we
 		// will write these to a file that can be used by the front-end to more
@@ -246,12 +246,12 @@ for ( var i = 0; i < months.length; i++ ) {
 		centerLon = turf.center(updown).geometry.coordinates[0];
 		centerLat = turf.center(updown).geometry.coordinates[1];
 
-		// We do this here instead of in the same place as if polygon_type ==
+		// We do this here instead of in the same place as if polygonType ==
 		// "file" because the hexgrid is not a fixed size, but is only as
 		// large as needed based on the data points, which may save processing
 		// time and files size.
-		if ( polygon_type == 'hex' ) {
-			polygons = create_hexgrids(updown);
+		if ( polygonType == 'hex' ) {
+			polygons = createHexgrids(updown);
 		}
 
 		for ( polygon in polygons ) {
@@ -259,18 +259,18 @@ for ( var i = 0; i < months.length; i++ ) {
 				polygon);
 			polygons[polygon] = aggregate(polygons[polygon], results.download,
 				properties.download, aggregations.download);
-			fs.writeFileSync(dirs.tmp + sub_dir + '-download-aggregate-' +
+			fs.writeFileSync(dirs.tmp + subDir + '-download-aggregate-' +
 				polygon + '.json', JSON.stringify(polygons[polygon]));
 			console.log('* Aggregating upload throughput data for ' + polygon);
 			polygons[polygon] = aggregate(polygons[polygon], results.upload,
 				properties.upload, aggregations.upload);
-			fs.writeFileSync(dirs.tmp + sub_dir + '-final-aggregate-' +
+			fs.writeFileSync(dirs.tmp + subDir + '-final-aggregate-' +
 				polygon + '.json', JSON.stringify(polygons[polygon]));
 			// Stringify GeoJSON and write it to the file system
-			var polygon_serial = JSON.stringify(polygons[polygon]);
-			fs.writeFileSync(dirs.geojson + sub_dir + '-' + polygon + '.json',
-				polygon_serial);
-			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' +
+			var polygonSerial = JSON.stringify(polygons[polygon]);
+			fs.writeFileSync(dirs.geojson + subDir + '-' + polygon + '.json',
+				polygonSerial);
+			console.log('* Wrote file ' + dirs.geojson + subDir + '-' +
 				polygon + '.json');
 
 			// The process of coverting to TopoJSON is destructive to the input
@@ -286,9 +286,9 @@ for ( var i = 0; i < months.length; i++ ) {
 				}
 			);
 			var topojsonSerial = JSON.stringify(topojsonResult);
-			fs.writeFileSync(dirs.geojson + sub_dir + '-' + polygon + '.topojson',
+			fs.writeFileSync(dirs.geojson + subDir + '-' + polygon + '.topojson',
 				topojsonSerial);
-			console.log('* Wrote file ' + dirs.geojson + sub_dir + '-' +
+			console.log('* Wrote file ' + dirs.geojson + subDir + '-' +
 				polygon + '.topojson');
 		}
 	});
@@ -309,19 +309,19 @@ console.log('* Wrote file ./html/js/center.js');
  * @param {object} json GeoJSON FeatureCollection
  * @returns {array} Array of 3 GeoJSON objects at various resolutions.
  */
-function create_hexgrids(json) {
+function createHexgrids(json) {
 
 	// Create the bounding box using features from both the download and upload
 	var bbox = turf.extent(json);
-	var bbox_poly = turf.bboxPolygon(bbox);
-	var point1 = turf.point(bbox_poly.geometry.coordinates[0][0]);
-	var point2 = turf.point(bbox_poly.geometry.coordinates[0][1]);
+	var bboxPoly = turf.bboxPolygon(bbox);
+	var point1 = turf.point(bboxPoly.geometry.coordinates[0][0]);
+	var point2 = turf.point(bboxPoly.geometry.coordinates[0][1]);
 	var distance = turf.distance(point1, point2, 'miles');
 
 	var hexgrids =  {
-		low : turf.hex(bbox, cell_widths.low, 'miles'),
-		medium : turf.hex(bbox, cell_widths.medium, 'miles'),
-		high : turf.hex(bbox, cell_widths.high, 'miles'),
+		low : turf.hex(bbox, cellWidths.low, 'miles'),
+		medium : turf.hex(bbox, cellWidths.medium, 'miles'),
+		high : turf.hex(bbox, cellWidths.high, 'miles'),
 	}
 
 	return hexgrids;
@@ -335,7 +335,7 @@ function create_hexgrids(json) {
  * @param {string} query The query to run
  * @returns {string} Result from BigQuery in CSV format
  */
-function get_csv(path, query) {
+function getCsv(path, query) {
 	// Options passed to the bq client. These probably shouldn't be changed -n:
 	// defines an arbitrarily high number of results to return that we should
 	// never surpass in practice, and just makes sure we get everything.
@@ -346,7 +346,7 @@ function get_csv(path, query) {
 	//
 	// --headless: don't know what effect this has, but seems good since this
 	// may possibly be automated in some way.
-	var bq_opts='-n 1000000 --format csv --quiet --headless';
+	var bqOpts='-n 1000000 --format csv --quiet --headless';
 
 	try {
 		fs.statSync(path).isFile();
@@ -359,7 +359,7 @@ function get_csv(path, query) {
 	}
 
 	var start = new Date();
-	var result = exec('bq query ' + bq_opts + ' "' + query + '"',
+	var result = exec('bq query ' + bqOpts + ' "' + query + '"',
 		{'encoding' : 'utf8'});
 	elapsed(start);
 	fs.writeFileSync(path, result);
@@ -378,7 +378,7 @@ function get_csv(path, query) {
  * @returns {object} GeoJSON object with aggregated data
  */
 function aggregate(polygon, json, fields, aggs) {
-	json = make_numeric(json, fields.averages);
+	json = makeNumeric(json, fields.averages);
 
 	var start = new Date();
 	var json = turf.aggregate(polygon, json, aggs);
@@ -386,7 +386,6 @@ function aggregate(polygon, json, fields, aggs) {
 
 	return json;
 }
-
 
 /**
  * While we're looping through the object, also take the opportunity to covert
@@ -397,17 +396,16 @@ function aggregate(polygon, json, fields, aggs) {
  * @param {object} fields Which properties of json to process
  * @returns {object} GeoJSON data with numeric values coverted to Numbers
  */
-function make_numeric(json, fields) {
+function makeNumeric(json, fields) {
 	for ( var i = 0; i < json.features.length; i++ ) { 
 		for ( var field in fields ) {
-			var numeric_val = Number(
+			var numericVal = Number(
 				json.features[i].properties[fields[field]]);
-			json.features[i].properties[fields[field]] = numeric_val;
+			json.features[i].properties[fields[field]] = numericVal;
 		}
 	}
 	return json;
 }
-
 
 /**
  * Simple function to return elapsed time in hours, minutes, seconds.
@@ -428,7 +426,7 @@ function elapsed(start) {
  *
  * @param {string} dir Path and name of directory to create
  */
-function create_dir(dir) {
+function createDir(dir) {
 	try {
 		fs.mkdirSync(dir);
 	} catch(err) {
