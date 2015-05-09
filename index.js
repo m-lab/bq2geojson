@@ -120,9 +120,6 @@ var turf = require('turf');
 	async = require('async'),
 	exec = require('child_process').execSync;
 
-// Define variables
-var	centerLat,
-	centerLon;
 
 // Validate the year passed, minimally.
 if ( process.argv[2] ) {
@@ -184,6 +181,9 @@ for (var dir in dirs) {
 // and use the year_month combination to determine which tables to query in
 // BigQuery, and also use it for the directory structure that gets created.
 for ( var i = 0; i < months.length; i++ ) {
+	var	centerLat,
+		centerLon;
+
 	// Some convenient variables to have on hand
 	var subDir = year + '_' + months[i];
 	var csvPath = dirs.csv + subDir;
@@ -226,10 +226,10 @@ for ( var i = 0; i < months.length; i++ ) {
 		}
 	}, function (err, results) {
 
-		fs.writeFileSync(dirs.tmp + subDir + '-download.geojson', JSON.stringify(
-			results.download));
-		fs.writeFileSync(dirs.tmp + subDir + '-upload.geojson', JSON.stringify(
-			results.upload));
+		fs.writeFileSync(dirs.tmp + subDir + '-download.geojson',
+			JSON.stringify(results.download));
+		fs.writeFileSync(dirs.tmp + subDir + '-upload.geojson',
+			JSON.stringify(results.upload));
 
 		// The combined up/down features will be used to add a map layer with a
 		// scatter plot of all the data points.
@@ -274,10 +274,12 @@ for ( var i = 0; i < months.length; i++ ) {
 				polygon + '.geojson');
 
 			// The process of coverting to TopoJSON is destructive to the input
-			// GeoJSON, so it happens last.
+			// GeoJSON.  Stringifying the object then parsing it _should_ clone
+			// the object into a new one.
+			var topoCollection = JSON.parse(JSON.stringify(polygons[polygon]));
 			var topojsonResult = topojson(
 				{
-					'collection': polygons[polygon]
+					'collection': topoCollection
 				},
 				{
 					'property-transform': function(feature) {
@@ -292,7 +294,7 @@ for ( var i = 0; i < months.length; i++ ) {
 		}
 
 		// The process of coverting to TopoJSON is destructive to the input
-		// GeoJSON, so it happens last.
+		// GeoJSON, but we won't need 'updown' again for this iteration.
 		var topojsonPlot = topojson({'collection': updown});
 		fs.writeFileSync(dirs.json + subDir + '-plot.topojson', JSON.stringify(
 			topojsonPlot));
