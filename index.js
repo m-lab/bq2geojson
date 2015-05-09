@@ -42,9 +42,9 @@ var cellWidths = {
 // something fails, these won't have to be generated again, potentially.  And
 // maybe useful for debugging.
 var dirs = {
-	csv : './bigquery/csv/',
-	json : './html/json/',
-	tmp : './tmp/'
+	'csv': './bigquery/csv/',
+	'json': './html/json/',
+	'tmp': './tmp/'
 };
 
 // When running aggregate functions on the data, these are the various
@@ -53,56 +53,56 @@ var dirs = {
 // value of how many data points per hex cell there are for that test.
 // 'averages' is an array that holds the fields that need to be averaged.
 var properties = {
-	download : {
-		count : 'download_count',
-		averages : ['download_throughput', 'rtt_average']
+	'download': {
+		'count': 'download_count',
+		'averages': ['download_throughput', 'rtt_average']
 	},
-	upload : {
-		count : 'upload_count',
-		averages : ['upload_throughput']
+	'upload': {
+		'count': 'upload_count',
+		'averages': ['upload_throughput']
 	}
 };
 
 // This defines the aggregate calculations that need to happen on each data
 // set: http://turfjs.org/examples/turf-aggregate/
 aggregations = {
-	download : [
+	'download': [
 		{
-			aggregation : 'count',
-			inField : 'download_throughput',
-			outField : 'download_count'
+			'aggregation': 'count',
+			'inField': 'download_throughput',
+			'outField': 'download_count'
 		},
 		{
-			aggregation : 'median',
-			inField : 'download_throughput',
-			outField : 'download_median'
+			'aggregation': 'median',
+			'inField': 'download_throughput',
+			'outField': 'download_median'
 		},
 		{
-			aggregation : 'average',
-			inField : 'download_throughput',
-			outField : 'download_avg'
+			'aggregation': 'average',
+			'inField': 'download_throughput',
+			'outField': 'download_avg'
 		},
 		{
-			aggregation : 'average',
-			inField : 'rtt_average',
-			outField : 'rtt_avg'
+			'aggregation' : 'average',
+			'inField': 'rtt_average',
+			'outField': 'rtt_avg'
 		}
 	],
-	upload : [
+	'upload': [
 		{
-			aggregation : 'count',
-			inField : 'upload_throughput',
-			outField : 'upload_count'
+			'aggregation': 'count',
+			'inField': 'upload_throughput',
+			'outField': 'upload_count'
 		},
 		{
-			aggregation : 'median',
-			inField : 'upload_throughput',
-			outField : 'upload_median'
+			'aggregation': 'median',
+			'inField': 'upload_throughput',
+			'outField': 'upload_median'
 		},
 		{
-			aggregation : 'average',
-			inField : 'upload_throughput',
-			outField : 'upload_avg'
+			'aggregation': 'average',
+			'inField': 'upload_throughput',
+			'outField': 'upload_avg'
 		}
 	]
 };
@@ -211,14 +211,14 @@ for ( var i = 0; i < months.length; i++ ) {
 
 	// Convert CSV to GeoJSON and then process with Turf
 	async.parallel({
-		download : function(callback) {
+		'download': function(callback) {
 			console.log('* Converting download throughput CSV data to ' +
 				'GeoJSON.');
 			csv2geojson(csvDown, function(err, geojson) {
 				callback(null, geojson);
 			});
 		},
-		upload : function(callback) {
+		'upload': function(callback) {
 			console.log('* Converting upload throughput CSV data to GeoJSON.');
 			csv2geojson(csvUp, function(err, geojson) {
 				callback(null, geojson);
@@ -312,8 +312,9 @@ console.log('* Wrote file ./html/js/center.js');
 
 /**
  * Takes a FeatureCollection and creates a bounding box that contains all of
- * the features, auto-calculates an appropriate cell width based on the width
- * of the box, then turns creates a hexgrid.
+ * the features. The distance across the bounding box is calculate because at
+ * some point we may want to use this to auto define cellWidths instead of
+ * having to manually set them.
  *
  * @param {object} json GeoJSON FeatureCollection
  * @returns {array} Array of 3 GeoJSON objects at various resolutions.
@@ -328,9 +329,9 @@ function createHexgrids(json) {
 	var distance = turf.distance(point1, point2, 'miles');
 
 	var hexgrids =  {
-		low : turf.hex(bbox, cellWidths.low, 'miles'),
-		medium : turf.hex(bbox, cellWidths.medium, 'miles'),
-		high : turf.hex(bbox, cellWidths.high, 'miles'),
+		'low': turf.hex(bbox, cellWidths.low, 'miles'),
+		'medium': turf.hex(bbox, cellWidths.medium, 'miles'),
+		'high': turf.hex(bbox, cellWidths.high, 'miles'),
 	}
 
 	return hexgrids;
