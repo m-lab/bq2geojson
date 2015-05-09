@@ -201,8 +201,17 @@ function getLayerData(url, callback) {
 	} else {
 		console.log('Fetching and caching ' + url);
 		$.get(url, function(response) {
+			// If we're dealing with a TopoJSON file, convert it to GeoJSON
+			if ('topojson' == url.split('.').pop()) {
+				var geojson = {
+					'type': 'FeatureCollection',
+					'features': null
+				};
+				geojson.features = omnivore.topojson.parse(response);
+				response = geojson;
+			}
 			geoJsonCache[url] = response;
-			callback(response)
+			callback(response);
 		}, 'json');
 	}
 }
@@ -226,9 +235,9 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygon_type != 'hex' ) {
-		polygon_url = 'json/' + year + '_' + month + '-' + polygon_type + '.geojson';
+		polygon_url = 'json/' + year + '_' + month + '-' + polygon_type + '.' + jsonType;
 	} else {
-		polygon_url = 'json/' + year + '_' + month + '-' + resolution + '.geojson';
+		polygon_url = 'json/' + year + '_' + month + '-' + resolution + '.' + jsonType;
 	}
 
 	if ( mode == 'update' ) {
@@ -306,7 +315,7 @@ function setPlotLayer(year, month, mode) {
 	}
 
 	month = month < 10 ? '0' + month : month;
-	var plot_url = 'json/' + year + '_' + month + '-plot.geojson';
+	var plot_url = 'json/' + year + '_' + month + '-plot.' + jsonType;
 
 	if ( mode == 'update' ) {
 		layerCtrl.removeLayer(plotLayer);
@@ -353,9 +362,9 @@ function seedLayerCache(year) {
 		month = months[i] < 10 ? '0' + months[i] : months[i];
 		if ( polygon_type != 'hex' ) {
 			url = 'json/' + year + '_' + month + '-' + polygon_type +
-				'.geojson';
+				'.' + jsonType;
 		} else {
-			url = 'json/' + year + '_' + month + '-low.geojson';
+			url = 'json/' + year + '_' + month + '-low.' + jsonType;
 		}
 		getLayerData(url, function(){ return false; });
 	}
