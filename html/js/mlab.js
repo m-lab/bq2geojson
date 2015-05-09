@@ -52,9 +52,11 @@ function addControls() {
 			checkAnimate = L.DomUtil.create('div', 'mapControls', controls),
 			date_options = '';
 
+		var yearSelected;
 		for ( var year in dates ) {
-			date_options += '<option value="' + year + '">' + year +
-				'</option>';
+			yearSelected =  year == defaultYear ? 'selected="selected"' : '';
+			date_options += '<option value="' + year + '"' + yearSelected +
+				'>' + year + '</option>';
 		}
 
 		checkAnimate.innerHTML = '<input id="checkAnimate"' +
