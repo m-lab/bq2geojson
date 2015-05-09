@@ -268,10 +268,8 @@ for ( var i = 0; i < months.length; i++ ) {
 				properties.upload, aggregations.upload);
 			fs.writeFileSync(dirs.tmp + subDir + '-final-aggregate-' +
 				polygon + '.geojson', JSON.stringify(polygons[polygon]));
-			// Stringify GeoJSON and write it to the file system
-			var polygonSerial = JSON.stringify(polygons[polygon]);
 			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.geojson',
-				polygonSerial);
+				JSON.stringify(polygons[polygon]));
 			console.log('* Wrote file ' + dirs.json + subDir + '-' +
 				polygon + '.geojson');
 
@@ -287,12 +285,19 @@ for ( var i = 0; i < months.length; i++ ) {
 					}
 				}
 			);
-			var topojsonSerial = JSON.stringify(topojsonResult);
 			fs.writeFileSync(dirs.json + subDir + '-' + polygon + '.topojson',
-				topojsonSerial);
+				JSON.stringify(topojsonResult));
 			console.log('* Wrote file ' + dirs.json + subDir + '-' +
 				polygon + '.topojson');
 		}
+
+		// The process of coverting to TopoJSON is destructive to the input
+		// GeoJSON, so it happens last.
+		var topojsonPlot = topojson({'collection': updown});
+		fs.writeFileSync(dirs.json + subDir + '-plot.topojson', JSON.stringify(
+			topojsonPlot));
+		console.log('* Wrote file ' + dirs.json + subDir + '-plot.topojson');
+
 	});
 }
 
