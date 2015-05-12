@@ -135,8 +135,9 @@ function addControls() {
  */
 function updateLayers(e, mode) {
 	var year = $('#selectYear').val(),
-		metric = $('#selectMetric').val(),
-		resolution = $('#selectRes').val();
+		metric = $('#selectMetric').val();
+
+	var resolution = polygonType == 'hex' ? $('#selectRes').val() : '';
 
 	// If the year was changed then we need to update the slider and set it's
 	// value to the first configured month for that year.
@@ -156,7 +157,7 @@ function updateLayers(e, mode) {
 		// updateLayers() function to run a second time.  There must be a better
 		// way to do this, but for now just remove the onchange event function,
 		// change the value, then re-add it.
-		$('#sliderMonth').slider('option', 'change', function(){});
+		$('#sliderMonth').slider('option', 'change', function(){return false;});
 		$('#sliderMonth').slider('value', dates[year][0]);
 		$('#sliderMonth').slider('option', 'change',
 			function(e, ui){ updateLayers(e, 'update')});
@@ -202,18 +203,18 @@ function getLayerData(url, callback) {
 		callback(geoJsonCache[url]);
 	} else {
 		console.log('Fetching and caching ' + url);
-		$.get(url, function(response) {
+		$.get(url, function(resp) {
 			// If we're dealing with a TopoJSON file, convert it to GeoJSON
 			if ('topojson' == url.split('.').pop()) {
 				var geojson = {
 					'type': 'FeatureCollection',
 					'features': null
 				};
-				geojson.features = omnivore.topojson.parse(response);
-				response = geojson;
+				geojson.features = omnivore.topojson.parse(resp);
+				resp = geojson;
 			}
-			geoJsonCache[url] = response;
-			callback(response);
+			geoJsonCache[url] = resp;
+			callback(resp);
 		}, 'json');
 	}
 }
@@ -237,9 +238,11 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygonType != 'hex' ) {
-		polygonUrl = 'json/' + year + '_' + month + '-' + polygonType + '.' + jsonType;
+		polygonUrl = 'json/' + year + '_' + month + '-' + polygonType + '.' +
+			jsonType;
 	} else {
-		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' + jsonType;
+		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
+			jsonType;
 	}
 
 	if ( mode == 'update' ) {
