@@ -37,7 +37,7 @@
 // the MMMM_YY- suffix to look for. For example:
 // If set to 'city_council_districts', then the system will look for
 // GeoJSON files like 'MMMM_YY-city_council_districts.geojson'.
-var polygonType = 'hex';
+var polygonType = 'city_council_districts';
 
 // Either 'topojson' or 'geojson'.  The Node.js script creates both TopoJSON and
 // GeoJSON files.  TopoJSON files are significantly smaller in size, but need to
@@ -104,6 +104,7 @@ var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
 // them from the server more than once.  This could potentially be problematic
 // if there are many files and they are large.
 var geoJsonCache = {};
+var geometryCache = null;
 
 // Create the map
 var map = L.map('map').setView(center, zoom);
@@ -134,15 +135,19 @@ var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-if ( overlays['polygon']['enabled'] ) {
-	setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
-}
-if ( overlays['plot']['enabled'] ) {
-	setPlotLayer(defaultYear, defaultMonth, 'new');
-}
-if ( seedCache ) {
-	seedLayerCache(defaultYear);
-}
+$.get('js/seattle_council_districts.geojson', function(resp) {
+    geometryCache = resp;
+
+    if ( overlays['polygon']['enabled'] ) {
+        setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
+    }
+    if ( overlays['plot']['enabled'] ) {
+        setPlotLayer(defaultYear, defaultMonth, 'new');
+    }
+    if ( seedCache ) {
+        seedLayerCache(defaultYear);
+    }
+}, 'json');
 </script>
 
 </body>
