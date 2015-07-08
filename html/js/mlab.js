@@ -238,10 +238,10 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygonType != 'hex' ) {
-        var start = Date.UTC(year, month - 1) / 1000;
-        var end = Date.UTC(year, month) / 1000;
-        polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
-		//polygonUrl = 'json/' + year + '_' + month + '-' + polygonType + '.' + jsonType;
+		var start = Date.UTC(year, month - 1) / 1000;
+		var end = Date.UTC(year, month) / 1000;
+		//polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
+		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
 	} else {
 		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
 			jsonType;
@@ -252,29 +252,29 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 	}
 
 	getLayerData(polygonUrl, function(response) {
-        var lookup = {};
-        response.features.forEach(function(row) {
-            lookup[row.properties['district']] = row.properties;
-        });
-        console.log(response, lookup);
-        geometryCache.features.forEach(function(cell) {
-		// response.features.forEach( function(cell) {
+		var lookup = {};
+		response.features.forEach(function(row) {
+			lookup[row.properties['objectid']] = row.properties;
+		});
+		geometryCache.features.forEach(function(cell) {
 
-            var stats = lookup[cell.properties['district']];
-            for (var k in stats) {
-                if (stats.hasOwnProperty(k)) {
-                    cell.properties[k] = stats[k];
-                }
-            }
-            var value = cell.properties[metric],
-                polygonStyle = cell.polygonStyle = {};
+			var stats = lookup[cell.properties['OBJECTID']];
+			for (var k in stats) {
+				if (stats.hasOwnProperty(k)) {
+					cell.properties[k] = stats[k];
+				}
+			}
+
+			var value = cell.properties[metric],
+				polygonStyle = cell.polygonStyle = {};
 
 			polygonStyle.weight = 1;
 			polygonStyle.fillOpacity = 0.5;
 
 			if ( ! value ) {
-				polygonStyle.weight = 0;
-				polygonStyle.fillOpacity = 0;
+				polygonStyle.weight = 0.2;
+				polygonStyle.fillOpacity = 0.015;
+				polygonStyle.color = 'black';
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
