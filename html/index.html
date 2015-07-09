@@ -135,8 +135,13 @@ var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-$.get('js/seattle_council_districts.geojson', function(resp) {
-    geometryCache = resp;
+$.get('seattle_census10_blockgroups.geojson', function(resp) {
+	var geojson = {
+		'type': 'FeatureCollection',
+		'features': omnivore.topojson.parse(resp)
+	};
+
+    geometryCache = geojson;
 
     if ( overlays['polygon']['enabled'] ) {
         setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
