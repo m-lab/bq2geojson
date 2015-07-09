@@ -135,7 +135,7 @@ var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-$.get('seattle_census10_blockgroups.geojson', function(resp) {
+$.get('seattle_census10_blockgroups.topojson', function(resp) {
 	var geojson = {
 		'type': 'FeatureCollection',
 		'features': omnivore.topojson.parse(resp)
