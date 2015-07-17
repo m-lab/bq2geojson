@@ -6,8 +6,16 @@ html, body {
 
 #map {
 	height: 100%;
+	width: 75%;
 	margin: 0;
 	padding: 0;
+}
+
+#sidebar {
+	position: absolute;
+	width: 24%;
+	right: 0;
+	padding: 5px;
 }
 
 .legend {
