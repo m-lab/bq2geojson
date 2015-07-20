@@ -32,27 +32,33 @@
 </div>
 
 <div id="sidebar">
-	<div id="ndt-div">
-		<div id="ndt-svg"></div>
+	
+	<div id="ndt">
+		Test your speed:
+		<div id="ndt-div">
+			<div id="ndt-svg"></div>
+		</div>
+		<div id="ndt-status"></div>
 	</div>
-	<div id="ndt-status"></div>
-	<div id="ndt-results" style="display: none;">
-		<div>c2sRate: <span id="c2sRate"></span></div>
-		<div>s2cRate: <span id="s2cRate"></span></div>
-		<div>MinRTT: <span id="MinRTT"></span></div>
+
+	<div id="ndt-results">
+		<h3>Test results</h3>
+		<div>Download speed: <span id="s2cRate"></span>Mbps</div>
+		<div>Upload speed: <span id="c2sRate"></span>Mbps</div>
+		<div>MinRTT: <span id="MinRTT"></span>ms</div>
 	</div>
-	<div id="extra-data" style="display: none;">
+
+	<div id="extra-data">
+		Help us understand the state of broadband in Seattle by completing the following short form!
 		<form action="/collector/collect" method="post" id="collector">
-			<input name="latitude" id="latitude" type="hidden" />
-			<input name="longitude" id="longitude" type="hidden" />
-			Location type:<br/>
+			Location type:
 			<select name="location_type">
 				<option value="residence">Residence</option>
 				<option value="workplace">Workplace</option>
 				<option value="business">Business</option>
 				<option value="public">Public space</option>
 			</select><br/>
-			Connection type:<br/>
+			Connection type:
 			<select name="connection_type">
 				<option value="cable">Cable</option>
 				<option value="dsl">DSL</option>
@@ -60,18 +66,20 @@
 				<option value="cellular">Cellular</option>
 				<option value="other">Other</option>
 			</select><br/>
-			Advertised download:<br/>
-			<input name="advertised_download" /><br/>
-			Advertised upload:<br/>
-			<input name="advertised_upload" /><br/>
-			Cost of service:<br/>
-			<input name="cost_of_service" /><br/>
-			<input type="submit" />
+			Advertised download: <input name="advertised_download" size="3"/>Mbps<br/>
+			Advertised upload: <input name="advertised_upload" size="3"/>Mbps<br/>
+			Cost of service: $<input name="cost_of_service" size="3" /><br/>
+			<input name="latitude" id="latitude" type="hidden" />
+			<input name="longitude" id="longitude" type="hidden" />
+			<input name="bigquery_key" id="bigquery_key" type="hidden" />
+			<input type="submit" value="Submit"/>
 		</form>
 	
-		<div id="approxLoc" style="margin-top: 1em;">
-			You're approximate location:
-		</div>
+	</div>
+
+	<div>
+		You're approximate location:
+		<div id="approx-loc"></div>
 	</div>
 
 	<script>
@@ -100,7 +108,7 @@
 			document.getElementById('longitude').value = position.coords.longitude;
 			var mapImage = document.createElement('img');
 			mapImage.src = "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|" + position.coords.latitude + "," + position.coords.longitude + "&zoom=12&size=200x200";
-			document.getElementById('approxLoc').appendChild(mapImage);
+			document.getElementById('approx-loc').appendChild(mapImage);
 		}
 
 		function error(error) {
@@ -176,7 +184,7 @@ var overlays = {
 		'defaultOn': true
 	},
 	'plot': {
-		'enabled': true,
+		'enabled': false,
 		'defaultOn': false
 	}
 };

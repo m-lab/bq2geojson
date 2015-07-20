@@ -128,11 +128,6 @@ NDTmeter.prototype.onprogress = function (returned_message, passedResults) {
           this.state === "running_c2s") {
       throughputRate = passedResults.c2sRate;
   }
-
-  if (throughputRate !== undefined) {
-      this.update_display(progress_label,
-          ((throughputRate / 1000).toFixed(2) + " mbps"));
-  }
 };
 
 NDTmeter.prototype.onfinish = function (passed_results) {
@@ -147,6 +142,10 @@ NDTmeter.prototype.onfinish = function (passed_results) {
     'c2sRate': 'Upload',
     'MinRTT': 'Latency'
   };
+
+  document.getElementById('bigquery_key').value = passed_results['Duration'] +
+      passed_results['CountRTT'] + passed_results['PktsIn'] +
+      passed_results['PktsOut'];
 
   for (metric_name in results_to_display) {
     if (results_to_display.hasOwnProperty(metric_name)  &&
@@ -165,7 +164,7 @@ NDTmeter.prototype.onfinish = function (passed_results) {
   }
 
   d3.selectAll("#progress-meter .foreground").classed("complete", true);
-  document.getElementById('ndt-div').style.display = "none";
+  document.getElementById('ndt').style.display = "none";
   document.getElementById('ndt-results').style.display = "block";
   document.getElementById('extra-data').style.display = "block";
 };
