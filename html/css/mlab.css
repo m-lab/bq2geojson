@@ -18,6 +18,32 @@ html, body {
 	padding: 5px;
 }
 
+#ndt {
+	width: 100%;
+	margin-bottom: 2em;
+}
+
+#ndt-div {
+	height: 100px;
+	width: 100px;
+	margin: 0 auto;
+}
+
+#ndt-results {
+	display: none;
+}
+
+#extra-data {
+	display: none;
+	margin: 2em 0;
+}
+
+#approx-loc {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
 .legend {
 	text-align: left;
 	line-height: 1;
