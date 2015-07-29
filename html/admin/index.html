@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Custom Data Admin</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Verified</th>
+			<th>Location type</th>
+			<th>Connection type</th>
+			<th>Advertised download</th>
+			<th>Advertised upload</th>
+			<th>Cost of Service</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
+			<th>Date</th>
+			<th>BigQuery Key</th>
+			<th>ID</th>
+		</tr>
+	</thead>
+	<tbody id="custom-data">
+	</tbody>
+</table>
+
+<script>
+var fields = [
+	'verified',
+	'location_type',
+	'connection_type',
+	'advertised_download',
+	'advertised_upload',
+	'cost_of_service',
+	'latitude',
+	'longitude',
+	'timestamp',
+	'bigquery_key',
+	'id'
+];
+var	url = 'http://localhost:8080/collector/retrieve';
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function () {
+	if (xhr.readyState === 4) {
+		if (xhr.status === 200) {
+ 			var response = JSON.parse(xhr.responseText);
+			createRows(response);
+		}
+	}
+};
+xhr.open("GET", url, true);
+xhr.send();
+
+function createRows(resp) {
+	records = resp['custom_data'];
+	for (var r = 0; r < records.length; r++) {
+		var tr = document.createElement('tr')
+		for (var f = 0; f < fields.length; f++) {
+			var td = document.createElement('td');
+			if (fields[f] == 'timestamp') {
+				td.innerHTML = new Date(records[r][fields[f]]);
+			} else if (fields[f] == 'verified') {
+				var cb = document.createElement('input');
+				cb.type = 'checkbox';
+				cb.value = records[r]['id'];
+				if (records[r][fields[f]]) {
+					cb.checked = true;
+				}
+				td.appendChild(cb);
+			} else {
+				td.innerHTML = records[r][fields[f]];
+			}
+			tr.appendChild(td);
+		}
+		document.getElementById('custom-data').appendChild(tr);
+	}
+}
+</script>
+
+</body>
+
+</html>
