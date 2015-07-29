@@ -7,7 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Custom Data Admin</title>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,7 +45,7 @@ var fields = [
 	'bigquery_key',
 	'id'
 ];
-var	url = 'http://localhost:8080/collector/retrieve';
+var	url = '/collector/retrieve';
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
 	if (xhr.readyState === 4) {
@@ -60,7 +59,7 @@ xhr.open("GET", url, true);
 xhr.send();
 
 function createRows(resp) {
-	records = resp['custom_data'];
+	var records = resp['custom_data'];
 	for (var r = 0; r < records.length; r++) {
 		var tr = document.createElement('tr')
 		for (var f = 0; f < fields.length; f++) {
@@ -71,6 +70,7 @@ function createRows(resp) {
 				var cb = document.createElement('input');
 				cb.type = 'checkbox';
 				cb.value = records[r]['id'];
+				cb.addEventListener('change', changeVerification);
 				if (records[r][fields[f]]) {
 					cb.checked = true;
 				}
@@ -83,6 +83,28 @@ function createRows(resp) {
 		document.getElementById('custom-data').appendChild(tr);
 	}
 }
+
+function changeVerification() {
+	var that = this;
+	if (this.checked === true) {
+		var url = '/collector/verify?id=' + this.value;
+	} else {
+		var url = '/collector/unverify?id=' + this.value;
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status !== 200) {
+				alert('Failed to update record with ID ' + that.value +
+						' (' + xhr.status + ').');
+				that.checked = that.checked ? false : true;
+			}
+		}
+	}
+	xhr.open("GET", url, true);
+	xhr.send();
+}
+
 </script>
 
 </body>
