@@ -22,17 +22,17 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Verified</th>
-			<th>Location type</th>
-			<th>Connection type</th>
-			<th>Advertised download</th>
-			<th>Advertised upload</th>
-			<th>Cost of Service</th>
+			<th><a id="sort-id" href="/admin/?sort=id&order=desc">ID</a></th>
+			<th><a id="sort-verified" href="/admin/?sort=verified&order=desc">Verified</a></th>
+			<th><a id="sort-location_type" href="/admin/?sort=location_type&order=desc">Location Type</a></th>
+			<th><a id="sort-connection_type" href="/admin/?sort=connection_type&order=desc">Connection Type</a></th>
+			<th><a id="sort-advertised_download" href="/admin/?sort=advertised_download&order=desc">Advertised Download</a></th>
+			<th><a id="sort-advertised_upload" href="/admin/?sort=advertised_upload&order=desc">Advertised Upload</a></th>
+			<th><a id="sort-cost_of_service" href="/admin/?sort=cost_of_service&order=desc">Cost of Service</a></th>
+			<th><a id="sort-timestamp" href="/admin/?sort=timestamp&order=desc">Date</a></th>
 			<th>Latitude</th>
 			<th>Longitude</th>
-			<th>Date</th>
 			<th>BigQuery Key</th>
-			<th>ID</th>
 		</tr>
 	</thead>
 	<tbody id="custom-data">
@@ -46,30 +46,38 @@
 
 <script>
 var fields = [
+	'id',
 	'verified',
 	'location_type',
 	'connection_type',
 	'advertised_download',
 	'advertised_upload',
 	'cost_of_service',
+	'timestamp',
 	'latitude',
 	'longitude',
-	'timestamp',
 	'bigquery_key',
-	'id'
 ];
 var page = Number(getQueryParam('page'));
 if (!page) {
 	page = 1;
 }
 var limit = 50;
-var	url = '/collector/retrieve?limit=' + limit + '&page=' + page;
+var queryString = window.location.search;
+setSortLinks();
+if (queryString) {
+	var	url = '/collector/retrieve' + queryString + '&limit=' + limit;
+} else {
+	var	url = '/collector/retrieve?limit=' + limit;
+}
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
 	if (xhr.readyState === 4) {
 		if (xhr.status === 200) {
  			var response = JSON.parse(xhr.responseText);
-			createRows(response);
+			if (response['record_count']) {
+				createRows(response);
+			}
 		}
 	}
 };
@@ -105,8 +113,10 @@ function createRows(resp) {
 		var pagePrev = document.getElementById('page-previous');
 		var pageNext = document.getElementById('page-next');
 		if (page > 1) {
-			pagePrev.setAttribute('href', '/admin/?page=' + (page - 1));
-			pageNext.setAttribute('href', '/admin/?page=' + (page + 1));
+			pagePrev.setAttribute('href', '/admin/' + queryString.replace(/page=\d+/,
+					'page=' + (page - 1)));
+			pageNext.setAttribute('href', '/admin/' + queryString.replace(/page=\d+/,
+					'page=' + (page + 1)));
 			pagePrev.style.display = 'inline';
 			if (page * limit > record_count) {
 				pageNext.style.display = 'none';
@@ -120,7 +130,12 @@ function createRows(resp) {
 						record_count + ' records.';
 			}
 		} else {
-			pageNext.setAttribute('href', '/admin/?page=2');
+			if (queryString.search('page')) {
+				pageNext.setAttribute('href', '/admin/' + queryString.replace(/page=\d+/,
+						'page=' + (page + 1)));
+			} else {
+				pageNext.setAttribute('href', '/admin/' + queryString + '&page=2');
+			}
 			pagePrev.style.display = 'none';
 			pageNext.style.display = 'inline';
 			document.getElementById('viewing-records').innerHTML = 'Viewing 1 to ' +
@@ -162,6 +177,19 @@ function getQueryParam(p) {
 		params[param] = value;
 	}
 	return params[p];
+}
+
+function setSortLinks() {
+	var sort = getQueryParam('sort');
+	var order = getQueryParam('order');
+	if (sort) {
+		var sortLink = document.getElementById('sort-' + sort);
+		if (order && order == 'desc') {
+				sortLink.setAttribute('href', '/admin/?sort=' + sort + '&order=asc');
+		} else {
+				sortLink.setAttribute('href', '/admin/?sort=' + sort + '&order=desc');
+		}
+	}
 }
 
 </script>
