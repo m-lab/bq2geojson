@@ -238,8 +238,8 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygonType != 'hex' ) {
-		var start = Date.UTC(year, month - 1) / 1000;
-		var end = Date.UTC(year, month) / 1000;
+		var start = Date.UTC(year, month - 1, 1) / 1000;
+		var end = Date.UTC(year, month, 1, 0, 0, -1) / 1000;
 		//polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
 		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
 	} else {
