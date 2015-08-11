@@ -238,8 +238,10 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygonType != 'hex' ) {
-		polygonUrl = 'json/' + year + '_' + month + '-' + polygonType + '.' +
-			jsonType;
+		var start = Date.UTC(year, month - 1, 1) / 1000;
+		var end = Date.UTC(year, month, 1, 0, 0, -1) / 1000;
+		//polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
+		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
 	} else {
 		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
 			jsonType;
@@ -250,7 +252,18 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 	}
 
 	getLayerData(polygonUrl, function(response) {
-		response.features.forEach( function(cell) {
+		var lookup = {};
+		response.features.forEach(function(row) {
+			lookup[row.properties['objectid']] = row.properties;
+		});
+		geometryCache.features.forEach(function(cell) {
+
+			var stats = lookup[cell.properties['OBJECTID']];
+			for (var k in stats) {
+				if (stats.hasOwnProperty(k)) {
+					cell.properties[k] = stats[k];
+				}
+			}
 
 			var value = cell.properties[metric],
 				polygonStyle = cell.polygonStyle = {};
@@ -259,8 +272,9 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			polygonStyle.fillOpacity = 0.5;
 
 			if ( ! value ) {
-				polygonStyle.weight = 0;
-				polygonStyle.fillOpacity = 0;
+				polygonStyle.weight = 0.2;
+				polygonStyle.fillOpacity = 0.015;
+				polygonStyle.color = 'black';
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
@@ -281,7 +295,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			var polygonLayerVisible = true;
 		}
 
-		polygonLayer = L.geoJson(response).eachLayer( function(l) {
+		polygonLayer = L.geoJson(geometryCache).eachLayer( function(l) {
 			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
@@ -313,6 +327,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
  * @param {string" mode What state are we in? New or update?
  */
 function setPlotLayer(year, month, mode) {
+    return;
 
 	// Don't display spinner if animation is happening
 	if ( $('#checkAnimate').prop('checked') === false ) {
