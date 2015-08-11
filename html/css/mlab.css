@@ -6,7 +6,7 @@ html, body {
 
 #map {
 	height: 100%;
-	width: 75%;
+	width: 100%;
 	margin: 0;
 	padding: 0;
 }
@@ -16,6 +16,7 @@ html, body {
 	width: 24%;
 	right: 0;
 	padding: 5px;
+	display:none;
 }
 
 #ndt {
@@ -118,4 +119,29 @@ html, body {
 
 #checkAnimate {
 	margin-top: 15px;
+}
+
+
+/* overriding styles for UI changes made by Gem Barrett */
+.leaflet-bottom.leaflet-left {
+	width:100%;
+}
+.leaflet-bottom.leaflet-right {
+	display:none;
+}
+.info {
+	border-radius:0;
+	box-shadow: none;
+	width:100%;
+}
+.info.controls.leaflet-control {
+	margin:0;
+}
+#sliderMonth {
+	width:auto;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	border:#007dc3 1px solid;
+	background-color: #fff;
 }
