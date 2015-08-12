@@ -138,13 +138,38 @@ html, body {
 	margin:0;
 }
 #sliderMonth {
-	width:auto;
+	width:70%;
+	float:left;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
 	border:#007dc3 3px solid;
+	border-radius:5px;
 	background: #fff;
 	width:2em;
 	height:2em;
 	top:-.7em;
 }
+
+.ui-widget-content {
+	border:none;
+	background:#007dc3;
+	border-radius:5px;
+}
+
+.mapControls {
+	float:left;
+}
+
+#playAnimation {
+	margin-top:0;
+	height:30px;
+	background-image: url(images/animate-map-play-pause.svg);
+	width:30px;
+	display:block;
+	background-position:0 30px;
+}
+#playAnimation.paused {
+	background-position:0 0;
+}
+

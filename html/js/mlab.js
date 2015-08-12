@@ -48,9 +48,7 @@ function addControls() {
 			selectRes.setAttribute('id', 'selectRes');
 		}
 
-		var	sliderMonth = L.DomUtil.create('div', 'mapControls', controls),
-			checkAnimate = L.DomUtil.create('div', 'mapControls', controls),
-			dateOptions = '';
+		var				checkAnimate = L.DomUtil.create('div', 'mapControls', controls),sliderMonth = L.DomUtil.create('div', 'mapControls', controls),dateOptions = '';
 
 		var yearSelected;
 		for ( var year in dates ) {
@@ -59,8 +57,7 @@ function addControls() {
 				'>' + year + '</option>';
 		}
 
-		checkAnimate.innerHTML = '<input id="checkAnimate"' +
-			'type="checkbox" />Animate map';
+		checkAnimate.innerHTML = '<span id="playAnimation" class="paused"><span>';
 		
 		sliderMonth.setAttribute('id', 'sliderMonth');
 		// Prevent the entire map from dragging when the slider is dragged.
@@ -93,9 +90,14 @@ function addControls() {
 			function (e) { updateLayers(e, 'update'); });
 	});
 
-	var clearId;
-	$('#checkAnimate').change( function() {
-		if ( $('#checkAnimate').prop('checked') ) {
+	var clearId;	
+	$('#playAnimation').click( function() {
+		$('#playAnimation').toggleClass('paused');
+		if ( $('#playAnimation').hasClass('paused') ) {
+			clearInterval(clearId);
+			$('.leaflet-control-layers').addClass(
+				"leaflet-control-layers-expanded");
+		} else {
 			$('.leaflet-control-layers').removeClass(
 				"leaflet-control-layers-expanded");
 			var i = $('#sliderMonth').slider('value');
@@ -103,10 +105,6 @@ function addControls() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[$('#selectYear').val()].length;
 			}, animateInterval);
-		} else {
-			clearInterval(clearId);
-			$('.leaflet-control-layers').addClass(
-				"leaflet-control-layers-expanded");
 		}
 	});
 
@@ -232,7 +230,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 	var polygonUrl;
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
@@ -330,7 +328,7 @@ function setPlotLayer(year, month, mode) {
     return;
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
