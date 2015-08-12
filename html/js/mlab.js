@@ -54,7 +54,7 @@ function addControls() {
 
 		var yearSelected;
 		for ( var year in dates ) {
-			yearSelected =  year == defaultYear ? 'selected="selected"' : '';
+			yearSelected =  year == currentYear ? 'selected="selected"' : '';
 			dateOptions += '<option value="' + year + '"' + yearSelected +
 				'>' + year + '</option>';
 		}
@@ -114,15 +114,16 @@ function addControls() {
 	// the map.
 	$('#sliderMonth')
 		.slider({
-			min: Number(dates[defaultYear][0]),
-			max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
+			min: Number(dates[currentYear][0]),
+			max: Number(dates[currentYear][dates[currentYear].length - 1]),
+			value: currentMonth,
 			change: function (e, ui) {
 				updateLayers(e, 'update');
 			}
 		})
 		.slider('pips', {
 			rest: 'label',
-			labels: monthNames.slice(0, dates[defaultYear].length)
+			labels: monthNames.slice(0, dates[currentYear].length)
 		});;
 }
 
@@ -139,7 +140,7 @@ function updateLayers(e, mode) {
 
 	var resolution = polygonType == 'hex' ? $('#selectRes').val() : '';
 
-	// If the year was changed then we need to update the slider and set it's
+	// If the year was changed then we need to update the slider and set its
 	// value to the first configured month for that year.
 	if ( e.target.id == 'selectYear' ) {
 		$('#sliderMonth')
