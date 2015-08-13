@@ -163,16 +163,30 @@ var polygonType = 'city_council_districts';
 // the right choice.  TODO: prove this theory.
 var jsonType = "topojson";
 
-// Specify default year and month for initial display
-var defaultYear = "2015";
-var defaultMonth = "1";
+// Get current year/month into variables
+var currentYear = new Date().getFullYear();
+var currentMonth = new Date().getMonth() + 1;
+// Zero pad the front of the month
+currentMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
+
+// The oldest year and month for which we have data.
+var startYear = 2014;
+var startMonth = 1;
 
 // An object with the years and months we have data for.  This will be used to
 // auto-generate various form controls.
-var dates = {
-	2014 : ['1','2','3','4','5','6','7','8','9','10','11','12'],
-	2015 : ['1','2','3','4']
-};
+var dates = {};
+var thisYear = startYear;
+while (thisYear <= currentYear) {
+	if (thisYear == currentYear) {
+		var months = [];
+		for (i = 1; i <= currentMonth; i++) { months.push(i) };
+		dates[thisYear] = months
+	} else {
+		dates[thisYear] = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+	}
+	thisYear++;
+}
 
 // The minimum number of data points in any given polygon for a it to be
 // considered statistically relevant.  These cells will either not be displayed
@@ -259,13 +273,13 @@ $.get('seattle_census10_blockgroups.topojson', function(resp) {
     geometryCache = geojson;
 
     if ( overlays['polygon']['enabled'] ) {
-        setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
+        setPolygonLayer(currentYear, currentMonth, 'download_median', 'new', 'low');
     }
     if ( overlays['plot']['enabled'] ) {
-        setPlotLayer(defaultYear, defaultMonth, 'new');
+        setPlotLayer(currentYear, currentMonth, 'new');
     }
     if ( seedCache ) {
-        seedLayerCache(defaultYear);
+        seedLayerCache(currentYear);
     }
 }, 'json');
 </script>
