@@ -136,10 +136,14 @@ html, body {
 }
 .info.controls.leaflet-control {
 	margin:0;
+	padding: 10px;
 }
 #sliderMonth {
-	width:70%;
+	width:90%;
 	float:left;
+	margin-top:1em;
+	margin-bottom: 2.5em;
+	margin-left:20px;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
@@ -172,4 +176,18 @@ html, body {
 #playAnimation.paused {
 	background-position:0 0;
 }
+.metricControls {
+	width:25%;
+	float:left;
+}
 
+.sliderElements {
+	width:75%;
+	float:left;
+}
+.form-control {
+	float:left;
+	width:auto;
+	height:24px;
+	font-size: 1em;
+}
