@@ -232,6 +232,10 @@ function getLayerData(url, callback) {
 function setPolygonLayer(year, month, metric, mode, resolution) {
 	var polygonUrl;
 
+	// Make a copy of the geometryCache so that operations on it don't
+	// modify the cache itself but just works on a copy
+	var geometryData = JSON.parse(JSON.stringify(geometryCache));
+
 	// Don't display spinner if animation is happening
 	if ( $('#checkAnimate').prop('checked') === false ) {
 		$('#spinner').css('display', 'block');
@@ -257,7 +261,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 		response.features.forEach(function(row) {
 			lookup[row.properties['objectid']] = row.properties;
 		});
-		geometryCache.features.forEach(function(cell) {
+		geometryData.features.forEach(function(cell) {
 
 			var stats = lookup[cell.properties['OBJECTID']];
 			for (var k in stats) {
@@ -296,7 +300,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			var polygonLayerVisible = true;
 		}
 
-		polygonLayer = L.geoJson(geometryCache).eachLayer( function(l) {
+		polygonLayer = L.geoJson(geometryData).eachLayer( function(l) {
 			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
