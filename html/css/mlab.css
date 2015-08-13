@@ -163,6 +163,10 @@ html, body {
 
 .mapControls {
 	float:left;
+	font-size: inherit;
+}
+span.mapControls {
+	margin-top: 3px;
 }
 
 #playAnimation {
@@ -190,4 +194,59 @@ html, body {
 	width:auto;
 	height:24px;
 	font-size: 1em;
+}
+.ui-slider-pips .ui-slider-pip {
+	margin-left: -0.5em;
+}
+.ui-slider-pips [class*=i-slider-pip-selected], .ui-slider-label:hover {
+	color:#007dc3;
+}
+span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
+	outline:none;
+}
+
+.sliderElements .mapControls:not(#sliderMonth) {
+	width:5%;
+}
+
+
+@media(max-width: 1200px) {
+	select#selectMetric {
+		float:none;
+		margin-bottom: 10px;
+	}
+	.metricControls {
+		width:20%;
+	}
+	.sliderElements {
+		width:80%;
+	}
+}
+
+@media(max-width: 960px) {
+	.metricControls {
+		float:none;
+		width:100%;
+	}
+	select#selectMetric {
+		float:left;
+	}
+	.sliderElements {
+		width:100%;
+	}
+}
+
+@media(min-width: 960px) {
+}
+
+@media(max-width: 768px) {
+	#sliderMonth {
+		width:85%;
+	}
+}
+
+@media(min-width: 768px) {
+}
+
+@media(min-width: 320px) {
 }
