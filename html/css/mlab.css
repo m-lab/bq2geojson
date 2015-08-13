@@ -16,7 +16,6 @@ html, body {
 	width: 24%;
 	right: 0;
 	padding: 5px;
-	display:none;
 }
 
 #ndt {
@@ -183,6 +182,7 @@ span.mapControls {
 .metricControls {
 	width:25%;
 	float:left;
+	margin-top:0.5em;
 }
 
 .sliderElements {
@@ -207,6 +207,18 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 .sliderElements .mapControls:not(#sliderMonth) {
 	width:5%;
+	margin-top:0.5em;
+}
+
+#sidebar {
+	z-index:5;
+	background:#fff;
+	background:rgba(255,255,255,0.75);
+}
+
+.info {
+	background:#fff;
+	background:rgba(255,255,255,0.75);
 }
 
 
