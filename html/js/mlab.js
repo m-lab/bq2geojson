@@ -33,11 +33,11 @@ function addControls() {
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls'),
-			labelYear = L.DomUtil.create('span', 'mapControls', controls),
-			selectYear = L.DomUtil.create('select', 'mapControls', controls),
-			labelMetric = L.DomUtil.create('span', 'mapControls', controls),
-			selectMetric = L.DomUtil.create('select', 'mapControls', controls);
-
+		labelMetric = L.DomUtil.create('span', 'mapControls', controls),
+		selectMetric = L.DomUtil.create('select', 'mapControls', controls),
+		labelYear = L.DomUtil.create('span', 'mapControls', controls),
+		selectYear = L.DomUtil.create('select', 'mapControls', controls);
+		
 		if ( polygonType == 'hex' ) {
 			var labelRes = L.DomUtil.create('span', 'mapControls', controls),
 				selectRes = L.DomUtil.create('select', 'mapControls', controls);
@@ -48,9 +48,7 @@ function addControls() {
 			selectRes.setAttribute('id', 'selectRes');
 		}
 
-		var	sliderMonth = L.DomUtil.create('div', 'mapControls', controls),
-			checkAnimate = L.DomUtil.create('div', 'mapControls', controls),
-			dateOptions = '';
+		var	checkAnimate = L.DomUtil.create('div', 'mapControls', controls),sliderMonth = L.DomUtil.create('div', 'mapControls', controls),dateOptions = '';
 
 		var yearSelected;
 		for ( var year in dates ) {
@@ -59,28 +57,34 @@ function addControls() {
 				'>' + year + '</option>';
 		}
 
-		checkAnimate.innerHTML = '<input id="checkAnimate"' +
-			'type="checkbox" />Animate map';
+		checkAnimate.innerHTML = '<span id="playAnimation" class="paused"></span>';
 		
 		sliderMonth.setAttribute('id', 'sliderMonth');
 		// Prevent the entire map from dragging when the slider is dragged.
 		L.DomEvent.disableClickPropagation(sliderMonth);
 
-		labelYear.innerHTML = 'Year';
+
+		labelMetric.innerHTML = 'Show me';
+		selectMetric.innerHTML = '<option value="download_median">' +
+			'Download speeds</option><option value="upload_median">' +
+			'Upload speeds</option>';
+		selectMetric.setAttribute('id', 'selectMetric');
+		selectMetric.setAttribute('class', 'form-control');
+
+		labelYear.innerHTML = 'from';
 		selectYear.innerHTML = dateOptions;
 		selectYear.setAttribute('id', 'selectYear');
-
-		labelMetric.innerHTML = 'Metric';
-		selectMetric.innerHTML = '<option value="download_median">' +
-			'DL throughput</option><option value="upload_median">' +
-			'UL throughput</option>';
-		selectMetric.setAttribute('id', 'selectMetric');
-
+		selectYear.setAttribute('class', 'form-control');
 
 		return controls;
 	};
 
 	controls.addTo(map);
+	
+	var metricChoices = $(".leaflet-control > span, .leaflet-control > select").slice(0,4);
+	$(".leaflet-control > div.mapControls").wrapAll("<div class='sliderElements'></div>");
+	metricChoices.wrapAll("<div class='metricControls'></div>");
+
 
 	var elems;
 	if ( polygonType != 'hex' ) {
@@ -93,9 +97,14 @@ function addControls() {
 			function (e) { updateLayers(e, 'update'); });
 	});
 
-	var clearId;
-	$('#checkAnimate').change( function() {
-		if ( $('#checkAnimate').prop('checked') ) {
+	var clearId;	
+	$('#playAnimation').click( function() {
+		$('#playAnimation').toggleClass('paused');
+		if ( $('#playAnimation').hasClass('paused') ) {
+			clearInterval(clearId);
+			$('.leaflet-control-layers').addClass(
+				"leaflet-control-layers-expanded");
+		} else {
 			$('.leaflet-control-layers').removeClass(
 				"leaflet-control-layers-expanded");
 			var i = $('#sliderMonth').slider('value');
@@ -103,10 +112,6 @@ function addControls() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[$('#selectYear').val()].length;
 			}, animateInterval);
-		} else {
-			clearInterval(clearId);
-			$('.leaflet-control-layers').addClass(
-				"leaflet-control-layers-expanded");
 		}
 	});
 
@@ -237,7 +242,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 	var geometryData = JSON.parse(JSON.stringify(geometryCache));
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
@@ -335,7 +340,7 @@ function setPlotLayer(year, month, mode) {
     return;
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 

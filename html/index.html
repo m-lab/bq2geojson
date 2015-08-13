@@ -4,14 +4,14 @@
 
 <head>
 	<meta charset='utf-8' />
-	<title>M-Lab polygon-binned maps using Turf.js</title>
+	<title>Seattle Broadband Map</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
-
-	<link href='css/mlab.css' rel='stylesheet' />
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link href='css/ndt_d3.css' rel='stylesheet' />
 	<link href="css/jquery-ui-slider-pips.css" rel="stylesheet" />
 	<link href='css/jquery-ui.min.css' rel='stylesheet' />
+	<link href='css/mlab.css' rel='stylesheet' />
 	<script src='//api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 	<script src='js/mlab.js'></script>
@@ -34,7 +34,7 @@
 <div id="sidebar">
 	
 	<div id="ndt">
-		Test your speed:
+		<h3>Test your speed:</h3>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
 		</div>
@@ -42,23 +42,28 @@
 	</div>
 
 	<div id="ndt-results">
-		<h3>Test results</h3>
+		<h3>Your test results:</h3>
 		<div>Download speed: <span id="s2cRate"></span>Mbps</div>
 		<div>Upload speed: <span id="c2sRate"></span>Mbps</div>
-		<div>MinRTT: <span id="MinRTT"></span>ms</div>
+		<div>Minimum Round Trip Time: <span id="MinRTT"></span>ms</div>
 	</div>
 
 	<div id="extra-data">
-		Help us understand the state of broadband in Seattle by completing the following short form!
+		<div class="panel panel-primary">
+		  <div class="panel-heading">
+  			<h3 class="panel-title">Help make the Broadband Seattle Map More Accurate!</h3>
+		  </div>
+		  <div class="panel-body">Help us understand the state of broadband in Seattle by telling us more about your Internet connection!
+		<hr>
 		<form action="/collector/collect" method="post" id="collector">
-			Location type:
+			Location: 
 			<select name="location_type">
 				<option value="residence">Residence</option>
 				<option value="workplace">Workplace</option>
 				<option value="business">Business</option>
 				<option value="public">Public space</option>
 			</select><br/>
-			Connection type:
+			What kind of ISP?
 			<select name="connection_type">
 				<option value="cable">Cable</option>
 				<option value="dsl">DSL</option>
@@ -66,15 +71,16 @@
 				<option value="cellular">Cellular</option>
 				<option value="other">Other</option>
 			</select><br/>
-			Advertised download: <input name="advertised_download" size="3"/>Mbps<br/>
-			Advertised upload: <input name="advertised_upload" size="3"/>Mbps<br/>
-			Cost of service: $<input name="cost_of_service" size="3" /><br/>
+			Advertised download speed? <input name="advertised_download" size="3"/><small>Mbps</small><br/>
+			Advertised upload speed? <input name="advertised_upload" size="3"/><small>Mbps</small><br/>
+			Monthly cost of service: $ <input name="cost_of_service" size="3" /><br/>
 			<input name="latitude" id="latitude" type="hidden" />
 			<input name="longitude" id="longitude" type="hidden" />
 			<input name="bigquery_key" id="bigquery_key" type="hidden" />
-			<input type="submit" value="Submit"/>
+			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
 		</form>
-	
+		</div>
+	     </div>	
 	</div>
 
 	<div>

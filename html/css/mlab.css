@@ -6,7 +6,7 @@ html, body {
 
 #map {
 	height: 100%;
-	width: 75%;
+	width: 100%;
 	margin: 0;
 	padding: 0;
 }
@@ -118,4 +118,147 @@ html, body {
 
 #checkAnimate {
 	margin-top: 15px;
+}
+
+
+/* overriding styles for UI changes made by Gem Barrett */
+.leaflet-bottom.leaflet-left {
+	width:100%;
+}
+.leaflet-bottom.leaflet-right {
+	display:none;
+}
+.info {
+	border-radius:0;
+	box-shadow: none;
+	width:100%;
+}
+.info.controls.leaflet-control {
+	margin:0;
+	padding: 10px;
+}
+#sliderMonth {
+	width:90%;
+	float:left;
+	margin-top:1em;
+	margin-bottom: 2.5em;
+	margin-left:20px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	border:#007dc3 3px solid;
+	border-radius:5px;
+	background: #fff;
+	width:2em;
+	height:2em;
+	top:-.7em;
+}
+
+.ui-widget-content {
+	border:none;
+	background:#007dc3;
+	border-radius:5px;
+}
+
+.mapControls {
+	float:left;
+	font-size: inherit;
+}
+span.mapControls {
+	margin-top: 3px;
+}
+
+#playAnimation {
+	margin-top:0;
+	height:30px;
+	background-image: url(images/animate-map-play-pause.svg);
+	width:30px;
+	display:block;
+	background-position:0 30px;
+}
+#playAnimation.paused {
+	background-position:0 0;
+}
+.metricControls {
+	width:25%;
+	float:left;
+	margin-top:0.5em;
+}
+
+.sliderElements {
+	width:75%;
+	float:left;
+}
+.form-control {
+	float:left;
+	width:auto;
+	height:24px;
+	font-size: 1em;
+}
+.ui-slider-pips .ui-slider-pip {
+	margin-left: -0.5em;
+}
+.ui-slider-pips [class*=i-slider-pip-selected], .ui-slider-label:hover {
+	color:#007dc3;
+}
+span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
+	outline:none;
+}
+
+.sliderElements .mapControls:not(#sliderMonth) {
+	width:5%;
+	margin-top:0.5em;
+}
+
+#sidebar {
+	z-index:5;
+	background:#fff;
+	background:rgba(255,255,255,0.75);
+}
+
+.info {
+	background:#fff;
+	background:rgba(255,255,255,0.75);
+}
+
+
+@media(max-width: 1200px) {
+	select#selectMetric {
+		float:none;
+		margin-bottom: 10px;
+	}
+	.metricControls {
+		width:20%;
+	}
+	.sliderElements {
+		width:80%;
+	}
+}
+
+@media(max-width: 960px) {
+	.metricControls {
+		float:none;
+		width:100%;
+	}
+	select#selectMetric {
+		float:left;
+	}
+	.sliderElements {
+		width:100%;
+	}
+}
+
+@media(min-width: 960px) {
+}
+
+@media(max-width: 768px) {
+	#sliderMonth {
+		width:85%;
+	}
+}
+
+@media(min-width: 768px) {
+}
+
+@media(min-width: 320px) {
 }
