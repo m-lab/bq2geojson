@@ -188,6 +188,7 @@ span.mapControls {
 	width:30px;
 	display:block;
 	background-position:0 30px;
+  float:right;
 }
 #playAnimation.paused {
 	background-position:0 0;
@@ -236,6 +237,10 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 p.test {
 	font-family: 'league_gothicregular';
+}
+
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup, .leaflet-fade-anim .leaflet-tile-loaded {
+  opacity:0.5;
 }
 
 @media(max-width: 1200px) {

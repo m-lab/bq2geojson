@@ -108,13 +108,31 @@
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(success, error);
 		}
-
+		
 		function success(position) {
 			document.getElementById('latitude').value = position.coords.latitude;
 			document.getElementById('longitude').value = position.coords.longitude;
-			var mapImage = document.createElement('img');
-			mapImage.src = "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|" + position.coords.latitude + "," + position.coords.longitude + "&zoom=12&size=200x200";
-			document.getElementById('approx-loc').appendChild(mapImage);
+			
+			var xhr = new XMLHttpRequest(),
+			currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
+
+			var currentLoc;
+			xhr.open('GET', currentLocationURL, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						currentLoc = JSON.parse(xhr.responseText);
+						console.log("Location received");
+
+						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
+						
+						$('#approx-loc').html("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+					} else {
+						console.log('Location lookup failed');
+					}
+				}
+			};
 		}
 
 		function error(error) {
