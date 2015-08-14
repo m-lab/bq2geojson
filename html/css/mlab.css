@@ -243,6 +243,18 @@ p.test {
   opacity:0.5;
 }
 
+#approx-loc {
+  text-align: left;
+}
+
+#approx-loc p:first-child {
+  font-weight: bold;
+}
+
+#approx-loc p {
+  margin:0;
+}
+
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;

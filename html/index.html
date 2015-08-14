@@ -83,9 +83,8 @@
 	     </div>	
 	</div>
 
-	<div>
-		Your approximate location:
-		<div id="approx-loc"></div>
+	<div id="approx-loc">
+		<p>Searching from:</p>
 	</div>
 
 	<script>
@@ -127,7 +126,7 @@
 
 						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
 						
-						$('#approx-loc').html("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+						$('#approx-loc').append("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
 					} else {
 						console.log('Location lookup failed');
 					}
