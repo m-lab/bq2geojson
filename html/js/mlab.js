@@ -416,3 +416,13 @@ function makePopup(props) {
 		'RTT (mean): ' + Math.round(props.rtt_avg) + ' ms';
 	return popup;
 }
+
+$(function() {
+	$('#icons img').click(function() {
+		console.log(this);
+		$('#icons img').removeClass('selected');
+		$(this).toggleClass('selected');
+		$('#sidebar').toggleClass('extended');
+	})
+});
+

@@ -235,16 +235,37 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	background:rgba(255,255,255,0.75);
 }
 
-p.test {
+.league-gothic {
 	font-family: 'league_gothicregular';
 }
+
+.icon-speed {
+  background-image: url(images/speed.svg);
+  background-size: cover;
+}
+.icon-about {
+  background-image: url(images/about.svg);
+  background-size: cover;
+}
+.icon-zoom-in {
+  background-image: url(images/zoom-in.svg);
+  background-size: cover;
+}
+.icon-zoom-out {
+  background-image: url(images/zoom-out.svg);
+  background-size: cover;
+}
+
 
 .leaflet-fade-anim .leaflet-map-pane .leaflet-popup, .leaflet-fade-anim .leaflet-tile-loaded {
   opacity:0.5;
 }
 
 #approx-loc {
-  text-align: left;
+  text-align: right;
+  position:absolute;
+  top:auto;
+  z-index: 5;
 }
 
 #approx-loc p:first-child {
@@ -255,6 +276,56 @@ p.test {
   margin:0;
 }
 
+#ndt {
+  display:block;
+  width:auto;
+}
+
+#ndt h3 {
+  margin-top:0;
+  font-size: 2.5em;
+}
+
+#ndt, #ndt-results, #extra-data {
+  right:-1000px;
+  position:absolute;
+}
+.extended #ndt, .extended #ndt-results {
+  right:initial;
+  position:initial;
+}
+.leaflet-top.leaflet-right {
+  display:none;
+}
+#sidebar {
+  width:10%;
+  top:25%;
+  overflow:hidden;
+}
+#sidebar.extended {
+  width:50%;
+}
+#icons {
+  float:right;
+}
+#sidebar.extended #icons img.selected {
+  opacity:1.0;
+  max-width: 150px;
+}
+#icons img {
+  width:90%;
+  max-width:100px;
+  margin:10px auto;
+  display: block;
+  opacity:0.75;
+}
+#icons img:hover {
+  opacity:1.0;
+}
+#icons img.small-icon {
+  width:50%;
+  display:none;
+}
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
