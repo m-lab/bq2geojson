@@ -139,6 +139,28 @@
 			};
 		};
 
+		$('#collector :submit').click(function(e) {
+			e.preventDefault();
+			var xhr = new XMLHttpRequest(),
+				collectorUrl = 'http://localhost:8080/collector/collect?';
+
+			collectorUrl = collectorUrl + $('#collector').serialize();
+
+			xhr.open('GET', collectorUrl, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 201) {
+						console.log('Record successfully added.');
+						$('#extra-data').css('display', 'none');
+					} else {
+						console.log('Failed to create record: ' + xhr.responseText);
+						$('#extra-data').append('Failed.');
+					}
+				}
+			};
+		});
+
 	</script>
 </div>
 
