@@ -48,7 +48,6 @@ html, body {
 
 #extra-data {
 	display: none;
-	margin: 2em 0;
 }
 
 #approx-loc {
@@ -256,16 +255,12 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   background-size: cover;
 }
 
-
-.leaflet-fade-anim .leaflet-map-pane .leaflet-popup, .leaflet-fade-anim .leaflet-tile-loaded {
-  opacity:0.5;
-}
-
 #approx-loc {
   text-align: right;
   position:absolute;
   top:auto;
   z-index: 5;
+  background-color:rgba(255,255,255,0.75);
 }
 
 #approx-loc p:first-child {
@@ -281,16 +276,16 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width:auto;
 }
 
-#ndt h3 {
+#sidebar h3 {
   margin-top:0;
   font-size: 2.5em;
 }
 
-#ndt, #ndt-results, #extra-data {
+#ndt, #ndt-results, #extra-data, #about-ndt {
   right:-1000px;
   position:absolute;
 }
-.extended #ndt, .extended #ndt-results {
+#sidebar .reset-positioning {
   right:initial;
   position:initial;
 }

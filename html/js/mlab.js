@@ -423,6 +423,9 @@ $(function() {
 		$('#icons img').removeClass('selected');
 		$(this).toggleClass('selected');
 		$('#sidebar').toggleClass('extended');
+		$('#ndt').toggleClass('reset-positioning');
+		$('#ndt-results').toggleClass('reset-positioning');
+		$('#extra-data').toggleClass('reset-positioning');
 	})
 });
 
