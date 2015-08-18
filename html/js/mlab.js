@@ -309,10 +309,14 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
+			} else {
+				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
 			if ( metric == "upload_median" &&
 					l.feature.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
+			} else {
+				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
 			l.setStyle(l.feature['polygonStyle']);
 		});
@@ -414,6 +418,16 @@ function makePopup(props) {
 		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
 		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+	return popup;
+}
+
+//**
+ * Create a popup for areas that don't have enough data yet.
+ *
+ */
+function makeEmptyPopup(props) {
+	var popup = 'This area has not had enough speed tests submitted. Help improve ' +
+		'this map by <a href="#">running a test</a>';
 	return popup;
 }
 
