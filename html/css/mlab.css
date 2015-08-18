@@ -37,15 +37,37 @@ html, body {
 }
 
 #ndt-div {
-	height: 100px;
-	width: 100px;
-	margin: 0 auto;
+	height: 200px;
+	width: 200px;
+	margin: 0 5% 5%;
+	float: left;
+}
+
+#ndt-status {
+	margin-top: 1em;
+	font-size: 1.5em;
 }
 
 #ndt-results {
 	display: none;
 }
 
+#ndt-results hr {
+	border-top: 1pm solid darkblue;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	margin-left: 1.3em;
+}
+
+#ndt-results p {
+	margin: 0 1.3em 5px;	
+}
+
+#ndt-results .btn-sm {
+	float: right;
+	margin-right: 2.3em;
+	margin-bottom: 2em;
+}
 #extra-data {
 	display: none;
 }
