@@ -59,7 +59,7 @@ html, body {
 	margin-left: 1.3em;
 }
 
-#ndt-results p {
+#ndt-results, #extra-data p {
 	margin: 0 1.3em 5px;	
 }
 
@@ -70,6 +70,10 @@ html, body {
 }
 #extra-data {
 	display: none;
+}
+
+#collector {
+	margin: 0 1.3em 5px;	
 }
 
 #approx-loc {
