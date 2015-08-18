@@ -421,6 +421,8 @@ function closeAllTheThings() {
 		$('#sidebar').removeClass('extended');
 		$('#icons img').removeClass('selected');
 		$('#ndt').hide();
+		$('#ndt-results').hide();
+		$('#extra-data').hide();
 		$('#about-ndt').hide();
 }
 
@@ -438,10 +440,15 @@ $(function() {
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
 					$('#ndt').hide();
+					$('#ndt-results').hide();
+					$('#extra-data').hide();
 					$('#about-ndt').show();					
 				}
 			}
 			else if (clickedElement == "test-icon") {
+				// are there results yet?
+				var results = document.getElementById('s2cRate');
+				var resultsReceived = results.innerText;
 				if ($('#test-icon').hasClass('selected')) {
 					closeAllTheThings();
 				}
@@ -450,7 +457,13 @@ $(function() {
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
 					$('#about-ndt').hide();
-					$('#ndt').show();
+					if (resultsReceived !== "?") {
+						$('#ndt-results').show();
+						$('#extra-data').show();
+					}
+					else {
+						$('#ndt').show();
+					}
 				}
 			}
 		}
