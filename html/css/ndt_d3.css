@@ -18,6 +18,7 @@
 
 #progress-meter text.information {
   fill: #007dc3;
+  font-size: 4em;
 }
 
 #progress-meter text.status{
