@@ -72,8 +72,9 @@ html, body {
 	display: none;
 }
 
-#collector {
-	margin: 0 1.3em 5px;	
+#extra-data input.btn {
+	float: right;
+	margin-right: 3em;
 }
 
 #approx-loc {
