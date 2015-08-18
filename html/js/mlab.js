@@ -417,15 +417,42 @@ function makePopup(props) {
 	return popup;
 }
 
-$(function() {
-	$('#icons img').click(function() {
-		console.log(this);
+function closeAllTheThings() {
+		$('#sidebar').removeClass('extended');
 		$('#icons img').removeClass('selected');
-		$(this).toggleClass('selected');
-		$('#sidebar').toggleClass('extended');
-		$('#ndt').toggleClass('reset-positioning');
-		$('#ndt-results').toggleClass('reset-positioning');
-		$('#extra-data').toggleClass('reset-positioning');
-	})
-});
+		$('#ndt').hide();
+		$('#about-ndt').hide();
+}
 
+$(function() {
+	closeAllTheThings();
+	$('#icons img').click(function() {
+		var clickedElement = $(this).attr('id');
+		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+			if (clickedElement == "about-icon") {
+				if ($('#about-icon').hasClass('selected')) {
+					closeAllTheThings();
+				}
+				else {
+					$('#icons img').removeClass('selected');
+					$(this).addClass('selected');
+					$('#sidebar').addClass('extended');
+					$('#ndt').hide();
+					$('#about-ndt').show();					
+				}
+			}
+			else if (clickedElement == "test-icon") {
+				if ($('#test-icon').hasClass('selected')) {
+					closeAllTheThings();
+				}
+				else {
+					$('#icons img').removeClass('selected');
+					$(this).addClass('selected');
+					$('#sidebar').addClass('extended');
+					$('#about-ndt').hide();
+					$('#ndt').show();
+				}
+			}
+		}
+	});
+});

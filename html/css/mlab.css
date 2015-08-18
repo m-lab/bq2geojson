@@ -173,8 +173,10 @@ html, body {
 }
 
 .mapControls {
-	float:left;
 	font-size: inherit;
+}
+.sliderElements .mapControls {
+  float: left;
 }
 span.mapControls {
 	margin-top: 3px;
@@ -203,7 +205,7 @@ span.mapControls {
 	float:left;
 }
 .form-control {
-	float:left;
+	display:inline;
 	width:auto;
 	height:24px;
 	font-size: 1em;
@@ -273,8 +275,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 #ndt {
   display:block;
-  width:auto;
 }
+
+
 
 #sidebar h3 {
   margin-top:0;
@@ -282,12 +285,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #ndt, #ndt-results, #extra-data, #about-ndt {
-  right:-1000px;
-  position:absolute;
-}
-#sidebar .reset-positioning {
-  right:initial;
-  position:initial;
+  width:70%;
 }
 .leaflet-top.leaflet-right {
   display:none;
@@ -298,14 +296,16 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   overflow:hidden;
 }
 #sidebar.extended {
-  width:50%;
+  width:30%;
 }
 #icons {
   float:right;
 }
-#sidebar.extended #icons img.selected {
+#sidebar #icons img.selected {
   opacity:1.0;
-  max-width: 150px;
+}
+#sidebar.extended #icons {
+  width:30%;
 }
 #icons img {
   width:90%;
@@ -320,6 +320,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #icons img.small-icon {
   width:50%;
   display:none;
+}
+
+.metric-value {
+  font-weight: bold;
+  color:inherit;
 }
 @media(max-width: 1200px) {
 	select#selectMetric {
@@ -340,7 +345,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 		width:100%;
 	}
 	select#selectMetric {
-		float:left;
+		display:inline;
 	}
 	.sliderElements {
 		width:100%;
