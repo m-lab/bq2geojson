@@ -166,7 +166,7 @@
 		$('#collector :submit').click(function(e) {
 			e.preventDefault();
 			var xhr = new XMLHttpRequest(),
-				collectorUrl = 'http://localhost:8080/collector/collect?';
+				collectorUrl = '/collector/collect?';
 
 			collectorUrl = collectorUrl + $('#collector').serialize();
 
