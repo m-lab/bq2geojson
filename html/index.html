@@ -4,27 +4,188 @@
 
 <head>
 	<meta charset='utf-8' />
-	<title>M-Lab polygon-binned maps using Turf.js</title>
+	<title>Seattle Broadband Map</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
-
-	<link href='css/mlab.css' rel='stylesheet' />
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link href='css/ndt_d3.css' rel='stylesheet' />
 	<link href="css/jquery-ui-slider-pips.css" rel="stylesheet" />
 	<link href='css/jquery-ui.min.css' rel='stylesheet' />
+	<link href='css/mlab.css' rel='stylesheet' />
 	<script src='//api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-	<script src='js/mlab.js'></script>
-	<script src='js/center.js'></script>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src='js/mlab.js'></script>
+	<script src='js/ndt.js'></script>
+	<script src='js/ndt_d3.js'></script>
+	<script src='js/d3.v3.min.js'></script>
+	<script src='js/center.js'></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/jquery-ui-slider-pips.min.js"></script>
+
 </head>
 
 <body>
-
 <div id="spinner">
 	<div id="spin">&nbsp;</div>
 	<div id="loading">LOADING</div>
+</div>
+<div id="approx-loc">
+	<p>Searching from:</p>
+</div>
+
+<div id="sidebar">
+	<div id="icons">
+		<img src="images/speed.svg" id="test-icon" />
+		<img src="images/about.svg" id="about-icon" />
+		<img src="images/zoom-in.svg" class="small-icon"/>
+		<img src="images/zoom-out.svg" class="small-icon"/>
+	</div>
+	<div id="about-ndt">
+		<h3 class="league-gothic">About this Map</h3>
+		<p>The Seattle Broadmand Map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
+		<p>The map shows real-world broadband experiences across the city, and allows the public to contribute their broadband experience using proven tools from <a href="http://measurementlab.net" target="_blank">Measurement Lab</a> (M-Lab).</p>
+		<p>M-Lab data is combined with speed tests contributed from this website provide a picture of Seattle's broadband experience over time. The more data that is contributed, the more accurate the map will become.</p>
+		<p>The speed test data you submit here is submitted to M-Lab, is publicly available and conforms to <a href="http://www.measurementlab.net/privacy" target="_blank">M-Lab's Privacy and Acceptable Use Policies</a>. The Seattle Broadband Map application optionally requests your location and after the speed test asks for additional information about your connection to better understand the state of consumer broadband in the city. This additional information is now sent to M-Lab, but is stored in a private database used by this site.</p>  	
+	</div>
+	<div id="ndt" class="ndt-related">
+		<h3 class="league-gothic">Test your speed!</h3>
+		<p class="subheading">You can contribute to this map!</p>
+		<p class="test-text">To start, simply hit the button below and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
+		<div id="ndt-div">
+			<div id="ndt-svg"></div>
+		</div>
+		<div id="ndt-status"></div>
+	</div>
+
+	<div id="ndt-results" class="ndt-related">
+		<h3 class="league-gothic">Your test results:</h3>
+		<p>Download speed: <span id="s2cRate"></span>Mbps</p>
+		<p>Upload speed: <span id="c2sRate"></span>Mbps</p>
+		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
+	</div>
+<hr />
+	<div id="extra-data" class="ndt-related">
+				<p>Help us understand the state of broadband in Seattle by telling us more about your Internet connection.</p>
+		<form action="/collector/collect" method="post" id="collector">
+			<p>Location: 
+			<select name="location_type" class="form-control">
+				<option value="residence">Residence</option>
+				<option value="workplace">Workplace</option>
+				<option value="business">Business</option>
+				<option value="public">Public space</option>
+			</select></p>
+			<p>What kind of ISP?
+			<select name="connection_type" class="form-control">
+				<option value="cable">Cable</option>
+				<option value="dsl">DSL</option>
+				<option value="fiber">Fiber</option>
+				<option value="cellular">Cellular</option>
+				<option value="other">Other</option>
+			</select></p>
+			<p>Advertised download speed? <input name="advertised_download" size="3"/><small>Mbps</small></p>
+			<p>Advertised upload speed? <input name="advertised_upload" size="3"/><small>Mbps</small></p>
+			<p>Monthly cost of service: $ <input name="cost_of_service" size="3" /></p>
+			<input name="latitude" id="latitude" type="hidden" />
+			<input name="longitude" id="longitude" type="hidden" />
+			<input name="bigquery_key" id="bigquery_key" type="hidden" />
+			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
+		</form>
+	</div>
+
+
+	<script>
+		var ndtServer,
+			ndtPort = "3001",
+  			ndtPath = "/ndt_protocol",
+  			ndtUpdateInterval = 1000,
+			c2sRate,
+			s2cRate,
+			MinRTT;
+
+		getNdtServer();
+
+		NDT_meter = new NDTmeter('#ndt-svg');
+		NDT_meter.meter.on("click", function () {
+			NDT_client = new NDTjs(ndtServer, ndtPort, ndtPath, NDT_meter, ndtUpdateInterval);
+			NDT_client.startTest();
+		});
+
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(success, error);
+		}
+		
+		function success(position) {
+			document.getElementById('latitude').value = position.coords.latitude;
+			document.getElementById('longitude').value = position.coords.longitude;
+			
+			var xhr = new XMLHttpRequest(),
+			currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
+
+			var currentLoc;
+			xhr.open('GET', currentLocationURL, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						currentLoc = JSON.parse(xhr.responseText);
+						console.log("Location received");
+
+						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
+						
+						$('#approx-loc').append("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+					} else {
+						console.log('Location lookup failed');
+					}
+				}
+			};
+		}
+
+		function error(error) {
+			document.getElementById('msg').innerHTML = 'ERROR(' + error.code + '): ' + error.message;
+		}
+
+		function getNdtServer () {
+			var xhr = new XMLHttpRequest(),
+				mlabNsUrl = 'http://mlab-ns.appspot.com/ndt?format=json';
+		
+			xhr.open('GET', mlabNsUrl, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						ndtServer = JSON.parse(xhr.responseText).fqdn;
+						console.log('Using M-Lab Server ' + ndtServer);
+					} else {
+						console.log('M-Lab NS lookup failed.');
+					}
+				}
+			};
+		};
+
+		$('#collector :submit').click(function(e) {
+			e.preventDefault();
+			var xhr = new XMLHttpRequest(),
+				collectorUrl = 'http://localhost:8080/collector/collect?';
+
+			collectorUrl = collectorUrl + $('#collector').serialize();
+
+			xhr.open('GET', collectorUrl, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 201) {
+						console.log('Record successfully added.');
+						$('#extra-data').css('display', 'none');
+					} else {
+						console.log('Failed to create record: ' + xhr.responseText);
+						$('#extra-data').append('Failed.');
+					}
+				}
+			};
+		});
+
+	</script>
 </div>
 
 <div id='map'></div>
@@ -37,7 +198,7 @@
 // the MMMM_YY- suffix to look for. For example:
 // If set to 'city_council_districts', then the system will look for
 // GeoJSON files like 'MMMM_YY-city_council_districts.geojson'.
-var polygonType = 'hex';
+var polygonType = 'city_council_districts';
 
 // Either 'topojson' or 'geojson'.  The Node.js script creates both TopoJSON and
 // GeoJSON files.  TopoJSON files are significantly smaller in size, but need to
@@ -48,21 +209,35 @@ var polygonType = 'hex';
 // the right choice.  TODO: prove this theory.
 var jsonType = "topojson";
 
-// Specify default year and month for initial display
-var defaultYear = "2015";
-var defaultMonth = "1";
+// Get current year/month into variables
+var currentYear = new Date().getFullYear();
+var currentMonth = new Date().getMonth() + 1;
+// Zero pad the front of the month
+currentMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
+
+// The oldest year and month for which we have data.
+var startYear = 2014;
+var startMonth = 1;
 
 // An object with the years and months we have data for.  This will be used to
 // auto-generate various form controls.
-var dates = {
-	2014 : ['1','2','3','4','5','6','7','8','9','10','11','12'],
-	2015 : ['1','2','3','4']
-};
+var dates = {};
+var thisYear = startYear;
+while (thisYear <= currentYear) {
+	if (thisYear == currentYear) {
+		var months = [];
+		for (i = 1; i <= currentMonth; i++) { months.push(i) };
+		dates[thisYear] = months
+	} else {
+		dates[thisYear] = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+	}
+	thisYear++;
+}
 
 // The minimum number of data points in any given polygon for a it to be
 // considered statistically relevant.  These cells will either not be displayed
 // or will be displayed with a different styling.
-var minDataPoints = 30;
+var minDataPoints = 5;
 
 // Defines how each overlay is treated on load.  If an overlay is enabled, then
 // there will be a checkbox for it in the layers control. 'defaultOn' determines
@@ -75,7 +250,7 @@ var overlays = {
 		'defaultOn': true
 	},
 	'plot': {
-		'enabled': true,
+		'enabled': false,
 		'defaultOn': false
 	}
 };
@@ -93,7 +268,7 @@ var animateInterval = 1500;
 if ( typeof center == 'undefined' ) {
 	var center = [38.8961302513129,-99.04025268554688]; //USA
 }
-var zoom = 10;
+var zoom = 11;
 
 // These are the labels that will be used for the month slider in the control
 // box in the lower left corner.
@@ -104,6 +279,7 @@ var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
 // them from the server more than once.  This could potentially be problematic
 // if there are many files and they are large.
 var geoJsonCache = {};
+var geometryCache = null;
 
 // Create the map
 var map = L.map('map').setView(center, zoom);
@@ -134,15 +310,24 @@ var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-if ( overlays['polygon']['enabled'] ) {
-	setPolygonLayer(defaultYear, defaultMonth, 'download_median', 'new', 'low');
-}
-if ( overlays['plot']['enabled'] ) {
-	setPlotLayer(defaultYear, defaultMonth, 'new');
-}
-if ( seedCache ) {
-	seedLayerCache(defaultYear);
-}
+$.get('seattle_census10_blockgroups.topojson', function(resp) {
+	var geojson = {
+		'type': 'FeatureCollection',
+		'features': omnivore.topojson.parse(resp)
+	};
+
+    geometryCache = geojson;
+
+    if ( overlays['polygon']['enabled'] ) {
+        setPolygonLayer(currentYear, currentMonth, 'download_median', 'new', 'low');
+    }
+    if ( overlays['plot']['enabled'] ) {
+        setPlotLayer(currentYear, currentMonth, 'new');
+    }
+    if ( seedCache ) {
+        seedLayerCache(currentYear);
+    }
+}, 'json');
 </script>
 
 </body>
