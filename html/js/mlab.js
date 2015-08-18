@@ -313,6 +313,12 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 					l.feature.properties.download_count == 0 ) {
 				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
+/** Attempting to work on default popup for areas with not enough data
+ *			else if ( metric == "download_median" &&
+ *					l.feature.properties.download_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *			}
+ */
 			if ( metric == "upload_median" &&
 					l.feature.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
@@ -320,6 +326,12 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 					l.feature.properties.upload_count == 0 ) {
 				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
+/** Attempting to work on default popup for areas with not enough data
+ *			else if ( metric == "upload_median" &&
+ *					l.feature.properties.upload_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *			}
+ */
 			l.setStyle(l.feature['polygonStyle']);
 		});
 
@@ -423,13 +435,13 @@ function makePopup(props) {
 	return popup;
 }
 
-//**
+/**
  * Create a popup for areas that don't have enough data yet.
  *
  */
 function makeEmptyPopup(props) {
 	var popup = 'This area has not had enough speed tests submitted. Help improve ' +
-		'this map by <a href="#">running a test</a>';
+		'this map by <a href=#>running a test</a>';
 	return popup;
 }
 
