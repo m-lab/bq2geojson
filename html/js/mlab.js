@@ -413,8 +413,7 @@ function makePopup(props) {
 		'<strong>Upload:</strong> ' + Math.round(props.upload_median * 10) / 10 +
 		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
-		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>' +
-		'test isps: ' + props.isp;
+		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
 
