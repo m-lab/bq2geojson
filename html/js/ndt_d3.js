@@ -167,6 +167,8 @@ NDTmeter.prototype.onfinish = function (passed_results) {
   document.getElementById('ndt').style.display = "none";
   document.getElementById('ndt-results').style.display = "block";
   document.getElementById('extra-data').style.display = "block";
+  var child = document.getElementById('ndt');
+  document.getElementById('sidebar').removeChild(child);
 };
 
 NDTmeter.prototype.onerror = function (error_message) {

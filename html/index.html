@@ -14,79 +14,83 @@
 	<link href='css/mlab.css' rel='stylesheet' />
 	<script src='//api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src='js/mlab.js'></script>
 	<script src='js/ndt.js'></script>
 	<script src='js/ndt_d3.js'></script>
 	<script src='js/d3.v3.min.js'></script>
 	<script src='js/center.js'></script>
-	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/jquery-ui-slider-pips.min.js"></script>
+
 </head>
 
 <body>
-
 <div id="spinner">
 	<div id="spin">&nbsp;</div>
 	<div id="loading">LOADING</div>
 </div>
+<div id="approx-loc">
+	<p>Searching from:</p>
+</div>
 
 <div id="sidebar">
-	
-	<div id="ndt">
-		<h3>Test your speed:</h3>
+	<div id="icons">
+		<img src="images/speed.svg" id="test-icon" />
+		<img src="images/about.svg" id="about-icon" />
+		<img src="images/zoom-in.svg" class="small-icon"/>
+		<img src="images/zoom-out.svg" class="small-icon"/>
+	</div>
+	<div id="about-ndt">
+		<h3 class="league-gothic">What is this?</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue.</p>
+		<p>Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. <a href="http://www.measurementlab.net" target="_blank">M-Lab link</a></p>
+	</div>
+	<div id="ndt" class="ndt-related">
+		<h3 class="league-gothic">Test your speed!</h3>
+		<p class="subheading">You can contribute to this map!</p>
+		<p class="test-text">To start, simply hit the button below and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
 		</div>
 		<div id="ndt-status"></div>
 	</div>
 
-	<div id="ndt-results">
-		<h3>Your test results:</h3>
-		<div>Download speed: <span id="s2cRate"></span>Mbps</div>
-		<div>Upload speed: <span id="c2sRate"></span>Mbps</div>
-		<div>Minimum Round Trip Time: <span id="MinRTT"></span>ms</div>
+	<div id="ndt-results" class="ndt-related">
+		<h3 class="league-gothic">Your test results:</h3>
+		<p>Download speed: <span id="s2cRate"></span>Mbps</p>
+		<p>Upload speed: <span id="c2sRate"></span>Mbps</p>
+		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
 	</div>
-
-	<div id="extra-data">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-  			<h3 class="panel-title">Help make the Broadband Seattle Map More Accurate!</h3>
-		  </div>
-		  <div class="panel-body">Help us understand the state of broadband in Seattle by telling us more about your Internet connection!
-		<hr>
+<hr />
+	<div id="extra-data" class="ndt-related">
+				<p>Help us understand the state of broadband in Seattle by telling us more about your Internet connection.</p>
 		<form action="/collector/collect" method="post" id="collector">
-			Location: 
-			<select name="location_type">
+			<p>Location: 
+			<select name="location_type" class="form-control">
 				<option value="residence">Residence</option>
 				<option value="workplace">Workplace</option>
 				<option value="business">Business</option>
 				<option value="public">Public space</option>
-			</select><br/>
-			What kind of ISP?
-			<select name="connection_type">
+			</select></p>
+			<p>What kind of ISP?
+			<select name="connection_type" class="form-control">
 				<option value="cable">Cable</option>
 				<option value="dsl">DSL</option>
 				<option value="fiber">Fiber</option>
 				<option value="cellular">Cellular</option>
 				<option value="other">Other</option>
-			</select><br/>
-			Advertised download speed? <input name="advertised_download" size="3"/><small>Mbps</small><br/>
-			Advertised upload speed? <input name="advertised_upload" size="3"/><small>Mbps</small><br/>
-			Monthly cost of service: $ <input name="cost_of_service" size="3" /><br/>
+			</select></p>
+			<p>Advertised download speed? <input name="advertised_download" size="3"/><small>Mbps</small></p>
+			<p>Advertised upload speed? <input name="advertised_upload" size="3"/><small>Mbps</small></p>
+			<p>Monthly cost of service: $ <input name="cost_of_service" size="3" /></p>
 			<input name="latitude" id="latitude" type="hidden" />
 			<input name="longitude" id="longitude" type="hidden" />
 			<input name="bigquery_key" id="bigquery_key" type="hidden" />
 			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
 		</form>
-		</div>
-	     </div>	
 	</div>
 
-	<div>
-		Your approximate location:
-		<div id="approx-loc"></div>
-	</div>
 
 	<script>
 		var ndtServer,
@@ -108,13 +112,31 @@
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(success, error);
 		}
-
+		
 		function success(position) {
 			document.getElementById('latitude').value = position.coords.latitude;
 			document.getElementById('longitude').value = position.coords.longitude;
-			var mapImage = document.createElement('img');
-			mapImage.src = "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|" + position.coords.latitude + "," + position.coords.longitude + "&zoom=12&size=200x200";
-			document.getElementById('approx-loc').appendChild(mapImage);
+			
+			var xhr = new XMLHttpRequest(),
+			currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
+
+			var currentLoc;
+			xhr.open('GET', currentLocationURL, true);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						currentLoc = JSON.parse(xhr.responseText);
+						console.log("Location received");
+
+						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
+						
+						$('#approx-loc').append("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+					} else {
+						console.log('Location lookup failed');
+					}
+				}
+			};
 		}
 
 		function error(error) {
