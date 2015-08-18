@@ -37,17 +37,37 @@ html, body {
 }
 
 #ndt-div {
-	height: 100px;
-	width: 100px;
-	margin: 0 auto;
+	height: 40%;
+	width: 40%;
+	margin: 0 5% 5%;
+	float: left;
+}
+
+#ndt-status {
+	margin-top: 1em;
+	font-size: 1.5em;
 }
 
 #ndt-results {
 	display: none;
 }
 
+#ndt-results p, #extra-data p {
+	margin: 0 1.3em 5px;	
+}
+
+#ndt-results .btn-sm {
+	float: right;
+	margin-right: 2.3em;
+	margin-bottom: 2em;
+}
 #extra-data {
 	display: none;
+}
+
+#extra-data input.btn {
+	float: right;
+	margin-right: 3em;
 }
 
 #approx-loc {
@@ -207,7 +227,7 @@ span.mapControls {
 .form-control {
 	display:inline;
 	width:auto;
-	height:24px;
+	height:30px;
 	font-size: 1em;
 }
 .ui-slider-pips .ui-slider-pip {
@@ -276,7 +296,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #ndt {
   display:block;
 }
-
 
 
 #sidebar h3 {
