@@ -407,14 +407,14 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = '<h5>Census block group ' + props.groupid + '</h3>' +
-		'<strong>Download:</strong> ' + Math.round(props.download_median * 10) / 10 +
+	var popup = '<strong>Download:</strong> ' + Math.round(props.download_median * 10) / 10 +
 		' Mbps (median, ' + Math.round(props.download_count * 10) / 10 +
 		' samples)<br/>' +
 		'<strong>Upload:</strong> ' + Math.round(props.upload_median * 10) / 10 +
 		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
-		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms';
+		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>' +
+		'test isps: ' + props.isp;
 	return popup;
 }
 
