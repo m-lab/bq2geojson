@@ -309,13 +309,15 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
-			} else {
+			} else if ( metric == "download_median" &&
+					l.feature.properties.download_count == 0 ) {
 				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
 			if ( metric == "upload_median" &&
 					l.feature.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
-			} else {
+			} else if ( metric == "upload_median" &&
+					l.feature.properties.upload_count == 0 ) {
 				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
 			l.setStyle(l.feature['polygonStyle']);
