@@ -298,9 +298,12 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 
-#sidebar h3, #extra-data h3 {
+#sidebar h3 {
   margin-top:0;
   font-size: 2.5em;
+}
+#extra-data h3 {
+  margin-left: 1.3em;
 }
 
 #ndt, #ndt-results, #extra-data, #about-ndt {
