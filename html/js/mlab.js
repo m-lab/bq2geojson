@@ -488,9 +488,7 @@ $(function() {
 					$('#icons img').removeClass('selected');
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt').hide();
-					$('#ndt-results').hide();
-					$('#extra-data').hide();
+					$('#ndt, #ndt-results, #extra-data').hide();
 					$('#about-ndt').show();					
 				}
 			}
