@@ -39,7 +39,7 @@ html, body {
 #ndt-div {
 	height: 40%;
 	width: 40%;
-	margin: 0 5% 5%;
+	margin: 5%;
 	float: left;
 }
 
@@ -52,7 +52,7 @@ html, body {
 	display: none;
 }
 
-#ndt-results p, #extra-data p {
+#ndt-results p, #extra-data p, #ndt p, #about-ndt p {
 	margin: 0 1.3em 5px;	
 }
 
@@ -92,7 +92,6 @@ html, body {
 	height: 10px;
 	float: left;
 	margin: 0 5px 2px;
-	opacity: 0.5;
 }
 
 .info {
@@ -277,12 +276,24 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   background-size: cover;
 }
 
-#approx-loc {
-  text-align: right;
+#header {
   position:absolute;
   top:auto;
   z-index: 5;
   background-color:rgba(255,255,255,0.75);
+  width:100%;
+}
+
+#header h2 {
+  text-align: center;
+  display:inline-block;
+}
+
+#approx-loc {
+  text-align: right;
+  width:auto;
+  float:right;
+  display:inline-block;
 }
 
 #approx-loc p:first-child {
@@ -299,15 +310,15 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 
 #sidebar h3 {
-  margin-top:0;
+  margin:0.5em;
   font-size: 2.5em;
+}
+#sidebar h4 {
+  margin:1em;
 }
 
 #ndt, #ndt-results, #extra-data, #about-ndt {
   width:70%;
-}
-.leaflet-top.leaflet-right {
-  display:none;
 }
 #sidebar {
   width:10%;
@@ -315,7 +326,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   overflow:hidden;
 }
 #sidebar.extended {
-  width:60%;
+  width:40%;
 }
 #icons {
   float:right;
@@ -344,6 +355,66 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 .metric-value {
   font-weight: bold;
   color:inherit;
+}
+
+#progress-meter text.information {
+  text-align:center;
+  margin:0 auto;
+}
+
+#intro {
+  display:none;
+}
+
+.leaflet-top {
+  top:65px;
+}
+
+#icon-container, #header h2, #approx-loc {
+  float:left;
+}
+
+#icon-container {
+  width:10%;
+}
+
+#header h2 {
+  width:50%;
+  text-align: right;
+}
+
+#header.initial h2 {
+  text-align: center;
+  float:none;
+  width:auto;
+  display:block;
+}
+#header.initial p {
+  width:60%;
+  margin:0 auto;
+}
+#button-container {
+  text-align: center;
+}
+#header button {
+  margin:20px;
+}
+#approx-loc {
+  width:40%;
+}
+
+#intro-icon, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
+  display:none;
+}
+
+#testSpeed, #exploreMap {
+  display:none;
+}
+
+#intro-icon {
+  width:30px;
+  vertical-align: super;
+  margin-right:33%;
 }
 @media(max-width: 1200px) {
 	select#selectMetric {
