@@ -30,8 +30,22 @@
 	<div id="spin">&nbsp;</div>
 	<div id="loading">LOADING</div>
 </div>
+<div id="header">
+	<div id="icon-container">
+	<img src="images/info.svg" id="intro-icon" />
+</div>
+	<h2 class="league-gothic">The state of broadband in Seattle</h2>
+
+	<div id="intro">
+		<p>The Seattle Broadmand Map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
+			<p>The map shows real-world broadband experiences across the city, and allows the public to contribute their broadband experience using proven tools from <a href="http://measurementlab.net" target="_blank">Measurement Lab</a> (M-Lab).</p>
+			<div id="button-container">
+			<button id="exploreMap" class="btn btn-primary btn-sm">Explore the map</button><button id="testSpeed" class="btn btn-primary btn-sm">Test your speed</button>
+		</div>
+	</div>
 <div id="approx-loc">
 	<p>Searching from:</p>
+</div>
 </div>
 
 <div id="sidebar">
@@ -43,15 +57,13 @@
 	</div>
 	<div id="about-ndt">
 		<h3 class="league-gothic">About this Map</h3>
-		<p>The Seattle Broadmand Map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
-		<p>The map shows real-world broadband experiences across the city, and allows the public to contribute their broadband experience using proven tools from <a href="http://measurementlab.net" target="_blank">Measurement Lab</a> (M-Lab).</p>
 		<p>M-Lab data is combined with speed tests contributed from this website provide a picture of Seattle's broadband experience over time. The more data that is contributed, the more accurate the map will become.</p>
 		<p>The speed test data you submit here is submitted to M-Lab, is publicly available and conforms to <a href="http://www.measurementlab.net/privacy" target="_blank">M-Lab's Privacy and Acceptable Use Policies</a>. The Seattle Broadband Map application optionally requests your location and after the speed test asks for additional information about your connection to better understand the state of consumer broadband in the city. This additional information is now sent to M-Lab, but is stored in a private database used by this site.</p>  	
 	</div>
 	<div id="ndt" class="ndt-related">
 		<h3 class="league-gothic">Test your speed!</h3>
-		<p class="subheading">You can contribute to this map!</p>
-		<p class="test-text">To start, simply hit the button below and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
+		<h4>You can contribute to this map!</h4>
+		<p>To start, simply hit the button below and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
 		</div>
@@ -65,7 +77,7 @@
 		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
 	</div>
 	<div id="extra-data" class="ndt-related">
-		<h3 class="league-gothic">Tell us more about your Internet connection:</h3>
+		<h4>Tell us more about your Internet connection:</h4>
 		<form action="/collector/collect" method="post" id="collector">
 			<p>Location: 
 			<select name="location_type" class="form-control">
@@ -178,7 +190,7 @@
 						$('#extra-data').css('display', 'none');
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
-						$('#extra-data').append('Failed.');
+						$('#extra-data').append('Please complete the form before submitting.');
 					}
 				}
 			};

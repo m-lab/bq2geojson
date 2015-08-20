@@ -446,13 +446,62 @@ function makeEmptyPopup(props) {
 }
 
 function closeAllTheThings() {
-		$('#sidebar').removeClass('extended');
-		$('#icons img').removeClass('selected');
-		$('#ndt').hide();
-		$('#ndt-results').hide();
-		$('#extra-data').hide();
-		$('#about-ndt').hide();
+	$('#sidebar').removeClass('extended');
+	$('#icons img').removeClass('selected');
+	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
 }
+
+function showHideControls() {
+	$('#intro-icon, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top').toggle();
+}
+
+function showTestingPanel() {
+	// are there results yet?
+	var results = document.getElementById('s2cRate');
+	var resultsReceived = results.innerText;
+	var results = document.getElementById('s2cRate');
+	var resultsReceived = results.innerText;
+	if ($('#test-icon').hasClass('selected')) {
+		closeAllTheThings();
+	}
+	else {
+		$('#icons img').removeClass('selected');
+		$('#test-icon').addClass('selected');
+		$('#sidebar').addClass('extended');
+		$('#about-ndt').hide();
+		if (resultsReceived !== "?") {
+			$('#ndt-results').show();
+			$('#extra-data').show();
+		}
+		else {
+			$('#ndt').show();
+		}
+	}
+}
+
+
+$(function() {
+	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
+	$('#header').addClass('initial');
+	$('#exploreMap').click(function() {
+		$('#header').removeClass('initial');
+		showHideControls();
+		$('#intro, #testSpeed, #exploreMap').toggle();
+	});
+	$('#testSpeed').click(function() {
+		$('#header').removeClass('initial');
+		showHideControls();
+		showTestingPanel();
+		$('#intro, #testSpeed, #exploreMap').toggle();
+	});
+	$('#intro-icon').click(function() {
+		closeAllTheThings();
+		$('#header').toggleClass('initial');
+		$('#intro').toggle();
+	});
+});
+
+
 
 $(function() {
 	closeAllTheThings();
@@ -467,32 +516,12 @@ $(function() {
 					$('#icons img').removeClass('selected');
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt').hide();
-					$('#ndt-results').hide();
-					$('#extra-data').hide();
+					$('#ndt, #ndt-results, #extra-data').hide();
 					$('#about-ndt').show();					
 				}
 			}
 			else if (clickedElement == "test-icon") {
-				// are there results yet?
-				var results = document.getElementById('s2cRate');
-				var resultsReceived = results.innerText;
-				if ($('#test-icon').hasClass('selected')) {
-					closeAllTheThings();
-				}
-				else {
-					$('#icons img').removeClass('selected');
-					$(this).addClass('selected');
-					$('#sidebar').addClass('extended');
-					$('#about-ndt').hide();
-					if (resultsReceived !== "?") {
-						$('#ndt-results').show();
-						$('#extra-data').show();
-					}
-					else {
-						$('#ndt').show();
-					}
-				}
+				showTestingPanel();			
 			}
 		}
 	});
