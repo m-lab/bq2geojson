@@ -452,13 +452,11 @@ function closeAllTheThings() {
 }
 
 function showHideControls() {
-	$('#intro-icon, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top').toggle();
+	$('#intro-icon, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top, .leaflet-bottom.leaflet-right').toggle();
 }
 
 function showTestingPanel() {
 	// are there results yet?
-	var results = document.getElementById('s2cRate');
-	var resultsReceived = results.innerText;
 	var results = document.getElementById('s2cRate');
 	var resultsReceived = results.textContent;
 	if ($('#test-icon').hasClass('selected')) {

@@ -154,6 +154,7 @@ html, body {
 /* overriding styles for UI changes made by Gem Barrett */
 .leaflet-bottom.leaflet-left {
 	width:100%;
+  min-height: 75px;
 }
 .info {
 	border-radius:0;
@@ -278,6 +279,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   z-index: 5;
   background-color:rgba(255,255,255,0.75);
   width:100%;
+  min-height:60px;
 }
 
 #header h2 {
@@ -318,7 +320,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width:70%;
 }
 #sidebar {
-  width:10%;
+  width:auto;
   top:25%;
   overflow:hidden;
 }
@@ -462,6 +464,20 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   opacity: 1;
 }
 
+.leaflet-bottom.leaflet-right {
+  bottom:75px;
+  left:0;
+  width:10%;
+  display:none;
+}
+.info.legend.leaflet-control {
+  margin-bottom:0;
+  float:none;
+}
+.leaflet-container .leaflet-control-attribution {
+  float:none;
+  background-color: rgba(255,255,255,.75);
+}
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
