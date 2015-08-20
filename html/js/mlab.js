@@ -496,7 +496,6 @@ $(function() {
 	});
 	$('#intro-icon').click(function() {
 		closeAllTheThings();
-		$('#header').toggleClass('initial');
 		$('#intro').toggle();
 	});
 });

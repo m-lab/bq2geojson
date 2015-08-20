@@ -35,25 +35,23 @@
 	<img src="images/info.svg" id="intro-icon" />
 </div>
 	<h2 class="league-gothic">The state of broadband in Seattle</h2>
+	<div id="approx-loc">
+		<p>Searching from:</p>
+	</div>
 
 	<div id="intro">
-		<p>The Seattle Broadmand Map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
+		<p>The Seattle Broadband map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
 			<p>The map shows real-world broadband experiences across the city, and allows the public to contribute their broadband experience using proven tools from <a href="http://measurementlab.net" target="_blank">Measurement Lab</a> (M-Lab).</p>
 			<div id="button-container">
 			<button id="exploreMap" class="btn btn-primary btn-sm">Explore the map</button><button id="testSpeed" class="btn btn-primary btn-sm">Test your speed</button>
 		</div>
 	</div>
-<div id="approx-loc">
-	<p>Searching from:</p>
-</div>
 </div>
 
 <div id="sidebar">
 	<div id="icons">
 		<img src="images/speed.svg" id="test-icon" />
 		<img src="images/about.svg" id="about-icon" />
-		<img src="images/zoom-in.svg" class="small-icon"/>
-		<img src="images/zoom-out.svg" class="small-icon"/>
 	</div>
 	<div id="about-ndt">
 		<h3 class="league-gothic">About this Map</h3>
@@ -313,6 +311,7 @@ var baseLayers = {
 	'OpenStreetMap': osmLayer,
 	'Mapbox': mapboxLayer
 };
+
 
 // Global overlay layer variables
 var polygonLayer, plotLayer;
