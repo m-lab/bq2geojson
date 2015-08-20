@@ -4,11 +4,11 @@
  * @returns {object} DOM object for map legend
  */
 function addLegend() {
-	var legend = L.control({position: 'bottomleft'});
+	var legend = L.control({position: 'bottomright'});
 
 	legend.onAdd = function(map) {
 	    var div = L.DomUtil.create('div', 'info legend'),
-	        grades = [0, 7, 20, 900];
+	        grades = [0, 5, 10, 25, 50];
 
 		div.innerHTML = '<i style="background: black; opacity: .2">' +
 			'</i>Insuff. data<br/>';
@@ -190,12 +190,10 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 900 ? 'darkgreen' :
-					 val > 50 ? 'lightgreen' :
-           val > 25  ? 'lightyellow' :
-           val > 10  ? 'yellow' :
-           val > 7  ? 'lightsalmon' :
-					 val > 5 ? 'lightsalmon' :
+    return val > 50 ? 'blue' :
+           val > 25  ? 'green' :
+           val > 10  ? 'purple' :
+           val > 5  ? 'yellow' :
            val > 0   ? 'red' : 'transparent';
 }
 
@@ -420,9 +418,9 @@ function makePopup(props) {
 }
 
 function closeAllTheThings() {
-		$('#sidebar').removeClass('extended');
-		$('#icons img').removeClass('selected');
-		$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
+	$('#sidebar').removeClass('extended');
+	$('#icons img').removeClass('selected');
+	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
 }
 
 function showHideControls() {
@@ -433,22 +431,26 @@ function showTestingPanel() {
 	// are there results yet?
 	var results = document.getElementById('s2cRate');
 	var resultsReceived = results.innerText;
+	var results = document.getElementById('s2cRate');
+	var resultsReceived = results.innerText;
 	if ($('#test-icon').hasClass('selected')) {
 		closeAllTheThings();
 	}
 	else {
-		$('#icons img, #test-icon').toggleClass('selected');
+		$('#icons img').removeClass('selected');
+		$('#test-icon').addClass('selected');
 		$('#sidebar').addClass('extended');
 		$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
-			$('#ndt-results, #extra-data').toggle();
+			$('#ndt-results').show();
+			$('#extra-data').show();
 		}
 		else {
 			$('#ndt').show();
 		}
 	}
-
 }
+
 
 $(function() {
 	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
@@ -466,10 +468,12 @@ $(function() {
 	});
 	$('#intro-icon').click(function() {
 		closeAllTheThings();
-		$('#header').addClass('initial');
+		$('#header').toggleClass('initial');
 		$('#intro').toggle();
 	});
 });
+
+
 
 $(function() {
 	closeAllTheThings();
@@ -481,13 +485,17 @@ $(function() {
 					closeAllTheThings();
 				}
 				else {
-					$('#icons img, #about-icon').toggleClass('selected');
+					$('#icons img').removeClass('selected');
+					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #extra-data, #about-ndt').toggle();
+					$('#ndt').hide();
+					$('#ndt-results').hide();
+					$('#extra-data').hide();
+					$('#about-ndt').show();					
 				}
 			}
 			else if (clickedElement == "test-icon") {
-				showTestingPanel();
+				showTestingPanel();			
 			}
 		}
 	});

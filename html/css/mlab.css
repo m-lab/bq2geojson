@@ -416,6 +416,10 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   vertical-align: super;
   margin-right:33%;
 }
+.leaflet-tile .leaflet-tile-loaded {
+    opacity:0.75;
+}
+
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
