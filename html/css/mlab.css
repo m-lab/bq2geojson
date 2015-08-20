@@ -156,9 +156,6 @@ html, body {
 .leaflet-bottom.leaflet-left {
 	width:100%;
 }
-.leaflet-bottom.leaflet-right {
-	display:none;
-}
 .info {
 	border-radius:0;
 	box-shadow: none;
