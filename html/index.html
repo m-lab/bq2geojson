@@ -75,7 +75,7 @@
 				<option value="public">Public space</option>
 			</select></p>
 			<p>Who is Your ISP?
-			<select name="isp" class="form-control">
+			<select name="isp" class="form-control" onchange="showOtherIspBox(this.value);">
 				<option value="at&t">AT&T</option>
 				<option value="centyury_link">Century Link</option>
 				<option value="comcast">Comcast</option>
@@ -89,7 +89,7 @@
 				<option value="wave">Wave</option>
 				<option value="other">Other</option>
 			</select>
-			<label id="other">Other<input type="text" name="other"/></label>
+			<input type="text" name="other" id="isp" style="display:none;"/>
 			</p>
 			<p>What Type of Connection?
 			<select name="connection_type" class="form-control">

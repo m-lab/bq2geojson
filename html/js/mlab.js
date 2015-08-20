@@ -497,10 +497,10 @@ $(function() {
 		}
 	});
 });
-window.onload=function() {
-  var other = document.getElementById('other');
-  other.style.display = 'none';
-  document.collector.isp.onchange = function() {
-    other.style.display =(this.value=='other')? '' : 'none';
-  };
-};
+function showOtherIspBox(val) {
+  var element=document.getElementById('isp');
+  if(val=='other')
+    element.style.display='block';
+  else
+    element.style.display='none';
+} 
