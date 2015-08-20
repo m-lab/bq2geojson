@@ -251,7 +251,7 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 		var start = Date.UTC(year, month - 1, 1) / 1000;
 		var end = Date.UTC(year, month, 1, 0, 0, -1) / 1000;
 		//polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
-		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
+		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.isp_bins&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
 	} else {
 		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
 			jsonType;
@@ -309,11 +309,29 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			if ( metric == "download_median" &&
 					l.feature.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
+			} else if ( metric == "download_median" &&
+					l.feature.properties.download_count == 0 ) {
+				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
+/** Attempting to work on default popup for areas with not enough data
+ *			else if ( metric == "download_median" &&
+ *					l.feature.properties.download_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *			}
+ */
 			if ( metric == "upload_median" &&
 					l.feature.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(l.feature.properties));
+			} else if ( metric == "upload_median" &&
+					l.feature.properties.upload_count == 0 ) {
+				l.bindPopup(makeEmptyPopup(l.feature.properties));
 			}
+/** Attempting to work on default popup for areas with not enough data
+ *			else if ( metric == "upload_median" &&
+ *					l.feature.properties.upload_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *			}
+ */
 			l.setStyle(l.feature['polygonStyle']);
 		});
 
@@ -407,13 +425,23 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = 'DL: median:' + Math.round(props.download_median * 10) / 10 +
-		' Mbps / mean:' + Math.round(props.download_avg * 10) / 10 +
-		' Mbps / pts:' + Math.round(props.download_count * 10) / 10 +
-		'<br/>UL: median:' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps / mean:' + Math.round(props.upload_avg * 10) / 10 + ' Mbps' +
-		' / pts:' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
-		'RTT (mean): ' + Math.round(props.rtt_avg) + ' ms';
+	var popup = '<strong>Download:</strong> ' + Math.round(props.download_median * 10) / 10 +
+		' Mbps (median, ' + Math.round(props.download_count * 10) / 10 +
+		' samples)<br/>' +
+		'<strong>Upload:</strong> ' + Math.round(props.upload_median * 10) / 10 +
+		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
+		' samples)<br/>' +
+		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+	return popup;
+}
+
+/**
+ * Create a popup for areas that don't have enough data yet.
+ *
+ */
+function makeEmptyPopup(props) {
+	var popup = 'This area has not had enough speed tests submitted. Help improve ' +
+		'this map by <a href=#>running a test</a>';
 	return popup;
 }
 
