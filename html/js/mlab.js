@@ -190,10 +190,10 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? 'blue' :
-           val > 25  ? 'green' :
-           val > 10  ? 'purple' :
-           val > 5  ? 'yellow' :
+    return val > 50 ? 'darkgreen' :
+           val > 25  ? 'lightgreen' :
+           val > 10  ? 'yellow' :
+           val > 5  ? 'lightsalmon' :
            val > 0   ? 'red' : 'transparent';
 }
 
@@ -460,7 +460,7 @@ function showTestingPanel() {
 	var results = document.getElementById('s2cRate');
 	var resultsReceived = results.innerText;
 	var results = document.getElementById('s2cRate');
-	var resultsReceived = results.innerText;
+	var resultsReceived = results.textContent;
 	if ($('#test-icon').hasClass('selected')) {
 		closeAllTheThings();
 	}
@@ -470,6 +470,7 @@ function showTestingPanel() {
 		$('#sidebar').addClass('extended');
 		$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
+			$('#ndt').show();
 			$('#ndt-results').show();
 			$('#extra-data').show();
 		}

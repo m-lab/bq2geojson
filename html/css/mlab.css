@@ -66,8 +66,7 @@ html, body {
 }
 
 #extra-data input.btn {
-	float: right;
-	margin-right: 3em;
+	margin:1em 1.3em 5px;
 }
 
 #approx-loc {
