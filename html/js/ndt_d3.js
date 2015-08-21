@@ -86,7 +86,8 @@ NDTmeter.prototype.create = function () {
   this.meter.append("path").attr("class", "foreground");
   this.meter.append("text")
     .attr("text-anchor", "middle")
-    .attr("dy", "0em")
+    .attr("dy", "0.3em")
+    .attr("dx", "0.1em")
     .attr("class", "information");
 
   this.reset_meter();
