@@ -426,7 +426,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   padding-right:10px;
 }
 
-#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-left {
+#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right {
   display:none;
 }
 
@@ -531,20 +531,20 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-@media(min-width:460px) {
+@media(min-width:768px) {
   #mobile-menu, #mobile-container {
     display:none !important;
   }
 }
 
-@media(max-width:460px) {
+@media(max-width:768px) {
   #approx-loc {
     display:none !important;
   }
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
-  #mobile-container, .leaflet-top.leaflet-right {
+  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
     right:0;
     left:auto;
