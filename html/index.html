@@ -283,6 +283,31 @@ var overlays = {
 	}
 };
 
+// Defines the layers that are going to be added to the map.
+var geoLayers = {
+	'census_block_groups': {
+		'name': 'Census block groups',
+		'polygonFile': 'seattle_census10_blockgroups.topojson',
+		'dataUrl': 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.isp_bins&b.spatial_join=key&b.time_slices=month&f.time_slices=',
+		'dbKey': 'objectid',
+		'geoKey': 'OBJECTID',
+		'cache': null,
+		'layer': null
+	},
+	'council_districts': {
+		'name': 'Council districts',
+		'polygonFile': 'seattle_council_districts.topojson',
+		'dataUrl': 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.isp_bins&b.spatial_join=key&b.time_slices=month&f.time_slices=',
+		'dbKey': 'district',
+		'geoKey': 'district',
+		'cache': null,
+		'layer': null
+	}
+};
+
+// Which of the geoLayers should be the one added to the map by default
+var defaultLayer = 'census_block_groups';
+
 // If set to true, then prefetch the GeoJSON files into a local cache.  WARNING:
 // You may not want to enable if you expect mobile, low bandwidth, or otherwise
 // bandwidth restricted users, as this can pull in many megabytes of data.
@@ -331,31 +356,14 @@ var baseLayers = {
 	'Mapbox': mapboxLayer
 };
 
-// Global overlay layer variables
-var polygonLayer, plotLayer;
-
 var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
 layerCtrl.addTo(map);
 addLegend();
 addControls();
-$.get('seattle_census10_blockgroups.topojson', function(resp) {
-	var geojson = {
-		'type': 'FeatureCollection',
-		'features': omnivore.topojson.parse(resp)
-	};
 
-    geometryCache = geojson;
-
-    if ( overlays['polygon']['enabled'] ) {
-        setPolygonLayer(currentYear, currentMonth, 'download_median', 'new', 'low');
-    }
-    if ( overlays['plot']['enabled'] ) {
-        setPlotLayer(currentYear, currentMonth, 'new');
-    }
-    if ( seedCache ) {
-        seedLayerCache(currentYear);
-    }
-}, 'json');
+for (var geoLayer in geoLayers) {
+	setupLayer(geoLayer);
+}
 </script>
 
 </body>
