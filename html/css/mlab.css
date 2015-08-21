@@ -37,8 +37,8 @@ html, body {
 }
 
 #ndt-div {
-	height: 40%;
-	width: 40%;
+	height: auto;
+	width: 25%;
 	margin: 5%;
 	float: left;
 }
@@ -53,7 +53,12 @@ html, body {
 }
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
-	margin: 0 1.3em 5px;	
+	margin: 0 1.3em 5px;
+}
+
+#ndt p {
+  float:right;
+  width:55%;	
 }
 
 #ndt-results .btn-sm {
@@ -65,9 +70,12 @@ html, body {
 	display: none;
 }
 
+#sidebar #extra-data h4 {
+  margin:1em 1.3em 1em;
+}
+
 #extra-data input.btn {
-	float: right;
-	margin-right: 3em;
+	margin:1em 1.3em 5px;
 }
 
 #approx-loc {
@@ -155,9 +163,7 @@ html, body {
 /* overriding styles for UI changes made by Gem Barrett */
 .leaflet-bottom.leaflet-left {
 	width:100%;
-}
-.leaflet-bottom.leaflet-right {
-	display:none;
+  min-height: 75px;
 }
 .info {
 	border-radius:0;
@@ -282,11 +288,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   z-index: 5;
   background-color:rgba(255,255,255,0.75);
   width:100%;
+  min-height:60px;
 }
 
 #header h2 {
   text-align: center;
   display:inline-block;
+  margin-top:15px;
 }
 
 #approx-loc {
@@ -311,17 +319,25 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 #sidebar h3 {
   margin:0.5em;
-  font-size: 2.5em;
+  font-size: 2.25em;
+  text-transform: uppercase;
+  color:#007dc3;
 }
 #sidebar h4 {
-  margin:1em;
+  margin:0 1.3em 5px;
+  font-size: 1em;
+}
+
+#ndt h4 {
+  float:right;
+  width:55%;
 }
 
 #ndt, #ndt-results, #extra-data, #about-ndt {
   width:70%;
 }
 #sidebar {
-  width:10%;
+  width:auto;
   top:25%;
   overflow:hidden;
 }
@@ -349,7 +365,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #icons img.small-icon {
   width:50%;
-  display:none;
 }
 
 .metric-value {
@@ -376,23 +391,28 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 #icon-container {
   width:10%;
+  margin-top:10px;
 }
 
 #header h2 {
   width:50%;
   text-align: right;
+  color:#007dc3;
+  text-transform: uppercase;
+  font-size:2.5em;
 }
 
 #header.initial h2 {
   text-align: center;
-  float:none;
-  width:auto;
-  display:block;
+  width:100%;
 }
-#header.initial p {
+
+#header #intro {
   width:60%;
   margin:0 auto;
+  clear:both;
 }
+
 #button-container {
   text-align: center;
 }
@@ -401,9 +421,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #approx-loc {
   width:40%;
+  margin-top:10px;
+  padding-right:10px;
 }
 
-#intro-icon, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
+#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
   display:none;
 }
 
@@ -414,12 +436,67 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #intro-icon {
   width:30px;
   vertical-align: super;
-  margin-right:33%;
+  float:right;
+  cursor: pointer;
 }
+.leaflet-bar a:hover
 .leaflet-tile .leaflet-tile-loaded {
     opacity:0.75;
 }
+.leaflet-left:first-child {
+  top:0;
+}
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+  border: 0;
+  border-radius: 50px;
+  background: none;
+  margin-top:10px;
+}
 
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    border: 0;
+    background-image:url(images/zoom-in.svg);
+}
+
+.leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
+  display: inline-block;
+  width:30px;
+  height: 30px;
+  vertical-align: inherit;
+  background: none;
+  text-indent: 0;
+  color:#007dc3;
+  border-bottom: none;
+  border:4px solid #007dc3;
+  border-radius: 50px;
+  text-align: center;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.leaflet-bar a, #intro-icon {
+  opacity:0.75;
+}
+
+.leaflet-bar a:hover, #intro-icon:hover {
+  opacity: 1;
+}
+
+.leaflet-bottom.leaflet-right {
+  bottom:75px;
+  left:0;
+  width:10%;
+  display:none;
+}
+.info.legend.leaflet-control {
+  margin-bottom:0;
+  float:none;
+}
+.leaflet-container .leaflet-control-attribution {
+  float:none;
+  background-color: rgba(255,255,255,.75);
+  margin-top: 10px;
+}
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
@@ -446,8 +523,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-@media(min-width: 960px) {
-}
 
 @media(max-width: 768px) {
 	#sliderMonth {
@@ -455,8 +530,91 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-@media(min-width: 768px) {
+@media(min-width:460px) {
+  #mobile-menu, #mobile-container {
+    display:none !important;
+  }
 }
 
-@media(min-width: 320px) {
+@media(max-width:460px) {
+  #approx-loc {
+    display:none !important;
+  }
+  #mobile-container {
+    display:none;
+    right:0;
+    left:auto;
+    width:100%;
+    bottom:122px;
+    min-height: 105px;
+    height:auto;
+    position: absolute;
+  }
+  #mobile-menu {
+    display:block;
+    width:auto;
+    height:auto;
+    border: 2px solid #007dc3;
+    float:right;
+    padding:0 1em;
+    border-radius:10px;
+    font-weight: bold;
+    color:#007dc3;
+    font-size: 1.2em;
+    margin-top: 0.5em;
+    cursor: pointer;
+  }
+  .leaflet-bottom.leaflet-right {
+    display:none !important;
+  }
+  #mobile-approx-loc {
+    left:33.3%;
+    left:calc(100vw/3);
+    background-color:rgba(255,255,255,0.75);
+    position:absolute;
+    bottom:0;
+    height:100%;
+  }
+  #mobile-approx-loc p {
+    font-size: 0.8em;
+  }
+  #mobile-approx-loc p:first-child {
+    font-weight: bold;
+  }
+  #header.initial {
+    height:100%;
+    padding:2em;
+  }
+  #header.initial h2 {
+    font-size: 2.5em;
+  }
+  #header h2 {
+    font-size: 1.75em;
+    width:auto;
+  }
+  #header #intro {
+    width:100%;
+  }
+  .leaflet-bottom.leaflet-left {
+    min-height:122px;
+  }
+  .info.legend.leaflet-control {
+    height:100%;
+    position: absolute;
+    left:0;
+  }
+  #mobile-approx-loc, .legend {
+    width:33.3%;
+    width:calc(100vw/3);
+  }
+  #icon-container {
+    margin-right:14px;
+  }
+  .leaflet-left:first-child {
+    right:0;
+    left:auto;
+  }
+  .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
+    margin-right: 10px;
+  }
 }

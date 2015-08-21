@@ -22,16 +22,16 @@ function NDTmeter(body_element) {
   };
 
   this.NDT_STATUS_LABELS = {
-    'preparing_s2c': 'Preparing Download',
-    'preparing_c2s': 'Preparing Upload',
-    'running_s2c': 'Measuring Download',
-    'running_c2s': 'Measuring Upload',
-    'finished_s2c': 'Finished Download',
-    'finished_c2s': 'Finished Upload',
-    'preparing_meta': 'Preparing Metadata',
-    'running_meta': 'Sending Metadata',
-    'finished_meta': 'Finished Metadata',
-    'finished_all': 'Test Complete'
+    'preparing_s2c': 'Preparing download',
+    'preparing_c2s': 'Preparing upload',
+    'running_s2c': 'Measuring download speed',
+    'running_c2s': 'Measuring upload speed',
+    'finished_s2c': 'Finished download',
+    'finished_c2s': 'Finished upload',
+    'preparing_meta': 'Preparing metadata',
+    'running_meta': 'Sending metadata',
+    'finished_meta': 'Finished metadata',
+    'finished_all': 'Test complete'
   };
 
   this.create();
@@ -86,7 +86,8 @@ NDTmeter.prototype.create = function () {
   this.meter.append("path").attr("class", "foreground");
   this.meter.append("text")
     .attr("text-anchor", "middle")
-    .attr("dy", "0em")
+    .attr("dy", "0.3em")
+    .attr("dx", "0.1em")
     .attr("class", "information");
 
   this.reset_meter();
