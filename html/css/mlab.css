@@ -425,7 +425,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   padding-right:10px;
 }
 
-#intro-icon, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
+#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
   display:none;
 }
 
@@ -495,6 +495,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 .leaflet-container .leaflet-control-attribution {
   float:none;
   background-color: rgba(255,255,255,.75);
+  margin-top: 10px;
 }
 @media(max-width: 1200px) {
 	select#selectMetric {
@@ -529,11 +530,80 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-
+@media(min-width:460px) {
+  #mobile-approx-loc {
+    display:none !important;
+  }
+}
 
 @media(max-width:460px) {
-  #header {
+  #approx-loc {
+    display:none !important;
+  }
+  #mobile-menu {
+    display:block;
+    width:50px;
+    height:50px;
+    background-color: #007dc3;
+    float:right;
+  }
+  .leaflet-bottom.leaflet-right {
+    right:0;
+    left:auto;
+    width:100%;
+    bottom:122px;
+    min-height: 105px;
+  }
+  .legend {
+    left:0;
+  }
+  #mobile-approx-loc {
+    left:33.3%;
+    left:calc(100vw/3);
+    background-color:rgba(255,255,255,0.75);
+    position:absolute;
+    bottom:0;
+    height:100%;
+  }
+  #mobile-approx-loc p {
+    font-size: 0.8em;
+  }
+  #mobile-approx-loc p:first-child {
+    font-weight: bold;
+  }
+  #header.initial {
     height:100%;
     padding:2em;
+  }
+  #header.initial h2 {
+    font-size: 2.5em;
+  }
+  #header h2 {
+    font-size: 1.75em;
+    width:auto;
+  }
+  #header #intro {
+    width:100%;
+  }
+  .leaflet-bottom.leaflet-left {
+    min-height:122px;
+  }
+  .info.legend.leaflet-control {
+    height:100%;
+    position: absolute;
+  }
+  #mobile-approx-loc, .legend {
+    width:33.3%;
+    width:calc(100vw/3);
+  }
+  #icon-container {
+    margin-right:14px;
+  }
+  .leaflet-left:first-child {
+    right:0;
+    left:auto;
+  }
+  .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
+    margin-right: 10px;
   }
 }
