@@ -522,8 +522,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-@media(min-width: 960px) {
-}
 
 @media(max-width: 768px) {
 	#sliderMonth {
@@ -531,8 +529,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	}
 }
 
-@media(min-width: 768px) {
-}
 
-@media(min-width: 320px) {
+
+@media(max-width:460px) {
+  #header {
+    height:100%;
+    padding:2em;
+  }
 }
