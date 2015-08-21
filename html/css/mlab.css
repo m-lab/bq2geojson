@@ -70,6 +70,10 @@ html, body {
 	display: none;
 }
 
+#sidebar #extra-data h4 {
+  margin:1em 1.3em 1em;
+}
+
 #extra-data input.btn {
 	margin:1em 1.3em 5px;
 }
@@ -321,8 +325,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #sidebar h4 {
   margin:0 1.3em 5px;
-  float:right;
   font-size: 1em;
+}
+
+#ndt h4 {
+  float:right;
   width:55%;
 }
 
