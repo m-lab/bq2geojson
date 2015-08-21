@@ -495,7 +495,7 @@ function showTestingPanel() {
 
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-right').toggle();
+	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
 	$('#header').addClass('initial');
 	$('#exploreMap').click(function() {
 		$('#header').removeClass('initial');
