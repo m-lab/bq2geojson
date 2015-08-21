@@ -544,7 +544,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
-  #mobile-container, .leaflet-top.leaflet-right {
+  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
     right:0;
     left:auto;

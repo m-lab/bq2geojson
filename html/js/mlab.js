@@ -514,7 +514,16 @@ $(function() {
 	});
 });
 
+function showHideOnMobile() {
+	if ($( window ).width() < 768) {
+		$('div.leaflet-top.leaflet-right').addClass('mobile-view');
+	} else if (($( window ).width() > 768) && ($('div.leaflet-top.leaflet-right').hasClass('mobile-view'))) {
+		$('div.leaflet-top.leaflet-right').removeClass('mobile-view');
+	}
+}
+
 $(function() {
+	showHideOnMobile();
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
@@ -525,7 +534,11 @@ $(function() {
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
 		$('#mobile-container, div.leaflet-top.leaflet-right').toggle();
-	})
+	});
+	$( window ).resize(function() {
+		showHideOnMobile()
+	});
+
 })
 
 $(function() {
