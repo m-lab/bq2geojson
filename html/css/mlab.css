@@ -45,7 +45,7 @@ html, body {
 
 #ndt-status {
 	margin-top: 1em;
-	font-size: 1.5em;
+	font-size: 1em;
 }
 
 #ndt-results {
@@ -326,6 +326,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #sidebar h4 {
   margin:0 1.3em 5px;
   font-size: 1em;
+  line-height: 1.42857143;
 }
 
 #ndt h4 {
@@ -425,7 +426,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   padding-right:10px;
 }
 
-#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top {
+#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-left {
   display:none;
 }
 
@@ -541,9 +542,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
     display:none !important;
   }
   #mobile-container {
+    background-color: rgba(255,255,255,0.75);
+  }
+  #mobile-container, .leaflet-top.leaflet-right {
     display:none;
     right:0;
     left:auto;
+    top:auto;
     width:100%;
     bottom:122px;
     min-height: 105px;
@@ -570,16 +575,17 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   #mobile-approx-loc {
     left:33.3%;
     left:calc(100vw/3);
-    background-color:rgba(255,255,255,0.75);
     position:absolute;
     bottom:0;
     height:100%;
   }
   #mobile-approx-loc p {
-    font-size: 0.8em;
+      font-size: inherit;
+      line-height: inherit;
   }
   #mobile-approx-loc p:first-child {
     font-weight: bold;
+    margin-bottom: 5px;
   }
   #header.initial {
     height:100%;
@@ -594,6 +600,14 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   }
   #header #intro {
     width:100%;
+    padding:1em;
+    font-size:0.8em;
+  }
+  #sidebar {
+    top:30%;
+  }
+  #sidebar img {
+    max-width: 60px;
   }
   .leaflet-bottom.leaflet-left {
     min-height:122px;
@@ -602,8 +616,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
     height:100%;
     position: absolute;
     left:0;
+    background:none;
   }
-  #mobile-approx-loc, .legend {
+  #mobile-approx-loc, .legend, .leaflet-top.leaflet-right {
     width:33.3%;
     width:calc(100vw/3);
   }
@@ -615,6 +630,30 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
     left:auto;
   }
   .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
-    margin-right: 10px;
+    margin-right: 1em;
+  }
+  #sidebar.extended {
+    width:100%;
+  }
+  #ndt h4, #ndt p {
+    width:50%;
+  }
+  #progress-meter text.information {
+    font-size: 1em;
+  }
+  .leaflet-top.leaflet-right .leaflet-control-layers {
+    border:0;
+    margin:0;
+    padding:1em;
+    background:none;
+    float:none;
+  }
+  .info.legend.leaflet-control, #mobile-approx-loc, .leaflet-top.leaflet-right .leaflet-control-layers {
+      padding:6px 8px;
+      font-size: 10px;
+      line-height: 1;
+  }
+  #ndt, #ndt-results, #extra-data, #about-ndt {
+    font-size: 0.8em;
   }
 }
