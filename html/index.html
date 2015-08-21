@@ -158,7 +158,7 @@
 						console.log("Location received");
 
 						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
-						$('div.legend').before('<div id="mobile-approx-loc"><p>Searching from:</p></div>')
+						$('#mobile-container').append('<div id="mobile-approx-loc"><p>Searching from:</p></div>')
 						$('#approx-loc, #mobile-approx-loc').append("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
 					} else {
 						console.log('Location lookup failed');

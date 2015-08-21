@@ -531,7 +531,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 @media(min-width:460px) {
-  #mobile-approx-loc {
+  #mobile-menu, #mobile-container {
     display:none !important;
   }
 }
@@ -540,22 +540,32 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   #approx-loc {
     display:none !important;
   }
-  #mobile-menu {
-    display:block;
-    width:50px;
-    height:50px;
-    background-color: #007dc3;
-    float:right;
-  }
-  .leaflet-bottom.leaflet-right {
+  #mobile-container {
+    display:none;
     right:0;
     left:auto;
     width:100%;
     bottom:122px;
     min-height: 105px;
+    height:auto;
+    position: absolute;
   }
-  .legend {
-    left:0;
+  #mobile-menu {
+    display:block;
+    width:auto;
+    height:auto;
+    border: 2px solid #007dc3;
+    float:right;
+    padding:0 1em;
+    border-radius:10px;
+    font-weight: bold;
+    color:#007dc3;
+    font-size: 1.2em;
+    margin-top: 0.5em;
+    cursor: pointer;
+  }
+  .leaflet-bottom.leaflet-right {
+    display:none !important;
   }
   #mobile-approx-loc {
     left:33.3%;
@@ -591,6 +601,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   .info.legend.leaflet-control {
     height:100%;
     position: absolute;
+    left:0;
   }
   #mobile-approx-loc, .legend {
     width:33.3%;

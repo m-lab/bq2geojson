@@ -515,10 +515,16 @@ $(function() {
 });
 
 $(function() {
-	var mobileMenuExtra = '<div id="mobile-menu"></div>';
+	var mobileContainer = '<div id="mobile-container"></div>';
+	$('#map').append(mobileContainer);
+	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
 	$('div.leaflet-control > .metricControls').before(mobileMenuExtra);
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
+	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
+	$('#mobile-menu').click(function() {
+		$('#mobile-container').toggle();
+	})
 })
 
 $(function() {
