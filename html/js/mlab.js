@@ -467,7 +467,7 @@ function closeAllTheThings() {
 }
 
 function showHideControls() {
-	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top, .leaflet-bottom.leaflet-right').toggle();
+	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top.leaflet-left, .leaflet-bottom.leaflet-right, .leaflet-top.leaflet-right').toggle();
 }
 
 function showTestingPanel() {
@@ -495,7 +495,7 @@ function showTestingPanel() {
 
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
+	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-right').toggle();
 	$('#header').addClass('initial');
 	$('#exploreMap').click(function() {
 		$('#header').removeClass('initial');
@@ -523,7 +523,8 @@ $(function() {
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('#mobile-menu').click(function() {
-		$('#mobile-container').toggle();
+		closeAllTheThings();
+		$('#mobile-container, div.leaflet-top.leaflet-right').toggle();
 	})
 })
 
