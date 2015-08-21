@@ -176,11 +176,8 @@ function updateLayers(e, mode) {
 
 	var month = $('#sliderMonth').slider('value');
 
-	if ( overlays['polygon']['enabled'] ) {
-		setPolygonLayer(year, month, metric, mode, resolution);
-	}
-	if ( overlays['plot']['enabled'] ) {
-		setPlotLayer(year, month, mode);
+	for (var geoLayer in geoLayers) {
+		setPolygonLayer(geoLayer, year, month, metric, mode, resolution);
 	}
 }
 
@@ -229,18 +226,22 @@ function getLayerData(url, callback) {
 /**
  * Applies a layer to the map.
  *
+ * @param {string} layer Name of layer to set
  * @param {string} year Year of layer to set
  * @param {string} month Month of layer to set
  * @param {string} metric Metric to be represented in layer
  * @param {string" mode What state are we in? New or update?
  * @param {string} [resolution] For hexbinned map, granularity of hex layer
  */
-function setPolygonLayer(year, month, metric, mode, resolution) {
+function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 	var polygonUrl;
+	var dataUrl;
 
-	// Make a copy of the geometryCache so that operations on it don't
-	// modify the cache itself but just works on a copy
-	var geometryData = JSON.parse(JSON.stringify(geometryCache));
+	// Create the layer from the cache if this is a newly loaded page
+	if ( mode == 'new' ) {
+		geoLayers[layer]['layer'] = L.geoJson(JSON.parse(
+			JSON.stringify(geoLayers[layer]['cache'])));
+	}
 
 	// Don't display spinner if animation is happening
 	if ( $('#playAnimation').hasClass('paused') === false ) {
@@ -251,25 +252,21 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 	if ( polygonType != 'hex' ) {
 		var start = Date.UTC(year, month - 1, 1) / 1000;
 		var end = Date.UTC(year, month, 1, 0, 0, -1) / 1000;
-		//polygonUrl = 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
-		polygonUrl = 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.isp_bins&b.spatial_join=key&b.time_slices=month&f.time_slices=' + start + ',' + end;
+		dataUrl = geoLayers[layer]['dataUrl'] + start + ',' + end;
 	} else {
-		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
+		dataUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
 			jsonType;
 	}
 
-	if ( mode == 'update' ) {
-		layerCtrl.removeLayer(polygonLayer);
-	}
-
-	getLayerData(polygonUrl, function(response) {
+	getLayerData(dataUrl, function(response) {
 		var lookup = {};
 		response.features.forEach(function(row) {
-			lookup[row.properties['objectid']] = row.properties;
+			lookup[row.properties[geoLayers[layer]['dbKey']]] = row.properties;
 		});
-		geometryData.features.forEach(function(cell) {
+		geoLayers[layer]['layer'].eachLayer(function(l) {
+			cell = l.feature;
 
-			var stats = lookup[cell.properties['OBJECTID']];
+			var stats = lookup[cell.properties[geoLayers[layer]['geoKey']]];
 			for (var k in stats) {
 				if (stats.hasOwnProperty(k)) {
 					cell.properties[k] = stats[k];
@@ -299,48 +296,44 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			} else {
 				polygonStyle.color = getPolygonColor(value);
 			}
-		});
 
-		if ( map.hasLayer(polygonLayer) ) {
-			map.removeLayer(polygonLayer);
-			var polygonLayerVisible = true;
-		}
-
-		polygonLayer = L.geoJson(geometryData).eachLayer( function(l) {
 			if ( metric == "download_median" &&
-					l.feature.properties.download_count > 0 ) {
-				l.bindPopup(makePopup(l.feature.properties));
+					cell.properties.download_count > 0 ) {
+				l.bindPopup(makePopup(cell.properties));
 			} else if ( metric == "download_median" &&
-					l.feature.properties.download_count == 0 ) {
-				l.bindPopup(makeEmptyPopup(l.feature.properties));
+					cell.properties.download_count == 0 ) {
+				l.bindPopup(makeEmptyPopup(cell.properties));
 			}
 /** Attempting to work on default popup for areas with not enough data
  *			else if ( metric == "download_median" &&
- *					l.feature.properties.download_count == 0 ) {
- *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *					cell.properties.download_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(cell.properties));
  *			}
  */
 			if ( metric == "upload_median" &&
-					l.feature.properties.upload_count > 0 ) {
-				l.bindPopup(makePopup(l.feature.properties));
+					cell.properties.upload_count > 0 ) {
+				l.bindPopup(makePopup(cell.properties));
 			} else if ( metric == "upload_median" &&
-					l.feature.properties.upload_count == 0 ) {
-				l.bindPopup(makeEmptyPopup(l.feature.properties));
+					cell.properties.upload_count == 0 ) {
+				l.bindPopup(makeEmptyPopup(cell.properties));
 			}
 /** Attempting to work on default popup for areas with not enough data
  *			else if ( metric == "upload_median" &&
- *					l.feature.properties.upload_count == 0 ) {
- *				l.bindPopup(makeEmptyPopup(l.feature.properties));
+ *					cell.properties.upload_count == 0 ) {
+ *				l.bindPopup(makeEmptyPopup(cell.properties));
  *			}
  */
-			l.setStyle(l.feature['polygonStyle']);
+			l.setStyle(cell['polygonStyle']);
 		});
 
-		layerCtrl.addOverlay(polygonLayer, 'Polygon layer');
-
-		if ( polygonLayerVisible || (mode == 'new' &&
-				overlays['polygon']['defaultOn']) ) {
-			map.addLayer(polygonLayer);
+		// Add the layer controls if this is on page load, and if this
+                // is the default layer we are dealing with then go ahead and add it
+		// to the map.
+		if ( mode == 'new' ) {
+			layerCtrl.addOverlay(geoLayers[layer]['layer'], geoLayers[layer]['name']);
+			if ( layer == defaultLayer ) {
+				map.addLayer(geoLayers[layer]['layer']);
+			}
 		}
 
 	});
@@ -434,6 +427,27 @@ function makePopup(props) {
 		' samples)<br/>' +
 		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
+}
+
+/**
+ * Run on page load to fetch and cache the geo file for a layer
+ *
+ * @param {string} layer The layer to fetch and cache
+ */
+function setupLayer(layer) {
+	$.get(geoLayers[layer]['polygonFile'], function(resp) {
+		var geojson = {
+			'type': 'FeatureCollection',
+			'features': omnivore.topojson.parse(resp)
+		};
+
+		geoLayers[layer]['cache'] = geojson;
+		setPolygonLayer(layer, currentYear, currentMonth, 'download_median', 'new', 'low');
+
+		if ( seedCache ) {
+			seedLayerCache(currentYear);
+		}
+	}, 'json');
 }
 
 /**
