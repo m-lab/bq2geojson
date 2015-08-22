@@ -159,6 +159,9 @@ html, body {
 	margin-top: 15px;
 }
 
+div.leaflet-control-layers-base {
+  display: none;
+}
 
 /* overriding styles for UI changes made by Gem Barrett */
 .leaflet-bottom.leaflet-left {
