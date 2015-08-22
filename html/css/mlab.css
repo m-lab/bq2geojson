@@ -159,7 +159,7 @@ html, body {
 	margin-top: 15px;
 }
 
-div.leaflet-control-layers-base {
+div.leaflet-control-layers-base, div.leaflet-control-layers-separator {
   display: none;
 }
 
