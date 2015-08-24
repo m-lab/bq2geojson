@@ -708,6 +708,12 @@ a.leaflet-popup-close-button {
       font-size: 10px;
       line-height: 1;
   }
+  .leaflet-top.leaflet-left {
+    display:none;
+  }
+  .sliderElements {
+    width:85%;
+  }
 }
 
 @media(max-width: 960px) {
@@ -717,9 +723,6 @@ a.leaflet-popup-close-button {
 	}
 	select#selectMetric {
 		display:inline;
-	}
-	.sliderElements {
-		width:100%;
 	}
 }
 

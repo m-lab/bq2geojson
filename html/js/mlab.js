@@ -467,11 +467,12 @@ function closeAllTheThings() {
 }
 
 function showHideControls() {
-	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top.leaflet-left').toggle();
+	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
 	if ($('#header').hasClass('initial')) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
 	} else if ($(document).width() > 968) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
+		$('.leaflet-top.leaflet-left').hide();
 	}
 }
 
