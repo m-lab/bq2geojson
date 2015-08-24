@@ -534,7 +534,7 @@ $(function() {
 	});
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
-		$('#mobile-container, div.leaflet-top.leaflet-right').toggle();
+		$('#mobile-container, div.leaflet-top.leaflet-right, .sliderElements, .metricControls').toggle();
 	});
 	$('#exploreMap').click(function() {
 		$('#header').removeClass('initial');
