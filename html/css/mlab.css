@@ -571,7 +571,7 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #ndt, #ndt-results, #extra-data, #about-ndt {
-    font-size: 1.25em
+    font-size: 0.8em
   }
   #header h2 {
     font-size: 2.5em;
@@ -579,7 +579,7 @@ a.leaflet-popup-close-button {
     margin-top:10px;
   }
   #header #intro {
-    font-size: 1.25em
+    font-size: 1em
   }
   #mobile-approx-loc {
     font-size: 0.5em;
