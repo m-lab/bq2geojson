@@ -469,9 +469,9 @@ function closeAllTheThings() {
 function showHideControls() {
 	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc, .leaflet-top.leaflet-left').toggle();
 	if ($('#header').hasClass('initial')) {
-		$('#layers-box').hide();
-	} else if ($(document).width() > 768) {
-		$('#layers-box').show();
+		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
+	} else if ($(document).width() > 968) {
+		$('#layers-box, .leaflet-bottom.leaflet-right').show();
 	}
 }
 
@@ -514,6 +514,7 @@ $(function() {
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+			$('#intro, #mobile-container').hide();
 			if (clickedElement == "about-icon") {
 				if ($('#about-icon').hasClass('selected')) {
 					closeAllTheThings();
@@ -555,8 +556,10 @@ $(function() {
 
 function showOtherIspBox(val) {
   var element=document.getElementById('isp');
-  if(val=='other')
-    element.style.display='block';
-  else
+  if(val=='other') {
+		element.style.display='block';		
+	}
+  else {
     element.style.display='none';
+	}
 } 
