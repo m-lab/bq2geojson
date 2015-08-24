@@ -504,7 +504,14 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   margin-top: 10px;
 }
 
-
+a.leaflet-popup-close-button {
+  position:absolute;
+  top:-13px;
+  right:-13px;
+  margin:0;
+  background-color: white;
+  opacity: 1;
+}
 
 @media(max-width:499px) {
   #ndt h4, #ndt p {
