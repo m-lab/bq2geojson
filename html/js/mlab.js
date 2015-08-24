@@ -506,7 +506,7 @@ $(function() {
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
-	$('div.leaflet-control > .metricControls').before(mobileMenuExtra);
+	$('.info.controls.leaflet-control').append(mobileMenuExtra);
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
