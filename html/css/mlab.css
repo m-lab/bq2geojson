@@ -168,7 +168,6 @@ div.leaflet-control-layers-base, div.leaflet-control-layers-separator {
 /* overriding styles for UI changes made by Gem Barrett */
 .leaflet-bottom.leaflet-left {
 	width:100%;
-  min-height: 75px;
 }
 .info {
 	border-radius:0;
@@ -571,7 +570,7 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #ndt, #ndt-results, #extra-data, #about-ndt {
-    font-size: 1.25em
+    font-size: 0.8em
   }
   #header h2 {
     font-size: 2.5em;
@@ -579,7 +578,7 @@ a.leaflet-popup-close-button {
     margin-top:10px;
   }
   #header #intro {
-    font-size: 1.25em
+    font-size: 1em
   }
   #mobile-approx-loc {
     font-size: 0.5em;
@@ -593,6 +592,9 @@ a.leaflet-popup-close-button {
 @media(max-width:968px) {
   #sliderMonth {
     width:85%;
+  }
+  .sliderElements, .metricControls {
+    display: none;
   }
   #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
@@ -609,7 +611,7 @@ a.leaflet-popup-close-button {
     left:auto;
     top:auto;
     width:100%;
-    bottom:122px;
+    bottom:118px;
     min-height: 105px;
     height:auto;
     position: absolute;
@@ -668,9 +670,6 @@ a.leaflet-popup-close-button {
   }
   #sidebar img {
     max-width: 60px;
-  }
-  .leaflet-bottom.leaflet-left {
-    min-height:122px;
   }
   .info.legend.leaflet-control {
     height:100%;
@@ -826,7 +825,7 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(max-width359px) {
+@media(max-width:359px) {
   #mobile-container, #layers-box {
     bottom:148px;
   }
