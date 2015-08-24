@@ -513,7 +513,19 @@ a.leaflet-popup-close-button {
   opacity: 1;
 }
 
+@media(min-width:460px) {
+  .metricControls {
+    width:65%;
+  }
+}
+
 @media(max-width:499px) {
+  .sliderElements {
+    width:100%;
+  }
+  .metricControls {
+    width:75%;
+  }
   #ndt h4, #ndt p {
     width:auto;
     float:none;
@@ -570,6 +582,9 @@ a.leaflet-popup-close-button {
   }
   #mobile-approx-loc {
     font-size: 0.5em;
+  }
+  .metricControls {
+    width:40%;
   }
 }
 
@@ -710,6 +725,19 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
+  .leaflet-top.leaflet-right {
+    right:auto;
+    top:auto;
+    left: 13%;
+    bottom:96px;
+  }
+  .leaflet-right .leaflet-control {
+    background: rgba(255,255,255,0.75);
+    border:0;
+  }
+  .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
+    min-height: 102px;
+  }
   .leaflet-bottom.leaflet-right {
     width:13%;
     bottom:96px;
@@ -733,18 +761,15 @@ a.leaflet-popup-close-button {
     font-size: 1em;
     width:72%;
   }
+  .metricControls {
+    width:20%;
+  }
 }
 
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
 		margin-bottom: 10px;
-	}
-	.metricControls {
-		width:20%;
-	}
-	.sliderElements {
-		width:80%;
 	}
 }
 @media(min-width: 1200px) {
@@ -753,7 +778,17 @@ a.leaflet-popup-close-button {
     width:calc(100vw / 3);
   }
   .leaflet-bottom.leaflet-right {
+    bottom:86px;
+    max-width:171px;
+    width:auto;
+  }
+  .leaflet-top.leaflet-right {
+    left:171px;
+    bottom:86px;
+  }
+}
+@media(min-width:1436px) {
+  .leaflet-top.leaflet-right , .leaflet-bottom.leaflet-right {
     bottom:75px;
   }
 }
-
