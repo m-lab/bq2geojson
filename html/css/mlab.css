@@ -513,6 +513,7 @@ a.leaflet-popup-close-button {
   opacity: 1;
 }
 
+
 @media(min-width:460px) {
   .metricControls {
     width:65%;
@@ -790,5 +791,43 @@ a.leaflet-popup-close-button {
 @media(min-width:1436px) {
   .leaflet-top.leaflet-right , .leaflet-bottom.leaflet-right {
     bottom:75px;
+  }
+}
+
+@media(max-width:400px) {
+  #header button {
+    margin: 10px;
+  }
+  #header {
+    min-height: 80px;
+  }
+  #header h2 {
+    width:70% !important;
+    text-align: center;
+  }
+  #header.initial h2 {
+    width:auto !important;
+  }
+  .leaflet-bar a {
+    display:block;
+  }
+  .sliderElements .mapControls:not(#sliderMonth) {
+    width:10%;
+  }
+  #sliderMonth {
+    width:75%;
+    margin-left: 10px;
+  }
+  #sidebar.extended {
+    top:79px;
+  }
+  #mobile-menu {
+    margin-left: 10px;
+  }
+}
+
+@media(max-width359px) {
+  #mobile-container, #layers-box {
+    bottom:148px;
   }
 }
