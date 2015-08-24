@@ -340,7 +340,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #ndt, #ndt-results, #extra-data, #about-ndt {
-  width:70%;
+  width:80%;
 }
 #sidebar {
   width:auto;
@@ -490,7 +490,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 .leaflet-bottom.leaflet-right {
-  bottom:75px;
   left:0;
   width:10%;
   display:none;
@@ -505,42 +504,29 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   margin-top: 10px;
 }
 
-@media(max-width: 1200px) {
-	select#selectMetric {
-		float:none;
-		margin-bottom: 10px;
-	}
-	.metricControls {
-		width:20%;
-	}
-	.sliderElements {
-		width:80%;
-	}
-}
-
-@media(max-width: 960px) {
-	.metricControls {
-		float:none;
-		width:100%;
-	}
-	select#selectMetric {
-		display:inline;
-	}
-	.sliderElements {
-		width:100%;
-	}
-}
 
 
-@media(max-width: 768px) {
-	#sliderMonth {
-		width:85%;
-	}
-}
-
-@media(min-width:768px) {
-  #mobile-menu, #mobile-container {
-    display:none !important;
+@media(max-width:499px) {
+  #ndt h4, #ndt p {
+    width:auto;
+    float:none;
+  }
+  #ndt-status {
+    float:left;
+    margin-top: 10%;
+  } 
+  #progress-meter text.information {
+    font-size: 20px;
+  }
+  #ndt, #ndt-results, #extra-data, #about-ndt {
+    font-size: 0.8em;
+  }
+  #header h2 {
+    font-size: 1.75em;
+    width:auto;
+  }
+  #header #intro {
+    font-size:0.8em;
   }
 }
 
@@ -558,24 +544,33 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
     text-align: center;
     width: 25%;
   }
-}
-
-@media(max-width:499px) {
-  #ndt h4, #ndt p {
+  #extra-data p {
+    display:inline-block;
+  }
+  #extra-data input.btn {
+    display:block;
+  }
+  #ndt, #ndt-results, #extra-data, #about-ndt {
+    font-size: 1.25em
+  }
+  #header h2 {
+    font-size: 2.5em;
     width:auto;
-    float:none;
+    margin-top:10px;
   }
-  #ndt-status {
-    float:left;
-    margin-top: 10%;
-  } 
-  #progress-meter text.information {
-    font-size: 20px;
+  #header #intro {
+    font-size: 1.25em
   }
-
+  #mobile-approx-loc {
+    font-size: 0.5em;
+  }
 }
 
-@media(max-width:768px) {
+
+@media(max-width:968px) {
+  #sliderMonth {
+    width:85%;
+  }
   #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
   }
@@ -635,14 +630,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   #header.initial h2 {
     font-size: 2.5em;
   }
-  #header h2 {
-    font-size: 1.75em;
-    width:auto;
-  }
   #header #intro {
     width:100%;
     padding:1em;
-    font-size:0.8em;
     padding-right: 75px;
     min-height: 180px;
   }
@@ -696,7 +686,67 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
       font-size: 10px;
       line-height: 1;
   }
-  #ndt, #ndt-results, #extra-data, #about-ndt {
-    font-size: 0.8em;
+}
+
+@media(max-width: 960px) {
+	.metricControls {
+		float:none;
+		width:100%;
+	}
+	select#selectMetric {
+		display:inline;
+	}
+	.sliderElements {
+		width:100%;
+	}
+}
+
+
+@media(min-width:969px) {
+  .leaflet-bottom.leaflet-right {
+    width:13%;
+    bottom:96px;
+  }
+  #mobile-menu, #mobile-container {
+    display:none !important;
+  }
+  #approx-loc {
+    float: right;
+  }
+  #icon-container {
+    width:13%;
+  }
+  #header h2 {
+    padding-left:10px;
+  }
+  #sidebar #ndt, #sidebar #ndt-results, #sidebar #extra-data, #sidebar #about-ndt {
+    font-size: 1em;
+  }
+  #header #intro {
+    font-size: 1em;
+    width:72%;
   }
 }
+
+@media(max-width: 1200px) {
+	select#selectMetric {
+		float:none;
+		margin-bottom: 10px;
+	}
+	.metricControls {
+		width:20%;
+	}
+	.sliderElements {
+		width:80%;
+	}
+}
+@media(min-width: 1200px) {
+  #icon-container, #header h2, #approx-loc {
+    width:33.3%;
+    width:calc(100vw / 3);
+  }
+  .leaflet-bottom.leaflet-right {
+    bottom:75px;
+  }
+}
+
