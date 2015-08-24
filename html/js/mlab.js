@@ -514,6 +514,7 @@ $(function() {
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+			$('#intro, #mobile-container').hide();
 			if (clickedElement == "about-icon") {
 				if ($('#about-icon').hasClass('selected')) {
 					closeAllTheThings();

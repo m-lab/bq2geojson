@@ -60,11 +60,11 @@
 	</div>
 	<div id="ndt" class="ndt-related">
 		<h3 class="league-gothic">Test your speed!</h3>
+		<h4>You can contribute to this map!</h4>
+		<p>To start, simply hit the button and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
 		</div>
-		<h4>You can contribute to this map!</h4>
-		<p>To start, simply hit the button below and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="ndt-status"></div>
 	</div>
 
@@ -203,7 +203,9 @@
 						$('#extra-data').css('display', 'none');
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
-						$('#extra-data').append('Please complete the form before submitting.');
+						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
+							$('#extra-data').append("<p style='color:red'>Please complete the form before submitting.</p>");
+						}
 					}
 				}
 			};

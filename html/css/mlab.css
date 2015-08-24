@@ -41,11 +41,13 @@ html, body {
 	width: 25%;
 	margin: 5%;
 	float: left;
+  max-width:95px;
 }
 
 #ndt-status {
-	margin-top: 1em;
 	font-size: 1em;
+  margin:0 1.3em 5px;
+  font-weight: bold;
 }
 
 #ndt-results {
@@ -322,7 +324,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 
 #sidebar h3 {
   margin:0.5em;
-  font-size: 2.25em;
+  font-size: 2em;
   text-transform: uppercase;
   color:#007dc3;
 }
@@ -355,7 +357,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   opacity:1.0;
 }
 #sidebar.extended #icons {
-  width:30%;
+  width:20%;
+  margin-top: 20px;
 }
 #icons img {
   width:90%;
@@ -501,6 +504,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   background-color: rgba(255,255,255,.75);
   margin-top: 10px;
 }
+
 @media(max-width: 1200px) {
 	select#selectMetric {
 		float:none;
@@ -538,6 +542,37 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   #mobile-menu, #mobile-container {
     display:none !important;
   }
+}
+
+@media(min-width:500px) {
+  #ndt h4, #ndt p {
+    width:50%;
+    float:right;
+  }
+  #progress-meter text.information {
+    font-size: 25px;
+  }
+  #ndt-status {
+    float: none;
+    clear: both;
+    text-align: center;
+    width: 25%;
+  }
+}
+
+@media(max-width:499px) {
+  #ndt h4, #ndt p {
+    width:auto;
+    float:none;
+  }
+  #ndt-status {
+    float:left;
+    margin-top: 10%;
+  } 
+  #progress-meter text.information {
+    font-size: 20px;
+  }
+
 }
 
 @media(max-width:768px) {
@@ -608,9 +643,15 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
     width:100%;
     padding:1em;
     font-size:0.8em;
+    padding-right: 75px;
+    min-height: 180px;
+  }
+  #header.initial #intro {
+    padding:0;
+    min-height: auto;
   }
   #sidebar {
-    top:30%;
+    top:80px;
   }
   #sidebar img {
     max-width: 60px;
@@ -640,12 +681,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   }
   #sidebar.extended {
     width:100%;
-  }
-  #ndt h4, #ndt p {
-    width:50%;
-  }
-  #progress-meter text.information {
-    font-size: 1em;
+    min-height: 50%;
+    top:60px;
   }
   .leaflet-top.leaflet-right .leaflet-control-layers {
     border:0;
