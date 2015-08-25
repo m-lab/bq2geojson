@@ -501,9 +501,11 @@ function showTestingPanel() {
 	}
 }
 
-$( window ).resize(function() {
-		console.log($(document).width());
-		if ($(document).width() > 968) {
+$( window ).resize(function() {		
+		if ($('#header').hasClass('initial')) {
+			return;
+		}
+		else if (($(document).width() > 968)) {
 			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 		}
 });

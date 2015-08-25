@@ -721,7 +721,7 @@ a.leaflet-popup-close-button {
       line-height: 1;
   }
   .leaflet-top.leaflet-left {
-    display:none;
+    display:none !important;
   }
   .sliderElements {
     width:85%;
