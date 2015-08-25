@@ -499,7 +499,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 .leaflet-container .leaflet-control-attribution {
   float:none;
-  background-color: rgba(255,255,255,.75);
   margin-top: 10px;
 }
 
@@ -553,6 +552,13 @@ a.leaflet-popup-close-button {
   #ndt h4, #ndt p {
     width:50%;
     float:right;
+    font-size: 1.3em;
+  }
+  #ndt-div {
+    margin-top:0;
+  }
+  #sidebar h3 {
+    font-size: 2.5em;
   }
   #progress-meter text.information {
     font-size: 25px;
@@ -588,6 +594,12 @@ a.leaflet-popup-close-button {
   }
 }
 
+@media(min-width:600px) {
+  #ndt h4, #ndt p {
+    font-size: 1.3em;
+    width:60%;
+  }
+}
 
 @media(max-width:968px) {
   #sliderMonth {
@@ -743,7 +755,10 @@ a.leaflet-popup-close-button {
   }
   .leaflet-bottom.leaflet-right {
     width:13%;
-    bottom:96px;
+    bottom:72px;
+  }
+  .leaflet-top.leaflet-right {
+    bottom:72px;
   }
   #mobile-menu, #mobile-container {
     display:none !important;
@@ -765,7 +780,15 @@ a.leaflet-popup-close-button {
     width:72%;
   }
   .metricControls {
-    width:20%;
+    width:auto;
+  }
+  .sliderElements {
+    width:70%;
+  }
+  #ndt h4, #ndt p {
+    font-size: 0.8em;
+    width:65%;
+    margin:0
   }
 }
 
@@ -781,13 +804,17 @@ a.leaflet-popup-close-button {
     width:calc(100vw / 3);
   }
   .leaflet-bottom.leaflet-right {
-    bottom:86px;
     max-width:171px;
     width:auto;
   }
   .leaflet-top.leaflet-right {
     left:171px;
-    bottom:86px;
+  }
+  #sliderMonth {
+    width:88%;
+  }
+  #ndt h4, #ndt p {
+    font-size: 1.1em;
   }
 }
 @media(min-width:1436px) {
@@ -825,9 +852,9 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(min-width:360px) {
+@media(min-width:360px and max-width:969px) {
   .sliderElements {
-    width:83%;
+    width:80%;
   }
 }
 

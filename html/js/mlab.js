@@ -476,6 +476,8 @@ function showHideControls() {
 	}
 }
 
+
+
 function showTestingPanel() {
 	// are there results yet?
 	var results = document.getElementById('s2cRate');
@@ -516,6 +518,9 @@ $(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
 			$('#intro, #mobile-container').hide();
+			if ($(document).width() < 968) {
+				$('.metricControls, .sliderElements').hide();
+			}
 			if (clickedElement == "about-icon") {
 				if ($('#about-icon').hasClass('selected')) {
 					closeAllTheThings();
