@@ -472,7 +472,7 @@ function showHideControls() {
 		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
 	} else if ($(document).width() > 968) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
-		$('.leaflet-top.leaflet-left').hide();
+		$('.leaflet-top.leaflet-left').show();
 	}
 }
 
@@ -501,6 +501,12 @@ function showTestingPanel() {
 	}
 }
 
+$( window ).resize(function() {
+		console.log($(document).width());
+		if ($(document).width() > 968) {
+			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+		}
+});
 
 $(function() {
 	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
