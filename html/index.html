@@ -202,6 +202,7 @@
 						console.log('Record successfully added.');
 						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
 						$('#extra-data').css('display', 'none');
+						setTimeout(window.location.reload(true),3000);
 						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
