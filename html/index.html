@@ -201,9 +201,8 @@
 					if (xhr.status === 201) {
 						console.log('Record successfully added.');
 						$('#extra-data').css('display', 'none');
-						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
-							$('#ndt-results').append("<h3 class="league-gothic">Thank you for submitting your test!</h3>");
-						}
+						$('#ndt-results').append("<h3 class="league-gothic">Thank you for submitting your test!</h3>");
+						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
 						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
