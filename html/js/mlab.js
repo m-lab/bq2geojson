@@ -283,27 +283,25 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 				polygonStyle.weight = 0.2;
 				polygonStyle.fillOpacity = 0.015;
 				polygonStyle.color = 'black';
+                                l.bindPopup(makeEmptyPopup(cell.properties));
+                        }
+
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
 				polygonStyle.fillOpacity = 0.05;
 				polygonStyle.color = 'black';
+                                l.bindPopup(makeEmptyPopup(cell.properties));
 			} else if ( metric == 'upload_median' &&
 					cell.properties['upload_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
 				polygonStyle.fillOpacity = 0.05;
 				polygonStyle.color = 'black';
+                                l.bindPopup(makeEmptyPopup(cell.properties));
 			} else {
 				polygonStyle.color = getPolygonColor(value);
 			}
 
-			if ( metric == "download_median" &&
-					cell.properties.download_count > 0 ) {
-				l.bindPopup(makePopup(cell.properties));
-			} else if ( metric == "download_median" &&
-					cell.properties.download_count == 0 ) {
-				l.bindPopup(makeEmptyPopup(cell.properties));
-			}
 /** Attempting to work on default popup for areas with not enough data
  *			else if ( metric == "download_median" &&
  *					cell.properties.download_count == 0 ) {
