@@ -200,8 +200,8 @@
 				if (xhr.readyState === 4) {
 					if (xhr.status === 201) {
 						console.log('Record successfully added.');
-						$('#extra-data').css('display', 'none');
 						$('#ndt-results').append("<h3 class="league-gothic">Thank you for submitting your test!</h3>");
+						$('#extra-data').css('display', 'none');
 						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
