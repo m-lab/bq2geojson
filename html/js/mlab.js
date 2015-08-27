@@ -283,7 +283,6 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 				polygonStyle.weight = 0.2;
 				polygonStyle.fillOpacity = 0.015;
 				polygonStyle.color = 'black';
-                                l.bindPopup(makeEmptyPopup(cell.properties));
                         }
 
 			} else if ( metric == 'download_median' &&
@@ -291,13 +290,11 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 				polygonStyle.weight = 0.5;
 				polygonStyle.fillOpacity = 0.05;
 				polygonStyle.color = 'black';
-                                l.bindPopup(makeEmptyPopup(cell.properties));
 			} else if ( metric == 'upload_median' &&
 					cell.properties['upload_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
 				polygonStyle.fillOpacity = 0.05;
 				polygonStyle.color = 'black';
-                                l.bindPopup(makeEmptyPopup(cell.properties));
 			} else {
 				polygonStyle.color = getPolygonColor(value);
 			}
@@ -452,7 +449,7 @@ function setupLayer(layer) {
  * Create a popup for areas that don't have enough data yet.
  *
  */
-function makeEmptyPopup(props) {
+function makeEmptyPopup() {
 	var popup = 'This area has not had enough speed tests submitted. Help improve ' +
 		'this map by <a href=#>running a test</a>';
 	return popup;
