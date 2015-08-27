@@ -75,10 +75,11 @@
 		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
 	</div>
 	<div id="extra-data" class="ndt-related">
-		<h4>Tell us more about your Internet connection:</h4>
+		<h4>Please tell us more about your Internet connection:</h4>
 		<form action="/collector/collect" method="post" id="collector">
 			<p>Location: 
 			<select name="location_type" class="form-control">
+				<option value="default">------</option>
 				<option value="residence">Residence</option>
 				<option value="workplace">Workplace</option>
 				<option value="business">Business</option>
@@ -86,6 +87,7 @@
 			</select></p>
 			<p>Who is Your ISP?
 			<select name="isp" class="form-control" onchange="showOtherIspBox(this.value);">
+				<option value="default">------</option>
 				<option value="at&amp;t">AT&amp;T</option>
 				<option value="centyury_link">Century Link</option>
 				<option value="comcast">Comcast</option>
@@ -101,6 +103,7 @@
 			</p>
 			<p>What Type of Connection?
 			<select name="connection_type" class="form-control">
+				<option value="default">------</option>
 				<option value="cable">Cable</option>
 				<option value="dsl">DSL</option>
 				<option value="fiber">Fiber</option>
