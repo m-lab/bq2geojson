@@ -283,6 +283,7 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 				polygonStyle.weight = 0.2;
 				polygonStyle.fillOpacity = 0.015;
 				polygonStyle.color = 'black';
+				l.bindPopup(makePopup(cell.properties));
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
@@ -300,29 +301,11 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 			if ( metric == "download_median" &&
 					cell.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(cell.properties));
-			} else if ( metric == "download_median" &&
-					cell.properties.download_count == 0 ) {
-				l.bindPopup(makeEmptyPopup(cell.properties));
-			}
-/** Attempting to work on default popup for areas with not enough data
- *			else if ( metric == "download_median" &&
- *					cell.properties.download_count == 0 ) {
- *				l.bindPopup(makeEmptyPopup(cell.properties));
- *			}
- */
+			} 
 			if ( metric == "upload_median" &&
 					cell.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(cell.properties));
-			} else if ( metric == "upload_median" &&
-					cell.properties.upload_count == 0 ) {
-				l.bindPopup(makeEmptyPopup(cell.properties));
-			}
-/** Attempting to work on default popup for areas with not enough data
- *			else if ( metric == "upload_median" &&
- *					cell.properties.upload_count == 0 ) {
- *				l.bindPopup(makeEmptyPopup(cell.properties));
- *			}
- */
+			} 
 			l.setStyle(cell['polygonStyle']);
 		});
 
@@ -448,16 +431,6 @@ function setupLayer(layer) {
 			seedLayerCache(currentYear);
 		}
 	}, 'json');
-}
-
-/**
- * Create a popup for areas that don't have enough data yet.
- *
- */
-function makeEmptyPopup(props) {
-	var popup = 'This area has not had enough speed tests submitted. Help improve ' +
-		'this map by <a href=#>running a test</a>';
-	return popup;
 }
 
 function closeAllTheThings() {
