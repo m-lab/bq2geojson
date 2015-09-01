@@ -281,9 +281,9 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 
 			if ( ! value ) {
 				polygonStyle.weight = 0.2;
-				polygonStyle.fillOpacity = 0.015;
+				polygonStyle.fillOpacity = 0.5;
 				polygonStyle.color = 'black';
-				l.bindPopup(makePopup(cell.properties));
+				l.bindPopup(makeBlankPopup());
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
@@ -411,7 +411,10 @@ function makePopup(props) {
 		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
-
+function makeBlankPopup() {
+        var popup = '<h4>Not enough data for this area</h4><p>Help make our map more accurate by <a href="#">running your test</a>!</p>';
+	return popup;
+}
 /**
  * Run on page load to fetch and cache the geo file for a layer
  *
