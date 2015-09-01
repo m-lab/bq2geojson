@@ -412,7 +412,7 @@ function makePopup(props) {
 	return popup;
 }
 function makeBlankPopup() {
-        var popup = "<h4 class='league-gothic'>This area doesn't have enough data yet!</h4><p>Help make our map more accurate by <a id='testSpeedEmptyPrompt' href='#'>running your test</a> from an address in this area</a>!</p>";
+        var popup = "<h3 class='league-gothic'>This area doesn't have enough data yet!</h3><p>Help make our map more accurate by <a id='testSpeedEmpty' href='#' onClick='javascript:testSpeedEmptyPrompt();'>running your test</a> from an address in this area</a>!</p>";
 	return popup;
 }
 /**
