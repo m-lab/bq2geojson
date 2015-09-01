@@ -281,7 +281,7 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 
 			if ( ! value ) {
 				polygonStyle.weight = 0.2;
-				polygonStyle.fillOpacity = 0.5;
+				polygonStyle.fillOpacity = 0.015;
 				polygonStyle.color = 'black';
 				l.bindPopup(makeBlankPopup());
 			} else if ( metric == 'download_median' &&
@@ -412,7 +412,7 @@ function makePopup(props) {
 	return popup;
 }
 function makeBlankPopup() {
-        var popup = '<h4>Not enough data for this area</h4><p>Help make our map more accurate by <a href="#">running your test</a>!</p>';
+        var popup = '<h4>This area doesn't have enough data yet!</h4><p>Help make our map more accurate by running your test from an address in this area</a>!</p><div id="button-container"><button id="exploreMap" class="btn btn-primary btn-sm">Explore the map</button><button id="testSpeed" class="btn btn-primary btn-sm">Test your speed</button></div>';
 	return popup;
 }
 /**
