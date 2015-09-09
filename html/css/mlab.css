@@ -76,7 +76,7 @@ html, body {
   margin:1em 1.3em 1em;
 }
 
-#extra-data input.btn {
+#extra-data .btn {
 	margin:1em 1.3em 5px;
 }
 
@@ -511,6 +511,10 @@ a.leaflet-popup-close-button {
   opacity: 1;
 }
 
+#form-buttons {
+  clear:both
+}
+
 
 @media(min-width:460px) {
   .metricControls {
@@ -572,8 +576,8 @@ a.leaflet-popup-close-button {
   #extra-data p {
     display:inline-block;
   }
-  #extra-data input.btn {
-    display:block;
+  #extra-data .btn.btn-primary.btn-sm {
+    display:inline-block;
   }
   #ndt, #ndt-results, #extra-data, #about-ndt {
     font-size: 0.8em

@@ -116,7 +116,11 @@
 			<input name="latitude" id="latitude" type="hidden" />
 			<input name="longitude" id="longitude" type="hidden" />
 			<input name="bigquery_key" id="bigquery_key" type="hidden" />
-			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
+			<div id="form-buttons">
+			<input class="btn btn-primary btn-sm" id="submit-form" type="submit" value="Send"/>
+			<button class="btn btn-primary btn-sm" id="dismiss-form"/>No thanks</button>
+		</div>
+
 		</form>
 	</div>
 
@@ -190,7 +194,7 @@
 			};
 		};
 
-		$('#collector :submit').click(function(e) {
+		$('#collector #submit-form').click(function(e) {
 			e.preventDefault();
 			var xhr = new XMLHttpRequest(),
 				collectorUrl = '/collector/collect?';
@@ -206,7 +210,6 @@
 						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
 						$('#extra-data').css('display', 'none');
 						setTimeout(window.location.reload(true),7000000);
-						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
 						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {

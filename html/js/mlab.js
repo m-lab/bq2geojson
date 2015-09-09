@@ -522,6 +522,10 @@ $(function() {
 			}
 		}
 	});
+	$('#dismiss-form').click(function(e) {
+		e.preventDefault();
+		$('#extra-data').remove();
+	});
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
 		$('#mobile-container, div.leaflet-top.leaflet-right, .sliderElements, .metricControls').toggle();
