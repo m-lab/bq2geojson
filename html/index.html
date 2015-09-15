@@ -189,7 +189,7 @@
 			xhr.send();
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState === 4) {
-					if (xhr.status === 201) {
+					if (xhr.status >= 200 && < 300) {
 						console.log('Record successfully added.');
 						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
 						$('#extra-data').css('display', 'none');
