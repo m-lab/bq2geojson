@@ -153,11 +153,16 @@ NDTmeter.prototype.onfinish = function (passed_results) {
         passed_results.hasOwnProperty(metric_name)) {
       if (metric_name == 'MinRTT') {
         resultString = Number(passed_results[metric_name]).toFixed(2);
-        document.getElementById(metric_name).value = resultString;
+        document.getElementById('min_rtt').value = resultString;
       } else {
         resultString = Number(passed_results[metric_name] /
           1000).toFixed(2);
-        document.getElementById(metric_name).value = resultString;
+        if (metric_name == 's2cRate') {
+          document.getElementById('actual_download').value = resultString;
+        }
+        if (metric_name == 'c2sRate') {
+          document.getElementById('actual_upload').value = resultString;
+        }
       }
       d3.select('#' + metric_name)
         .text(resultString)
