@@ -153,9 +153,11 @@ NDTmeter.prototype.onfinish = function (passed_results) {
         passed_results.hasOwnProperty(metric_name)) {
       if (metric_name == 'MinRTT') {
         resultString = Number(passed_results[metric_name]).toFixed(2);
+        document.getElementById(metric_name).value = resultString;
       } else {
         resultString = Number(passed_results[metric_name] /
           1000).toFixed(2);
+        document.getElementById(metric_name).value = resultString;
       }
       d3.select('#' + metric_name)
         .text(resultString)
