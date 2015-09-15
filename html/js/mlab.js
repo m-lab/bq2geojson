@@ -33,11 +33,11 @@ function addControls() {
 
 	controls.onAdd = function(map) {
 		var controls = L.DomUtil.create('div', 'info controls'),
-			labelYear = L.DomUtil.create('span', 'mapControls', controls),
-			selectYear = L.DomUtil.create('select', 'mapControls', controls),
-			labelMetric = L.DomUtil.create('span', 'mapControls', controls),
-			selectMetric = L.DomUtil.create('select', 'mapControls', controls);
-
+		labelMetric = L.DomUtil.create('span', 'mapControls', controls),
+		selectMetric = L.DomUtil.create('select', 'mapControls', controls),
+		labelYear = L.DomUtil.create('span', 'mapControls', controls),
+		selectYear = L.DomUtil.create('select', 'mapControls', controls);
+		
 		if ( polygonType == 'hex' ) {
 			var labelRes = L.DomUtil.create('span', 'mapControls', controls),
 				selectRes = L.DomUtil.create('select', 'mapControls', controls);
@@ -48,39 +48,44 @@ function addControls() {
 			selectRes.setAttribute('id', 'selectRes');
 		}
 
-		var	sliderMonth = L.DomUtil.create('div', 'mapControls', controls),
-			checkAnimate = L.DomUtil.create('div', 'mapControls', controls),
-			dateOptions = '';
+		var	checkAnimate = L.DomUtil.create('div', 'mapControls', controls),sliderMonth = L.DomUtil.create('div', 'mapControls', controls),dateOptions = '';
 
 		var yearSelected;
 		for ( var year in dates ) {
-			yearSelected =  year == defaultYear ? 'selected="selected"' : '';
+			yearSelected =  year == currentYear ? 'selected="selected"' : '';
 			dateOptions += '<option value="' + year + '"' + yearSelected +
 				'>' + year + '</option>';
 		}
 
-		checkAnimate.innerHTML = '<input id="checkAnimate"' +
-			'type="checkbox" />Animate map';
+		checkAnimate.innerHTML = '<span id="playAnimation" class="paused"></span>';
 		
 		sliderMonth.setAttribute('id', 'sliderMonth');
 		// Prevent the entire map from dragging when the slider is dragged.
 		L.DomEvent.disableClickPropagation(sliderMonth);
 
-		labelYear.innerHTML = 'Year';
+
+		labelMetric.innerHTML = 'Show me';
+		selectMetric.innerHTML = '<option value="download_median">' +
+			'Download speeds</option><option value="upload_median">' +
+			'Upload speeds</option>';
+		selectMetric.setAttribute('id', 'selectMetric');
+		selectMetric.setAttribute('class', 'form-control');
+
+		labelYear.innerHTML = 'from';
 		selectYear.innerHTML = dateOptions;
 		selectYear.setAttribute('id', 'selectYear');
-
-		labelMetric.innerHTML = 'Metric';
-		selectMetric.innerHTML = '<option value="download_median">' +
-			'DL throughput</option><option value="upload_median">' +
-			'UL throughput</option>';
-		selectMetric.setAttribute('id', 'selectMetric');
-
+		selectYear.setAttribute('class', 'form-control');
 
 		return controls;
 	};
 
 	controls.addTo(map);
+	
+	
+	var metricChoices = $(".leaflet-control > span, .leaflet-control > select").slice(0,4);
+	$(".leaflet-control > div.mapControls").wrapAll("<div class='sliderElements'></div>");
+	metricChoices.wrapAll("<div class='metricControls'></div>");
+
 
 	var elems;
 	if ( polygonType != 'hex' ) {
@@ -93,9 +98,14 @@ function addControls() {
 			function (e) { updateLayers(e, 'update'); });
 	});
 
-	var clearId;
-	$('#checkAnimate').change( function() {
-		if ( $('#checkAnimate').prop('checked') ) {
+	var clearId;	
+	$('#playAnimation').click( function() {
+		$('#playAnimation').toggleClass('paused');
+		if ( $('#playAnimation').hasClass('paused') ) {
+			clearInterval(clearId);
+			$('.leaflet-control-layers').addClass(
+				"leaflet-control-layers-expanded");
+		} else {
 			$('.leaflet-control-layers').removeClass(
 				"leaflet-control-layers-expanded");
 			var i = $('#sliderMonth').slider('value');
@@ -103,10 +113,6 @@ function addControls() {
 				$('#sliderMonth').slider('value', i + 1);
 				i = (i + 1) % dates[$('#selectYear').val()].length;
 			}, animateInterval);
-		} else {
-			clearInterval(clearId);
-			$('.leaflet-control-layers').addClass(
-				"leaflet-control-layers-expanded");
 		}
 	});
 
@@ -114,15 +120,16 @@ function addControls() {
 	// the map.
 	$('#sliderMonth')
 		.slider({
-			min: Number(dates[defaultYear][0]),
-			max: Number(dates[defaultYear][dates[defaultYear].length - 1]),
+			min: Number(dates[currentYear][0]),
+			max: Number(dates[currentYear][dates[currentYear].length - 1]),
+			value: currentMonth,
 			change: function (e, ui) {
 				updateLayers(e, 'update');
 			}
 		})
 		.slider('pips', {
 			rest: 'label',
-			labels: monthNames.slice(0, dates[defaultYear].length)
+			labels: monthNames.slice(0, dates[currentYear].length)
 		});;
 }
 
@@ -139,7 +146,7 @@ function updateLayers(e, mode) {
 
 	var resolution = polygonType == 'hex' ? $('#selectRes').val() : '';
 
-	// If the year was changed then we need to update the slider and set it's
+	// If the year was changed then we need to update the slider and set its
 	// value to the first configured month for that year.
 	if ( e.target.id == 'selectYear' ) {
 		$('#sliderMonth')
@@ -169,11 +176,8 @@ function updateLayers(e, mode) {
 
 	var month = $('#sliderMonth').slider('value');
 
-	if ( overlays['polygon']['enabled'] ) {
-		setPolygonLayer(year, month, metric, mode, resolution);
-	}
-	if ( overlays['plot']['enabled'] ) {
-		setPlotLayer(year, month, mode);
+	for (var geoLayer in geoLayers) {
+		setPolygonLayer(geoLayer, year, month, metric, mode, resolution);
 	}
 }
 
@@ -184,10 +188,10 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? 'blue' :
-           val > 25  ? 'green' :
-           val > 10  ? 'purple' :
-           val > 5  ? 'yellow' :
+    return val > 50 ? 'darkgreen' :
+           val > 25  ? 'lightgreen' :
+           val > 10  ? 'yellow' :
+           val > 5  ? 'lightsalmon' :
            val > 0   ? 'red' : 'transparent';
 }
 
@@ -222,35 +226,52 @@ function getLayerData(url, callback) {
 /**
  * Applies a layer to the map.
  *
+ * @param {string} layer Name of layer to set
  * @param {string} year Year of layer to set
  * @param {string} month Month of layer to set
  * @param {string} metric Metric to be represented in layer
  * @param {string" mode What state are we in? New or update?
  * @param {string} [resolution] For hexbinned map, granularity of hex layer
  */
-function setPolygonLayer(year, month, metric, mode, resolution) {
+function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 	var polygonUrl;
+	var dataUrl;
+
+	// Create the layer from the cache if this is a newly loaded page
+	if ( mode == 'new' ) {
+		geoLayers[layer]['layer'] = L.geoJson(JSON.parse(
+			JSON.stringify(geoLayers[layer]['cache'])));
+	}
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
 	month = month < 10 ? '0' + month : month;
 	if ( polygonType != 'hex' ) {
-		polygonUrl = 'json/' + year + '_' + month + '-' + polygonType + '.' +
-			jsonType;
+		var start = Date.UTC(year, month - 1, 1) / 1000;
+		var end = Date.UTC(year, month, 1, 0, 0, -1) / 1000;
+		dataUrl = geoLayers[layer]['dataUrl'] + start + ',' + end;
 	} else {
-		polygonUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
+		dataUrl = 'json/' + year + '_' + month + '-' + resolution + '.' +
 			jsonType;
 	}
 
-	if ( mode == 'update' ) {
-		layerCtrl.removeLayer(polygonLayer);
-	}
+	getLayerData(dataUrl, function(response) {
+		var lookup = {};
+		response.features.forEach(function(row) {
+			lookup[row.properties[geoLayers[layer]['dbKey']]] = row.properties;
+		});
+		geoLayers[layer]['layer'].eachLayer(function(l) {
+			cell = l.feature;
 
-	getLayerData(polygonUrl, function(response) {
-		response.features.forEach( function(cell) {
+			var stats = lookup[cell.properties[geoLayers[layer]['geoKey']]];
+			for (var k in stats) {
+				if (stats.hasOwnProperty(k)) {
+					cell.properties[k] = stats[k];
+				}
+			}
 
 			var value = cell.properties[metric],
 				polygonStyle = cell.polygonStyle = {};
@@ -259,8 +280,10 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			polygonStyle.fillOpacity = 0.5;
 
 			if ( ! value ) {
-				polygonStyle.weight = 0;
-				polygonStyle.fillOpacity = 0;
+				polygonStyle.weight = 0.2;
+				polygonStyle.fillOpacity = 0.015;
+				polygonStyle.color = 'black';
+				l.bindPopup(makeBlankPopup());
 			} else if ( metric == 'download_median' &&
 					cell.properties['download_count'] < minDataPoints ) {
 				polygonStyle.weight = 0.5;
@@ -274,30 +297,26 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
 			} else {
 				polygonStyle.color = getPolygonColor(value);
 			}
-		});
 
-		if ( map.hasLayer(polygonLayer) ) {
-			map.removeLayer(polygonLayer);
-			var polygonLayerVisible = true;
-		}
-
-		polygonLayer = L.geoJson(response).eachLayer( function(l) {
 			if ( metric == "download_median" &&
-					l.feature.properties.download_count > 0 ) {
-				l.bindPopup(makePopup(l.feature.properties));
-			}
+					cell.properties.download_count > 0 ) {
+				l.bindPopup(makePopup(cell.properties));
+			} 
 			if ( metric == "upload_median" &&
-					l.feature.properties.upload_count > 0 ) {
-				l.bindPopup(makePopup(l.feature.properties));
-			}
-			l.setStyle(l.feature['polygonStyle']);
+					cell.properties.upload_count > 0 ) {
+				l.bindPopup(makePopup(cell.properties));
+			} 
+			l.setStyle(cell['polygonStyle']);
 		});
 
-		layerCtrl.addOverlay(polygonLayer, 'Polygon layer');
-
-		if ( polygonLayerVisible || (mode == 'new' &&
-				overlays['polygon']['defaultOn']) ) {
-			map.addLayer(polygonLayer);
+		// Add the layer controls if this is on page load, and if this
+                // is the default layer we are dealing with then go ahead and add it
+		// to the map.
+		if ( mode == 'new' ) {
+			layerCtrl.addOverlay(geoLayers[layer]['layer'], geoLayers[layer]['name']);
+			if ( layer == defaultLayer ) {
+				map.addLayer(geoLayers[layer]['layer']);
+			}
 		}
 
 	});
@@ -313,9 +332,10 @@ function setPolygonLayer(year, month, metric, mode, resolution) {
  * @param {string" mode What state are we in? New or update?
  */
 function setPlotLayer(year, month, mode) {
+    return;
 
 	// Don't display spinner if animation is happening
-	if ( $('#checkAnimate').prop('checked') === false ) {
+	if ( $('#playAnimation').hasClass('paused') === false ) {
 		$('#spinner').css('display', 'block');
 	}
 
@@ -382,12 +402,160 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = 'DL: median:' + Math.round(props.download_median * 10) / 10 +
-		' Mbps / mean:' + Math.round(props.download_avg * 10) / 10 +
-		' Mbps / pts:' + Math.round(props.download_count * 10) / 10 +
-		'<br/>UL: median:' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps / mean:' + Math.round(props.upload_avg * 10) / 10 + ' Mbps' +
-		' / pts:' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
-		'RTT (mean): ' + Math.round(props.rtt_avg) + ' ms';
+	var popup = '<strong>Download:</strong> ' + Math.round(props.download_median * 10) / 10 +
+		' Mbps (median, ' + Math.round(props.download_count * 10) / 10 +
+		' samples)<br/>' +
+		'<strong>Upload:</strong> ' + Math.round(props.upload_median * 10) / 10 +
+		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
+		' samples)<br/>' +
+		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
+function makeBlankPopup() {
+        var popup = "<h3 class='league-gothic'>This area doesn't have enough data yet!</h3><p>Help make our map more accurate by <a id='testSpeedEmptyPrompt' href='#' onClick='javascript:showTestingPanel()'>running your test</a> from an address in this area</a>!</p>";
+	return popup;
+}
+/**
+ * Run on page load to fetch and cache the geo file for a layer
+ *
+ * @param {string} layer The layer to fetch and cache
+ */
+function setupLayer(layer) {
+	$.get(geoLayers[layer]['polygonFile'], function(resp) {
+		var geojson = {
+			'type': 'FeatureCollection',
+			'features': omnivore.topojson.parse(resp)
+		};
+
+		geoLayers[layer]['cache'] = geojson;
+		setPolygonLayer(layer, currentYear, currentMonth, 'download_median', 'new', 'low');
+
+		if ( seedCache ) {
+			seedLayerCache(currentYear);
+		}
+	}, 'json');
+}
+
+function closeAllTheThings() {
+	$('#sidebar').removeClass('extended');
+	$('#icons img').removeClass('selected');
+	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
+}
+
+function showHideControls() {
+	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
+	if ($('#header').hasClass('initial')) {
+		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
+	} else if ($(document).width() > 968) {
+		$('#layers-box, .leaflet-bottom.leaflet-right').show();
+		$('.leaflet-top.leaflet-left').show();
+	}
+}
+
+
+
+function showTestingPanel() {
+	// are there results yet?
+	var results = document.getElementById('s2cRate');
+	var resultsReceived = results.textContent;
+	if ($('#test-icon').hasClass('selected')) {
+		closeAllTheThings();
+	}
+	else {
+		$('#icons img').removeClass('selected');
+		$('#test-icon').addClass('selected');
+		$('#sidebar').addClass('extended');
+		$('#about-ndt').hide();
+		if (resultsReceived !== "?") {
+			$('#ndt').show();
+			$('#ndt-results').show();
+			$('#extra-data').show();
+		}
+		else {
+			$('#ndt').show();
+		}
+	}
+}
+
+$( window ).resize(function() {		
+		if ($('#header').hasClass('initial')) {
+			return;
+		}
+		else if (($(document).width() > 968)) {
+			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+		}
+});
+
+$(function() {
+	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
+	$('.leaflet-top.leaflet-right').attr('id','layers-box');
+	$('#header').addClass('initial');
+	var mobileContainer = '<div id="mobile-container"></div>';
+	$('#map').append(mobileContainer);
+	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
+	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+	var attribution = $('div.leaflet-control-attribution.leaflet-control');
+	$('div.info.legend.leaflet-control').append(attribution);
+	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
+	closeAllTheThings();
+	$('#icons img').click(function() {
+		var clickedElement = $(this).attr('id');
+		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+			$('#intro, #mobile-container').hide();
+			if ($(document).width() < 968) {
+				$('.metricControls, .sliderElements').hide();
+			}
+			if (clickedElement == "about-icon") {
+				if ($('#about-icon').hasClass('selected')) {
+					closeAllTheThings();
+				}
+				else {
+					$('#icons img').removeClass('selected');
+					$(this).addClass('selected');
+					$('#sidebar').addClass('extended');
+					$('#ndt, #ndt-results, #extra-data').hide();
+					$('#about-ndt').show();					
+				}
+			}
+			else if (clickedElement == "test-icon") {
+				showTestingPanel();			
+			}
+		}
+	});
+	$('#mobile-menu').click(function() {
+		closeAllTheThings();
+		$('#mobile-container, div.leaflet-top.leaflet-right, .sliderElements, .metricControls').toggle();
+	});
+	$('#exploreMap').click(function() {
+		$('#header').removeClass('initial');
+		showHideControls();
+		$('#intro, #testSpeed, #exploreMap').toggle();
+	});
+	$('#testSpeed').click(function() {
+		$('#header').removeClass('initial');
+		showHideControls();
+		showTestingPanel();
+		$('#intro, #testSpeed, #exploreMap').toggle();
+	});
+	$('#intro-icon').click(function() {
+		closeAllTheThings();
+		$('#intro').toggle();
+	});
+        $('#testSpeedEmptyPrompt').click(function() {
+                $('#header').removeClass('initial');
+                showHideControls();
+                showTestingPanel();
+                $('#intro, #testSpeed, #exploreMap').toggle();
+        });
+});
+
+
+function showOtherIspBox(val) {
+  var element=document.getElementById('isp');
+  if(val=='other') {
+		element.style.display='block';		
+	}
+  else {
+    element.style.display='none';
+	}
+} 
