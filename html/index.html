@@ -75,8 +75,9 @@
 		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
 	</div>
 	<div id="extra-data" class="ndt-related">
-		<h4>Please tell us more about your Internet connection:</h4>
+		<h4 class="league-gothic" style="font-size: .75em;">Please tell us more about your Internet connection:</h4>
 		<form action="/collector/collect" method="post" id="collector">
+			<input class="btn btn-primary btn-sm" type="submit" value="No thanks"/>
 			<p>Location: 
 			<select name="location_type" class="form-control">
 				<option value="default">------</option>
@@ -99,6 +100,9 @@
 			<p>Monthly cost of service: $ <input name="cost_of_service" size="3" /></p>
 			<input name="latitude" id="latitude" type="hidden" />
 			<input name="longitude" id="longitude" type="hidden" />
+			<input name="actual_upload" id="actual_upload" type="hidden" />
+			<input name="actual_download" id="actual_download" type="hidden" />
+			<input name="min_rtt" id="min_rtt" type="hidden" />
 			<input name="bigquery_key" id="bigquery_key" type="hidden" />
 			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
 		</form>
