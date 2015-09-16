@@ -547,6 +547,7 @@ $(function() {
                 showTestingPanel();
                 $('#intro, #testSpeed, #exploreMap').toggle();
         });
+    })
 });
 
 
