@@ -443,12 +443,12 @@ function closeAllTheThings() {
 }
 
 function showHideControls() {
-	$('#icon-container, .leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
+	$('.leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
 	if ($('#header').hasClass('initial')) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
 	} else if ($(document).width() > 968) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
-		$('.leaflet-top.leaflet-left').show();
+		$('.leaflet-top.leaflet-right').show();
 	}
 }
 
@@ -482,12 +482,13 @@ $( window ).resize(function() {
 			return;
 		}
 		else if (($(document).width() > 968)) {
-			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+			$('.metricControls, .sliderElements, .leaflet-top.leaflet-right').show();
 		}
 });
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, #sidebar').toggle();
+	
+	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-right').toggle();
 	$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
@@ -529,24 +530,24 @@ $(function() {
 	$('#exploreMap').click(function() {
 		$('#header').removeClass('initial');
 		showHideControls();
-		$('#intro, #testSpeed, #exploreMap').toggle();
+		$('#header > h2, #intro').remove();
+		$('.leaflet-top.leaflet-right').show();
+		$('#testSpeed, #exploreMap').toggle();
 	});
 	$('#testSpeed').click(function() {
 		$('#header').removeClass('initial');
 		showHideControls();
 		showTestingPanel();
-		$('#intro, #testSpeed, #exploreMap').toggle();
+		$('#header > h2, #intro').remove();
+		$('.leaflet-top.leaflet-right').show();
+		$('#testSpeed, #exploreMap').toggle();
 	});
-	$('#intro-icon').click(function() {
-		closeAllTheThings();
-		$('#intro').toggle();
-	});
-        $('#testSpeedEmptyPrompt').click(function() {
-                $('#header').removeClass('initial');
-                showHideControls();
-                showTestingPanel();
-                $('#intro, #testSpeed, #exploreMap').toggle();
-        });
+  $('#testSpeedEmptyPrompt').click(function() {
+    $('#header').removeClass('initial');
+    showHideControls();
+    showTestingPanel();
+    $('#testSpeed, #exploreMap').toggle();
+  });
 });
 
 

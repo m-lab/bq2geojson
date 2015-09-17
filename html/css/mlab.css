@@ -365,6 +365,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   margin:10px auto;
   display: block;
   opacity:0.75;
+  cursor: pointer;
 }
 #icons img:hover {
   opacity:1.0;
@@ -431,7 +432,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   padding-right:10px;
 }
 
-#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right {
+#icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-right {
   display:none;
 }
 
@@ -720,9 +721,6 @@ a.leaflet-popup-close-button {
       font-size: 10px;
       line-height: 1;
   }
-  .leaflet-top.leaflet-left {
-    display:none !important;
-  }
   .sliderElements {
     width:85%;
   }
@@ -740,12 +738,6 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
-  .leaflet-top.leaflet-right {
-    right:auto;
-    top:auto;
-    left: 13%;
-    bottom:96px;
-  }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
     border:0;
