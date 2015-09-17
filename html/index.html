@@ -325,8 +325,10 @@ var geoJsonCache = {};
 var geometryCache = null;
 
 // Create the map
-var map = L.map('map').setView(center, zoom);
-
+var map = L.map('map', {zoomControl: false}).setView(center, zoom);
+map.scrollWheelZoom.disable();
+var control = L.control.zoom({position: 'topright'});
+map.addControl(control);
 var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>' +
 		'contributors'

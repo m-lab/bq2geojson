@@ -738,12 +738,6 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
-  .leaflet-top.leaflet-right {
-    right:auto;
-    top:auto;
-    left: 13%;
-    bottom:96px;
-  }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
     border:0;
