@@ -343,7 +343,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #sidebar {
   width:auto;
-  top:25%;
+  top:50px;
   overflow:hidden;
 }
 #sidebar.extended {
@@ -457,7 +457,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border: 0;
   border-radius: 50px;
   background: none;
-  margin-top:10px;
+  margin:0;
 }
 
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -880,8 +880,10 @@ a.leaflet-popup-close-button {
 .leaflet-top.leaflet-right {
   top:auto;
   left:auto;
-  right:auto;
+  right:0;
   bottom:auto;
+  background:rgba(255,255,255,0.75);
+  padding:10px;
 }
 
 .info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
