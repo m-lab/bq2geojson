@@ -501,6 +501,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 .leaflet-container .leaflet-control-attribution {
   float:none;
   margin-top: 10px;
+  background:0;
 }
 
 a.leaflet-popup-close-button {
@@ -738,6 +739,12 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
+  .leaflet-top.leaflet-right {
+    right:auto;
+    top:auto;
+    left: 13%;
+    bottom:96px;
+  }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
     border:0;
@@ -868,4 +875,20 @@ a.leaflet-popup-close-button {
   .sliderElements .mapControls:not(#sliderMonth) {
     width: 8%;
   }
+}
+
+.leaflet-top.leaflet-right {
+  top:auto;
+  left:auto;
+  right:auto;
+  bottom:auto;
+}
+
+.info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
+  margin:0;
+  width:auto;
+  clear:none;
+  float:left;
+  border:0;
+  background:rgba(255,255,255,0.5);
 }

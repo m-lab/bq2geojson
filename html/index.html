@@ -347,10 +347,10 @@ var baseLayers = {
 	 'Mapbox': mapboxLayer
 };
 
-var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
+var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false, position: 'bottomleft' });
+addControls();
 layerCtrl.addTo(map);
 addLegend();
-addControls();
 
 for (var geoLayer in geoLayers) {
 	setupLayer(geoLayer);
