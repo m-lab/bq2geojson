@@ -58,7 +58,7 @@ html, body {
 	margin: 0 1.3em 5px;
 }
 
-#ndt p {
+#ndt > p {
   float:right;
   width:55%;	
 }
@@ -302,7 +302,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #approx-loc {
-  text-align: right;
+  text-align: left;
   width:auto;
   float:right;
   display:inline-block;
@@ -551,7 +551,7 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:500px) {
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt > p {
     width:50%;
     float:right;
     font-size: 1.3em;
@@ -597,7 +597,7 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:600px) {
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt > p {
     font-size: 1.3em;
     width:60%;
   }
@@ -784,10 +784,10 @@ a.leaflet-popup-close-button {
   .sliderElements {
     width:70%;
   }
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt > p, #approx-loc {
     font-size: 0.8em;
     width:65%;
-    margin:0
+    margin:5px 0 0 0;
   }
 }
 
@@ -798,7 +798,7 @@ a.leaflet-popup-close-button {
 	}
 }
 @media(min-width: 1200px) {
-  #icon-container, #header h2, #approx-loc {
+  #icon-container, #header h2 {
     width:33.3%;
     width:calc(100vw / 3);
   }
