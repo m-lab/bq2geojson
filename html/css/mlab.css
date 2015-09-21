@@ -777,7 +777,7 @@ a.leaflet-popup-close-button {
   .sliderElements {
     width:70%;
   }
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt p, #about-ndt p {
     font-size: 0.8em;
     width:65%;
     margin:0
