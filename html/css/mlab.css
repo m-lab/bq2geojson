@@ -338,8 +338,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width:55%;
 }
 
-#ndt, #ndt-results, #extra-data, #about-ndt {
+#ndt, #ndt-results, #extra-data {
   width:80%;
+}
+#about-ndt {
+  width: 100%;
 }
 #sidebar {
   width:auto;
@@ -347,7 +350,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   overflow:hidden;
 }
 #sidebar.extended {
-  width:40%;
+  width:50%;
 }
 #icons {
   float:right;
@@ -777,7 +780,7 @@ a.leaflet-popup-close-button {
   .sliderElements {
     width:70%;
   }
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt p, #about-ndt p {
     font-size: 0.8em;
     width:65%;
     margin:0
