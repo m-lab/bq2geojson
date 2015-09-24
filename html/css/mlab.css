@@ -896,3 +896,7 @@ a.leaflet-popup-close-button {
   border:0;
   background:rgba(255,255,255,0.5);
 }
+
+.disclaimer {
+  font-size:0.8em;
+}
