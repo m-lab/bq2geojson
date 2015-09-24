@@ -477,7 +477,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border:4px solid #007dc3;
   border-radius: 50px;
   text-align: center;
-  margin-right: 15px;
+  margin: 0 7.5px;
   text-decoration: none;
 }
 
@@ -554,7 +554,6 @@ a.leaflet-popup-close-button {
   #ndt h4, #ndt > p {
     width:50%;
     float:right;
-    font-size: 1.3em;
   }
   #ndt-div {
     margin-top:0;
@@ -598,7 +597,6 @@ a.leaflet-popup-close-button {
 
 @media(min-width:600px) {
   #ndt h4, #ndt > p {
-    font-size: 1.3em;
     width:60%;
   }
 }
@@ -785,7 +783,6 @@ a.leaflet-popup-close-button {
     width:70%;
   }
   #ndt h4, #ndt > p, #approx-loc {
-    font-size: 0.8em;
     width:65%;
     margin:5px 0 0 0;
   }
