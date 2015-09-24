@@ -4,7 +4,7 @@
  * @returns {object} DOM object for map legend
  */
 function addLegend() {
-	var legend = L.control({position: 'bottomright'});
+	var legend = L.control({position: 'bottomleft'});
 
 	legend.onAdd = function(map) {
 	    var div = L.DomUtil.create('div', 'info legend'),
@@ -445,10 +445,10 @@ function closeAllTheThings() {
 function showHideControls() {
 	$('.leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
 	if ($('#header').hasClass('initial')) {
-		$('#layers-box, .leaflet-bottom.leaflet-right').hide();
+		$('.leaflet-bottom.leaflet-right').hide();
 	} else if ($(document).width() > 968) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
-		$('.leaflet-top.leaflet-right').show();
+		$('.leaflet-top.leaflet-left').show();
 	}
 }
 
@@ -482,13 +482,12 @@ $( window ).resize(function() {
 			return;
 		}
 		else if (($(document).width() > 968)) {
-			$('.metricControls, .sliderElements, .leaflet-top.leaflet-right').show();
+			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 		}
 });
 
 $(function() {
-	
-	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-right').toggle();
+	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left').toggle();
 	$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
@@ -502,7 +501,7 @@ $(function() {
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
-			$('#intro, #mobile-container').hide();
+			$('#mobile-container').hide();
 			if ($(document).width() < 968) {
 				$('.metricControls, .sliderElements').hide();
 			}
@@ -528,18 +527,18 @@ $(function() {
 		$('#mobile-container, div.leaflet-top.leaflet-right, .sliderElements, .metricControls').toggle();
 	});
 	$('#exploreMap').click(function() {
-		$('#header').removeClass('initial');
 		showHideControls();
-		$('#header > h2, #intro').remove();
-		$('.leaflet-top.leaflet-right').show();
+		$('#header').remove();
+		$('#layers-box').show();
+		$('.leaflet-top.leaflet-left').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
 	$('#testSpeed').click(function() {
-		$('#header').removeClass('initial');
 		showHideControls();
 		showTestingPanel();
-		$('#header > h2, #intro').remove();
-		$('.leaflet-top.leaflet-right').show();
+		$('#header').remove();
+		$('#layers-box').show();
+		$('.leaflet-top.leaflet-left').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
   $('#testSpeedEmptyPrompt').click(function() {

@@ -58,7 +58,7 @@ html, body {
 	margin: 0 1.3em 5px;
 }
 
-#ndt p {
+#ndt > p {
   float:right;
   width:55%;	
 }
@@ -302,7 +302,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #approx-loc {
-  text-align: right;
+  text-align: left;
   width:auto;
   float:right;
   display:inline-block;
@@ -346,7 +346,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #sidebar {
   width:auto;
-  top:25%;
+  top:50px;
   overflow:hidden;
 }
 #sidebar.extended {
@@ -460,7 +460,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border: 0;
   border-radius: 50px;
   background: none;
-  margin-top:10px;
+  margin:0;
 }
 
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -480,7 +480,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border:4px solid #007dc3;
   border-radius: 50px;
   text-align: center;
-  margin-right: 15px;
+  margin: 0 7.5px;
   text-decoration: none;
 }
 
@@ -504,6 +504,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 .leaflet-container .leaflet-control-attribution {
   float:none;
   margin-top: 10px;
+  background:0;
 }
 
 a.leaflet-popup-close-button {
@@ -553,10 +554,9 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:500px) {
-  #ndt h4, #ndt p {
+  #ndt h4, #ndt > p {
     width:50%;
     float:right;
-    font-size: 1.3em;
   }
   #ndt-div {
     margin-top:0;
@@ -599,8 +599,7 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:600px) {
-  #ndt h4, #ndt p {
-    font-size: 1.3em;
+  #ndt h4, #ndt > p {
     width:60%;
   }
 }
@@ -741,6 +740,12 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
+  .leaflet-top.leaflet-right {
+    right:auto;
+    top:auto;
+    left: 13%;
+    bottom:96px;
+  }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
     border:0;
@@ -780,10 +785,11 @@ a.leaflet-popup-close-button {
   .sliderElements {
     width:70%;
   }
-  #ndt h4, #ndt p, #about-ndt p {
-    font-size: 0.8em;
+  #ndt h4, #ndt > p, #approx-loc {
+  /*#ndt h4, #ndt p, #about-ndt p {
+    font-size: 0.8em;*/
     width:65%;
-    margin:0
+    margin:5px 0 0 0;
   }
 }
 
@@ -794,7 +800,7 @@ a.leaflet-popup-close-button {
 	}
 }
 @media(min-width: 1200px) {
-  #icon-container, #header h2, #approx-loc {
+  #icon-container, #header h2 {
     width:33.3%;
     width:calc(100vw / 3);
   }
@@ -871,4 +877,22 @@ a.leaflet-popup-close-button {
   .sliderElements .mapControls:not(#sliderMonth) {
     width: 8%;
   }
+}
+
+.leaflet-top.leaflet-right {
+  top:auto;
+  left:auto;
+  right:0;
+  bottom:auto;
+  background:rgba(255,255,255,0.75);
+  padding:10px;
+}
+
+.info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
+  margin:0;
+  width:auto;
+  clear:none;
+  float:left;
+  border:0;
+  background:rgba(255,255,255,0.5);
 }

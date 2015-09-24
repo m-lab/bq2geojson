@@ -32,10 +32,6 @@
 </div>
 <div id="header">
 	<h2 class="league-gothic">The state of broadband in Seattle</h2>
-	<div id="approx-loc">
-		<p>Searching from:</p>
-	</div>
-
 	<div id="intro">
 		<p>The Seattle Broadband map's goal is to illustrate progress toward the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard.</p>
 
@@ -62,9 +58,11 @@
 	<div id="ndt" class="ndt-related">
 		<h3 class="league-gothic">Test your speed!</h3>
 		<h4>You can contribute to this map!</h4>
-		<p>To start, simply hit the button and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
+		</div>
+		<p>To start, simply hit the button and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
+		<div id="approx-loc">
 		</div>
 		<div id="ndt-status"></div>
 	</div>
@@ -149,8 +147,8 @@
 						console.log("Location received");
 
 						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
-						$('#mobile-container').append('<div id="mobile-approx-loc"><p>Searching from:</p></div>')
-						$('#approx-loc, #mobile-approx-loc').append("<p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+						$('#mobile-container').append('<div id="mobile-approx-loc"></div>')
+						$('#approx-loc, #mobile-approx-loc').append("<p>Searching from:</p><p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
 					} else {
 						console.log('Location lookup failed');
 					}
@@ -351,10 +349,10 @@ var baseLayers = {
 	 'Mapbox': mapboxLayer
 };
 
-var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false });
+var layerCtrl = L.control.layers(baseLayers, null, { collapsed: false, position: 'bottomleft' });
+addControls();
 layerCtrl.addTo(map);
 addLegend();
-addControls();
 
 for (var geoLayer in geoLayers) {
 	setupLayer(geoLayer);
