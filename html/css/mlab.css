@@ -610,6 +610,7 @@ a.leaflet-popup-close-button {
   }
   .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
     margin-bottom: 0.5em;
+    display:block;
   }
   #desktop-legend {
     display:none;
