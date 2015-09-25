@@ -543,7 +543,8 @@ $(function() {
 		$('.leaflet-top.leaflet-left').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
-  $('#testSpeedEmptyPrompt').click(function() {
+  $('#testSpeedEmptyPrompt').click(function(e) {
+		e.preventDefault();
     $('#header').removeClass('initial');
     showHideControls();
     showTestingPanel();
