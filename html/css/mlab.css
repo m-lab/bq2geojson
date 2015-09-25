@@ -605,6 +605,15 @@ a.leaflet-popup-close-button {
 }
 
 @media(max-width:968px) {
+  .leaflet-top.leaflet-right {
+    padding:0.35em 0.85em;
+  }
+  .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
+    margin-bottom: 0.5em;
+  }
+  #desktop-legend {
+    display:none;
+  }
   #sliderMonth {
     width:85%;
   }
@@ -745,6 +754,7 @@ a.leaflet-popup-close-button {
     top:auto;
     left: 13%;
     bottom:96px;
+    padding:10px;
   }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
@@ -885,7 +895,6 @@ a.leaflet-popup-close-button {
   right:0;
   bottom:auto;
   background:rgba(255,255,255,0.75);
-  padding:10px;
 }
 
 .info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
