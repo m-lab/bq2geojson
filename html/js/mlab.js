@@ -412,7 +412,7 @@ function makePopup(props) {
 	return popup;
 }
 function makeBlankPopup() {
-        var popup = "<h3 class='league-gothic'>This area doesn't have enough data yet!</h3><p>Help make our map more accurate by <a id='testSpeedEmptyPrompt' href='#' onClick='javascript:showTestingPanel()'>running your test</a> from an address in this area</a>!</p>";
+        var popup = "<h3 class='league-gothic'>This area doesn't have enough data yet!</h3><p>Help make our map more accurate by <a id='testSpeedEmptyPrompt'>running your test</a> from an address in this area</a>!</p>";
 	return popup;
 }
 /**
@@ -458,6 +458,7 @@ function showTestingPanel() {
 	// are there results yet?
 	var results = document.getElementById('s2cRate');
 	var resultsReceived = results.textContent;
+	$('.leaflet-popup-content').remove();
 	if ($('#test-icon').hasClass('selected')) {
 		closeAllTheThings();
 	}

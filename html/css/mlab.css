@@ -605,6 +605,9 @@ a.leaflet-popup-close-button {
 }
 
 @media(max-width:968px) {
+  .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
+    display:none;
+  }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
   }
@@ -750,6 +753,9 @@ a.leaflet-popup-close-button {
 
 
 @media(min-width:969px) {
+  .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
+    display:block;
+  }
   .leaflet-top.leaflet-right {
     right:auto;
     top:auto;
