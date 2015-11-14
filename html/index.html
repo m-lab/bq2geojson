@@ -194,8 +194,8 @@
 						console.log('Record successfully added.');
 						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
 						$('#extra-data').css('display', 'none');
-						setTimeout(window.location.reload(true),7000000);
-						
+						setTimeout(window.location.assign("thankyou.html"),7000000);
+ 						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
 						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
