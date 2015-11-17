@@ -188,11 +188,11 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? 'darkgreen' :
-           val > 25  ? 'lightgreen' :
-           val > 10  ? 'yellow' :
-           val > 5  ? 'lightsalmon' :
-           val > 0   ? 'red' : 'transparent';
+    return val > 50 ? '#f9ff5b' :
+           val > 25  ? '#fdca81' :
+           val > 10  ? '#b79be1' :
+           val > 5  ? '#ace79a' :
+           val > 0   ? '#258b06' : 'transparent';
 }
 
 /**
@@ -402,13 +402,13 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = '<strong>Download:</strong> ' + Math.round(props.download_median * 10) / 10 +
-		' Mbps (median, ' + Math.round(props.download_count * 10) / 10 +
+	var popup = 'Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
+		' Mbps (' + Math.round(props.download_count * 10) / 10 +
 		' samples)<br/>' +
-		'<strong>Upload:</strong> ' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps (median, ' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
+		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
+		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
-		'<strong>RTT (mean):</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
 function makeBlankPopup() {
