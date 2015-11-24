@@ -95,18 +95,16 @@
 **********************************/
 
 // load data from a csv file
-d3.csv("data/chartdata.csv", function (data) {
+d3.csv("data/chartdata2.csv", function (data) {
 
   // format our data
   var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
   
   data.forEach(function(d) { 
-    d.time_slice   = new Date(d.time_slice*1000); 
-    //d.lat   = +d.latitude;
-    //d.long  = +d.longitude;
-    d.download_median   = +d.download_median;
-    d.upload_median   = +d.upload_median;
-    d.rtt_avg   = +d.rtt_avg;
+    d.timestamp   = new Date(d.timestamp*1000); 
+    d.download_octets   = +d.download_octets/1048576;
+    d.upload_octets   = +d.upload_octets/1048576;
+    d.rtt   = +d.sum_rtt/d.count_rtt/1000;
     d.isp   = d.isp;
     //d.magnitude = d3.round(+d.magnitude,1);
     //d.depth = d3.round(+d.depth,0);
@@ -129,11 +127,11 @@ d3.csv("data/chartdata.csv", function (data) {
   var total = facts.groupAll().reduceCount().value();
   $('#dc-total-count').text(total);
 
-  var oMedianDL = facts.groupAll().reduceSum(function(d){ return d.download_median; }).value()/total;
-  $('#dc-total-count2').text(Math.round(oMedianDL));
+  var oMedianDL = facts.groupAll().reduceSum(function(d){ return d.download_octets; }).value()/total;
+  $('#dc-total-count2').text(oMedianDL.toFixed(2));
 
-  var oMedianUL = facts.groupAll().reduceSum(function(d){ return d.upload_median; }).value()/total;
-  $('#dc-total-count3').text(Math.round(oMedianUL));
+  var oMedianUL = facts.groupAll().reduceSum(function(d){ return d.upload_octets; }).value()/total;
+  $('#dc-total-count3').text(oMedianUL.toFixed(2));
 
 /******************************************************
 * Create the Dimensions                               *
@@ -143,55 +141,55 @@ d3.csv("data/chartdata.csv", function (data) {
 
   // for Magnitude
   var magValue = facts.dimension(function (d) {
-    return d.download_median;       // group or filter by magnitude
+    return d.download_octets;       // group or filter by magnitude
   });
   var magValueGroupSum = magValue.group()
-    .reduceSum(function(d) { return d.download_median; });	// sums the magnitudes per magnitude
+    .reduceSum(function(d) { return d.download_octets; });	// sums the magnitudes per magnitude
   var magValueGroupCount = magValue.group()
-    .reduceCount(function(d) { return d.download_median; }) // counts the number of the facts by magnitude
+    .reduceCount(function(d) { return d.download_octets; }) // counts the number of the facts by magnitude
 
   var magValueGroupCount3 = magValue.group().reduceCount(function(d){ return d.isp; });
   console.log(magValueGroupCount3.top(5));
 
 //upload
   var magValue2 = facts.dimension(function (d) {
-    return d.upload_median;       // group or filter by magnitude
+    return d.upload_octets;       // group or filter by magnitude
   });
   var magValueGroupSum2 = magValue2.group()
-    .reduceSum(function(d) { return d.upload_median; });  // sums the magnitudes per magnitude
+    .reduceSum(function(d) { return d.upload_octets; });  // sums the magnitudes per magnitude
   var magValueGroupCount2 = magValue2.group()
-    .reduceCount(function(d) { return d.upload_median; }) // counts the number of the facts by magnitude
+    .reduceCount(function(d) { return d.upload_octets; }) // counts the number of the facts by magnitude
 
 
   // For datatable
   var timeDimension = facts.dimension(function (d) {
-    return d.time_slice;
+    return d.timestamp;
   }); // group or filter by time
 
   // for Depth
   var depthValue = facts.dimension(function (d) {
-    return d.rtt_avg;
+    return d.rtt;
   });
   var depthValueGroup = depthValue.group();
 
   var depthValueGroupSum = depthValue.group()
-    .reduceSum(function(d) { return d.rtt_avg; });  // sums the magnitudes per magnitude
+    .reduceSum(function(d) { return d.rtt; });  // sums the magnitudes per magnitude
   var depthValueGroupCount = depthValue.group()
-    .reduceCount(function(d) { return d.rtt_avg; }) // counts the number of the facts by magnitude
+    .reduceCount(function(d) { return d.rtt; }) // counts the number of the facts by magnitude
 
   
   // define a daily volume Dimension
   var volumeByDay = facts.dimension(function(d) {
-    return d.time_slice;
-    //return d3.time.hour(d.time_slice);
+    return d.timestamp;
+    //return d3.time.hour(d.timestamp);
   });
 
   // map/reduce to group sum
   var volumeByDayGroup = volumeByDay.group()
-    .reduceCount(function(d) { return d.time_slice; });
+    .reduceCount(function(d) { return d.timestamp; });
 
     var medianDLByDayGroup = volumeByDay.group()
-    .reduceCount(function(d) { return d.download_median; });
+    .reduceCount(function(d) { return d.download_octets; });
 
     //by isp
     var ispValue = facts.dimension(function(d){
@@ -241,7 +239,7 @@ d3.csv("data/chartdata.csv", function (data) {
     .transitionDuration(500)
 	.elasticY(true)
     .x(d3.time.scale().domain([new Date(2013, 12, 01), new Date(2015, 12, 31)])) // scale and domain of the graph
-    //.x(d3.scale.linear().domain([d3.min(data, function(d){ return d.time_slice;}), d3.max(data, function(d) { return d.time_slice; })]))
+    //.x(d3.scale.linear().domain([d3.min(data, function(d){ return d.timestamp;}), d3.max(data, function(d) { return d.timestamp; })]))
     .xAxis();
 
   // Table of earthquake data
@@ -251,13 +249,13 @@ d3.csv("data/chartdata.csv", function (data) {
   //.group()
 	.size(total)							// number of rows to return
     .columns([
-      function(d) { return d.time_slice; },
-      function(d) { return d.download_median; },
-      function(d) { return d.upload_median; },
-      function(d) { return d.rtt_avg; },
+      function(d) { return d.timestamp; },
+      function(d) { return d.download_octets.toFixed(2); },
+      function(d) { return d.upload_octets.toFixed(2); },
+      function(d) { return d.rtt.toFixed(2); },
       function(d) { return d.isp; }
     ])
-    .sortBy(function(d){ return d.time_slice; })
+    .sortBy(function(d){ return d.timestamp; })
     .order(d3.ascending);
 
 /****************************
