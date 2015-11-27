@@ -45,10 +45,10 @@
 
       <div class='row'>
         <div class='pie-graph span6' id='dc-magnitude-chart'>
-        <h4>Tests by Median Download</h4>
+        <h4>Daily Download Mpbs</h4>
         </div>
         <div class='pie-graph span6' id='dc-depth-chart'>
-	      <h4>Tests by Upload Median</h4>
+	      <h4>Daily Upload Mpbs</h4>
         </div>    
       </div>
     </div>
@@ -102,6 +102,10 @@ d3.csv("data/chartdata2.csv", function (data) {
   
   data.forEach(function(d) { 
     d.timestamp   = new Date(d.timestamp*1000); 
+    d.date = d.timestamp.getDate();
+    //d.day = d.timestamp.getDay();
+    d.month = d.timestamp.getMonth();
+    d.year = d.timestamp.getYear()+1900;
     d.download_octets   = +d.download_octets/1048576;
     d.upload_octets   = +d.upload_octets/1048576;
     d.rtt   = +d.sum_rtt/d.count_rtt/1000;
@@ -109,6 +113,8 @@ d3.csv("data/chartdata2.csv", function (data) {
     //d.magnitude = d3.round(+d.magnitude,1);
     //d.depth = d3.round(+d.depth,0);
   });
+
+  console.log(data);
 
 /******************************************************
 * Step1: Create the dc.js chart objects & ling to div *
@@ -149,7 +155,7 @@ d3.csv("data/chartdata2.csv", function (data) {
     .reduceCount(function(d) { return d.download_octets; }) // counts the number of the facts by magnitude
 
   var magValueGroupCount3 = magValue.group().reduceCount(function(d){ return d.isp; });
-  console.log(magValueGroupCount3.top(5));
+  //console.log(magValueGroupCount3.top(5));
 
 //upload
   var magValue2 = facts.dimension(function (d) {
@@ -185,11 +191,17 @@ d3.csv("data/chartdata2.csv", function (data) {
   });
 
   // map/reduce to group sum
-  var volumeByDayGroup = volumeByDay.group()
-    .reduceCount(function(d) { return d.timestamp; });
+  var countByDayGroup = volumeByDay.group()
+    .reduceCount(function(d) { return d.date; });
+
+    var sumByDayGroup = volumeByDay.group()
+    .reduceSum(function(d) { return d.date; });
 
     var medianDLByDayGroup = volumeByDay.group()
-    .reduceCount(function(d) { return d.download_octets; });
+    .reduceSum(function(d) { return d.download_octets; });
+
+	var medianULByDayGroup = volumeByDay.group()
+    .reduceSum(function(d) { return d.upload_octets; });
 
     //by isp
     var ispValue = facts.dimension(function(d){
@@ -208,39 +220,49 @@ d3.csv("data/chartdata2.csv", function (data) {
   magnitudeChart.width(480)
     .height(150)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
-    .dimension(magValue)								// the values across the x axis
-    .group(magValueGroupSum)							// the values on the y axis
+    .dimension(volumeByDay)								// the values across the x axis
+    .group(medianDLByDayGroup)							// the values on the y axis
 	.transitionDuration(500)
     .centerBar(true)	
 	.gap(10)                                            // bar width Keep increasing to get right then back off.
-    .x(d3.scale.linear().domain([0, 1000]))
+    //.x(d3.scale.linear().domain([0, 1000]))
+    .x(d3.time.scale().domain([new Date(2015, 05, 30), new Date(2015, 06, 10)]))
 	.elasticY(true)
-	.xAxis().tickFormat(function(v) {return v;});	
+	.elasticX(true)
+	.renderHorizontalGridLines(true)
+	//.xAxis().tickFormat(function(v) {return v;});	
+	.xAxis();	
 
   // Depth bar graph
   depthChart.width(480)
     .height(150)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
-    .dimension(magValue2)
-    .group(magValueGroupSum2)
+    .dimension(volumeByDay)								// the values across the x axis
+    .group(medianULByDayGroup)							// the values on the y axis
 	.transitionDuration(500)
     .centerBar(true)	
-	.gap(10)                    // bar width Keep increasing to get right then back off.
-    .x(d3.scale.linear().domain([0, 1000]))
+	.gap(10)                                            // bar width Keep increasing to get right then back off.
+    //.x(d3.scale.linear().domain([0, 1000]))
+    .x(d3.time.scale().domain([new Date(2015, 05, 30), new Date(2015, 06, 10)]))
 	.elasticY(true)
-	.xAxis().tickFormat(function(v) {return v;});
+	.elasticX(true)
+	.renderHorizontalGridLines(true)
+	//.xAxis().tickFormat(function(v) {return v;});	
+	.xAxis();
 
   // time graph
   timeChart.width(960)
     .height(100)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
     .dimension(volumeByDay)
-    .group(volumeByDayGroup)
+    .group(sumByDayGroup)
     .transitionDuration(500)
+	.y(d3.scale.linear().domain([0, 100]))
 	.elasticY(true)
     .x(d3.time.scale().domain([new Date(2013, 12, 01), new Date(2015, 12, 31)])) // scale and domain of the graph
     //.x(d3.scale.linear().domain([d3.min(data, function(d){ return d.timestamp;}), d3.max(data, function(d) { return d.timestamp; })]))
-    .xAxis();
+    .elasticX(true)
+    .yAxis().tickFormat(function (v) { return v*10; });
 
   // Table of earthquake data
   dataTable.width(960).height(800)
