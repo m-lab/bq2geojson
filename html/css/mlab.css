@@ -645,7 +645,7 @@ a.leaflet-popup-close-button {
     position: absolute;
   }
   #mobile-menu {
-    display:block;
+    display:none;
     width:auto;
     height:auto;
     border: 2px solid #007dc3;
