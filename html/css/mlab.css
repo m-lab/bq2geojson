@@ -604,9 +604,9 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(max-width:900px) {
+@media(max-width:960px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-    display:none;
+    /* display:none; */
   }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
@@ -616,13 +616,13 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #desktop-legend {
-    display:none;
+   /* display:none; */
   }
   #sliderMonth {
     width:85%;
   }
   .sliderElements, .metricControls {
-    display: none;
+    /* display: none; */
   }
   #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
