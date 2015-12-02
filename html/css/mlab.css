@@ -603,7 +603,7 @@ a.leaflet-popup-close-button {
     width:60%;
   }
 }
-
+/*
 @media(max-width:800px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
      display:none; 
@@ -750,7 +750,7 @@ a.leaflet-popup-close-button {
 		display:inline;
 	}
 }
-
+*/
 
 @media(min-width:969px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
