@@ -604,7 +604,7 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(max-width:990px) {
+@media(max-width:940px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
      display:none; 
   }
