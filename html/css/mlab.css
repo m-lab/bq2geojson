@@ -606,7 +606,10 @@ a.leaflet-popup-close-button {
 
 @media(max-width:1000px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-     /* display:none; */
+    display:none; 
+  }
+  .leaflet-control-layers-overlays {
+    padding-left: 10em;
   }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
