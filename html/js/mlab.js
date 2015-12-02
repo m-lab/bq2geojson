@@ -8,14 +8,14 @@ function addLegend() {
 
 	legend.onAdd = function(map) {
 	    var div = L.DomUtil.create('div', 'info legend'),
-	        grades = [50, 25, 10, 5, 0];
+	        grades = [0, 5, 10, 25, 50];
 
 		div.innerHTML = '';
-	    for ( var i = 50; i > grades.length; i-- ) {
+	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
-	            '<i style="background:' + getPolygonColor(grades[i] - 1) +
-				'"></i> ' + (i == 0 ? '0' : grades[i]) - (grades[i - 1] ?
-				'&ndash;' + grades[i - 1] + ' Mbps<br/>' : '+ Mbps');
+	            '<i style="background:' + getPolygonColor(grades[i] + 1) +
+				'"></i> ' + (i == 0 ? '0' : grades[i]) + (grades[i + 1] ?
+				'&ndash;' + grades[i + 1] + ' Mbps<br/>' : '+ Mbps');
 	    }
 	    div.innerHTML += '<i style="background: black; opacity: .2">' +
 			'</i>Insuff. data<br/>';
