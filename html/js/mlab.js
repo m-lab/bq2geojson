@@ -8,7 +8,7 @@ function addLegend() {
 
 	legend.onAdd = function(map) {
 	    var div = L.DomUtil.create('div', 'info legend'),
-	        grades = [50, 25, 10, 5, 0];
+	        grades = [0, 5, 10, 25, 50];
 
 		div.innerHTML = '<i style="background: black; opacity: .2">' +
 			'</i>Insuff. data<br/>';
