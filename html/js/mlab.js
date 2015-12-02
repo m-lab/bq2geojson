@@ -495,10 +495,6 @@ $(function() {
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
 
-	var aggregations = $('div.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control');
-	$('div.info.legend.leaflet-control').append(aggregations);
-	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
-
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
