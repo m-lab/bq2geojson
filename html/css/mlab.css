@@ -603,8 +603,9 @@ a.leaflet-popup-close-button {
     width:60%;
   }
 }
-/*
+
 @media(max-width:800px) {
+/*
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
      display:none; 
   }
@@ -630,6 +631,8 @@ a.leaflet-popup-close-button {
   #approx-loc {
     display:none !important;
   }
+  */
+  /*
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
@@ -644,6 +647,7 @@ a.leaflet-popup-close-button {
     height:auto;
     position: absolute;
   }
+  */
   #mobile-menu {
     display:block;
     width:auto;
