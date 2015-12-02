@@ -498,9 +498,7 @@ $(function() {
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
-	var aggregations = $('div.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control');
-	$('div.info.aggregation.leaflet-control').append(aggregations);
-	$('div.info.aggregation.leaflet-control').clone().appendTo('#mobile-container');
+
 	closeAllTheThings();
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
