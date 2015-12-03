@@ -608,9 +608,6 @@ a.leaflet-popup-close-button {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
     display:none; 
   }
-  .leaflet-control-layers-overlays {
-    padding-left: 10em;
-  }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
   }
