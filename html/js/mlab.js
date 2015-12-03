@@ -188,11 +188,11 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? '#f9ff5b' :
-           val > 25  ? '#fdca81' :
-           val > 10  ? '#b79be1' :
-           val > 5  ? '#ace79a' :
-           val > 0   ? '#258b06' : 'transparent';
+    return val > 50 ? '#F57F17' :
+           val > 25  ? '#F9A825' :
+           val > 10  ? '#FBC02D' :
+           val > 5  ? '#FFEB3B' :
+           val > 0   ? '#FFEE58' : 'transparent';
 }
 
 /**
@@ -494,10 +494,12 @@ $(function() {
 	$('#map').append(mobileContainer);
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+
 	closeAllTheThings();
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
