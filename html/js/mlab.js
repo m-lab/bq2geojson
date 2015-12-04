@@ -200,11 +200,11 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? '#F57F17' :
-           val > 25  ? '#F9A825' :
-           val > 10  ? '#FBC02D' :
-           val > 5  ? '#FFEB3B' :
-           val == 0   ? '#FFEE58' : 'transparent';
+    return val >= 50 ? '#F57F17' :
+           val >= 25  ? '#F9A825' :
+           val >= 10  ? '#FBC02D' :
+           val >= 5  ? '#FFEB3B' :
+           val >= 0   ? '#FFEE58' : 'transparent';
 }
 
 /**
