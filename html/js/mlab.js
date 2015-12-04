@@ -10,8 +10,20 @@ function addLegend() {
 	    var div = L.DomUtil.create('div', 'info legend'),
 	        grades = [0, 5, 10, 25, 50];
 
-		div.innerHTML = '<i style="background: black; opacity: .2">' +
-			'</i>Insuff. data<br/>';
+	    var i;
+		div.innerHTML = '';
+	    for ( i = grades.length - 1; i >= 0; i-- ) {
+	        div.innerHTML +=
+	            '<i style="background:' + getPolygonColor(grades[i]) +
+				'"></i> ' + (i == grades.length ? '0' : grades[i]) + (grades[i - 1] ?
+				'&ndash;' + grades[i - 1] + ' Mbps<br/>' : '+ Mbps<br/>');
+	    }
+		div.innerHTML += '<i style="background: black; opacity: .2">' +
+		'</i>Insuff. data';
+	    return div;
+	};
+
+/*
 	    for ( var i = 0; i < grades.length; i++ ) {
 	        div.innerHTML +=
 	            '<i style="background:' + getPolygonColor(grades[i] + 1) +
@@ -19,7 +31,7 @@ function addLegend() {
 				'&ndash;' + grades[i + 1] + ' Mbps<br/>' : '+ Mbps');
 	    }
 	    return div;
-	};
+*/
 	legend.addTo(map);
 }
 
@@ -188,11 +200,11 @@ function updateLayers(e, mode) {
  * @returns {string} A string representing the color
  */
 function getPolygonColor(val) {
-    return val > 50 ? '#F57F17' :
-           val > 25  ? '#F9A825' :
-           val > 10  ? '#FBC02D' :
-           val > 5  ? '#FFEB3B' :
-           val > 0   ? '#FFEE58' : 'transparent';
+    return val >= 50 ? '#F57F17' :
+           val >= 25  ? '#F9A825' :
+           val >= 10  ? '#FBC02D' :
+           val >= 5  ? '#FFEB3B' :
+           val >= 0   ? '#FFEE58' : 'transparent';
 }
 
 /**
