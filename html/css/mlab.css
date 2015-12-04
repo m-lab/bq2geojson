@@ -916,7 +916,12 @@ a.leaflet-popup-close-button {
 }
 .leaflet-left.leaflet-bottom .leaflet-control-layers {
   background:rgba(255,255,255,0.75);
-  float:; left;
+  float: left;
+}
+@media(max-width:968px) {
+  .leaflet-left.leaflet-bottom .leaflet-control-layers {
+    margin-left: 118px;
+  }
 }
 
 .disclaimer {
