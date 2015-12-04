@@ -204,7 +204,7 @@ function getPolygonColor(val) {
            val > 25  ? '#F9A825' :
            val > 10  ? '#FBC02D' :
            val > 5  ? '#FFEB3B' :
-           val > 0   ? '#FFEE58' ;
+           val >= 0   ? '#FFEE58' : 'transparent';
 }
 
 /**
