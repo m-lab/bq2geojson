@@ -911,7 +911,7 @@ a.leaflet-popup-close-button {
   clear:none;
   float:left;
   border:0;
-  background:rgba(255,255,255,0.0);
+  background:rgba(255,255,255,0.75);
 }
 .leaflet-left.leaflet-bottom .leaflet-control-layers {
   margin-left: 125px;
