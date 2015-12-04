@@ -641,7 +641,7 @@ a.leaflet-popup-close-button {
     left:auto;
     top:auto;
     width:100%;
-    bottom:118px;
+    bottom:117px;
     min-height: 105px;
     height:auto;
     position: absolute;
@@ -916,9 +916,16 @@ a.leaflet-popup-close-button {
 }
 .leaflet-left.leaflet-bottom .leaflet-control-layers {
   background:rgba(255,255,255,0.75);
-  float:; left;
+  float: left;
 }
 
+@media(max-width:968px) {
+  .leaflet-left.leaflet-bottom .leaflet-control-layers {
+    margin-left: 116px;
+    background:rgba(255,255,255,0.0);
+    min-height: 102px;
+  }
+}
 .disclaimer {
   font-size:0.8em;
 }
