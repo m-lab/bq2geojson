@@ -14,7 +14,7 @@ function addLegend() {
 		div.innerHTML = '';
 	    for ( i = grades.length - 1; i >= 0; i-- ) {
 	        div.innerHTML +=
-	            '<i style="background:' + getPolygonColor(grades[i] - 1) +
+	            '<i style="background:' + getPolygonColor(grades[i]) +
 				'"></i> ' + (i == grades.length ? '0' : grades[i]) + (grades[i - 1] ?
 				'&ndash;' + grades[i - 1] + ' Mbps<br/>' : '+ Mbps<br/>');
 	    }
@@ -204,7 +204,7 @@ function getPolygonColor(val) {
            val > 25  ? '#F9A825' :
            val > 10  ? '#FBC02D' :
            val > 5  ? '#FFEB3B' :
-           val >= 0   ? '#FFEE58' : 'transparent';
+           val > 0   ? '#FFEE58' : 'transparent';
 }
 
 /**
