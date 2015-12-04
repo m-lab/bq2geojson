@@ -21,6 +21,7 @@ function addLegend() {
 		div.innerHTML + '<i style="background: black; opacity: .2">' +
 		'</i>Insuff. data';
 	    return div;
+	};
 
 /*
 	    for ( var i = 0; i < grades.length; i++ ) {
@@ -30,7 +31,6 @@ function addLegend() {
 				'&ndash;' + grades[i + 1] + ' Mbps<br/>' : '+ Mbps');
 	    }
 	    return div;
-	};
 */
 	legend.addTo(map);
 }
