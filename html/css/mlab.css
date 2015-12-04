@@ -913,6 +913,10 @@ a.leaflet-popup-close-button {
   border:0;
   background:rgba(255,255,255,0.5);
 }
+.leaflet-left.leaflet-bottom .leaflet-control-layers {
+  margin-left: 150px;
+  background:rgba(255,255,255,0.0);
+}
 
 .disclaimer {
   font-size:0.8em;
