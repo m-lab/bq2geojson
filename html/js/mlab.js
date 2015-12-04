@@ -15,10 +15,10 @@ function addLegend() {
 	    for ( i = grades.length - 1; i >= 0; i-- ) {
 	        div.innerHTML +=
 	            '<i style="background:' + getPolygonColor(grades[i] - 1) +
-				'"></i> ' + (i == grades.length ? '0' : grades[i]) + (grades[i - 1] ?
-				'&ndash;' + grades[i - 1] + ' Mbps<br/>' : '+ Mbps');
+				'"></i> ' + (i == grades.length-1 ? '0' : grades[i]) + (grades[i - 1] ?
+				'&ndash;' + grades[i - 1] + ' Mbps<br/>' : '+ Mbps<br/>');
 	    }
-		div.innerHTML + '<i style="background: black; opacity: .2">' +
+		div.innerHTML += '<i style="background: black; opacity: .2">' +
 		'</i>Insuff. data';
 	    return div;
 	};
