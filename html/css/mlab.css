@@ -905,7 +905,7 @@ a.leaflet-popup-close-button {
   background:rgba(255,255,255,0.0);
 }
 
-.info.legend.leaflet-control, .leaflet-left.leaflet-bottom, .leaflet-control-layers {
+.info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
   margin:0;
   width:auto;
   clear:none;
