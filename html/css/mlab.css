@@ -168,6 +168,7 @@ div.leaflet-control-layers-base, div.leaflet-control-layers-separator {
 /* overriding styles for UI changes made by Gem Barrett */
 .leaflet-bottom.leaflet-left {
 	width:100%;
+
 }
 .info {
 	border-radius:0;
@@ -911,11 +912,11 @@ a.leaflet-popup-close-button {
   clear:none;
   float:left;
   border:0;
-  background:rgba(255,255,255,0.0);
+  background:rgba(255,255,255,0.75);
 }
 .leaflet-left.leaflet-bottom .leaflet-control-layers {
-  margin-left: 125px;
-  background:rgba(255,255,255,0.0);
+  background:rgba(255,255,255,0.75);
+  float:; left;
 }
 
 .disclaimer {
