@@ -96,6 +96,7 @@
 **********************************/
 
 d3.json("/collector/bq_results?")
+	.limit(100)
 	.get(function(error, data){
 		if (error) return console.warn(error);
 		var records = data.result.records;
