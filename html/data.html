@@ -94,6 +94,18 @@
 * Step0: Load data from json file *
 **********************************/
 
+
+(function() {
+  var url = "/collector/bq_results?&limit=50";
+  $.getJSON( url, {
+    format: "json"
+  })
+    .done(function( data ) {
+      console.log(data);
+    });
+})();
+
+
 // load data from a csv file
 d3.csv("data/chartdata2.csv", function (data) {
 
@@ -114,7 +126,7 @@ d3.csv("data/chartdata2.csv", function (data) {
     //d.depth = d3.round(+d.depth,0);
   });
 
-  console.log(data);
+  //console.log(data);
 
 /******************************************************
 * Step1: Create the dc.js chart objects & ling to div *
