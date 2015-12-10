@@ -11,6 +11,7 @@
   <script src='js/d3.v3.min.js' type='text/javascript'></script>
   <script src='js/dc.js' type='text/javascript'></script>
   <script src='js/jquery-1.9.1.min.js' type='text/javascript'></script>
+  <script type="text/javascript" src="mlab.js"></script>
 
   <link href='css/bootstrap.min.css' rel='stylesheet' type='text/css'>
   <link href='css/dc.css' rel='stylesheet' type='text/css'>
@@ -94,20 +95,11 @@
 * Step0: Load data from json file *
 **********************************/
 
-
-(function() {
-  var url = "/collector/bq_results?";
-  $.getJSON( url, { 
-  	limit: 50
-  })
-    .done(function( data ) {
-      console.log(data);
-    });
-})();
-
-
-// load data from a csv file
-d3.csv("data/chartdata2.csv", function (data) {
+d3.json("/collector/bq_results?")
+	.get(function(error, data){
+		if (error) return console.warn(error);
+		var records = data.result.records;
+		console.log(records);
 
   // format our data
   var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
