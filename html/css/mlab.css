@@ -286,6 +286,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   background-image: url(images/zoom-out.svg);
   background-size: cover;
 }
+#test-icon-sm {
+  width: 3em;
+  height: 3em;
+  padding-left: .5em;
+}
 
 #header {
   position:absolute;
