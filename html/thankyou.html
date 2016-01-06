@@ -23,37 +23,6 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/jquery-ui-slider-pips.min.js"></script>
 
-	<script>
-	  var socialMediaContext = {
-		'twitter': {
-	  	  'text': 'Internet Health Test: the Open Broadband Speed Test. How fast is your Internet connection? https://www.internethealthtest.org',
-		  'share': function() {
-			var shareUrl = $('.result_url_share').val();
-			var tweetText = 'Check out my #InternetHealthTest result! See how well your connection performs and compare results. ' +  shareUrl;
-			return 'https://twitter.com/home?status=' + encodeURIComponent(tweetText);
-	 		}
-		},
-		'reddit': {
-			'text': 'Internet Health Test: the Open Broadband Speed Test',
-			'link': 'https://www.internethealthtest.org/'
-		},
-		'facebook': {
-		  'share': function() {
-			var shareUrl = $('.result_url_share').val();
-			return 'https://www.facebook.com/sharer/sharer.php?u='  + encodeURIComponent(shareUrl);
-			}
-		},
-		'email': {
-	  	  'share': function() {
-			var title = 'Check Out My Internet Health Test Result!';
-			var shareUrl = $('.result_url_share').val();
-			var body = "Did you know that broadband performance can differ across different parts of the Internet? I ran the Internet Health Test to check for slowdowns on my Internet connection. You should too!\n\n" + shareUrl;
-			return 'mailto:?subject='  + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
-		  }
-		}
-	  };
-	</script>
-
 </head>
 
 <body>
@@ -64,12 +33,44 @@
 	  <li><a href="/">Explore the map and see how your results compare to other users</li>
 	  <li><a href="http://www.seattle.gov/broadband-speed-test-about">Learn more about this test and how the data will be used</li>
 	  <li>Send this test to your friends, colleagues, and neighbors<br>
-	  <div data-type="horizontal" class="ui-btn-right">
-	   <a href="#" class="ui-btn ui-icon-twitter ui-btn-icon-notext ui-corner-all" onclick="window.open('https://twitter.com/home?status=' + encodeURIComponent(socialMediaContext['twitter']['text']));" data-inline="true">Twitter</a>
-	   <a href="#" class="ui-btn ui-icon-facebook ui-btn-icon-notext ui-corner-all" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https://www.internethealthtest.org/');" data-inline="true">Facebook</a>
-	   <a href="#" onclick="window.open('http://www.reddit.com/r/technology/submit?url=' + encodeURIComponent(socialMediaContext['reddit']['link']) + '&title=' + encodeURIComponent(socialMediaContext['reddit']['text']));" class="ui-btn ui-icon-reddit ui-btn-icon-notext ui-corner-all" data-inline="true">Reddit</a>
-	   <a href="#" class="ui-btn ui-icon-wordpress ui-btn-icon-notext ui-corner-all intro_overlay_embed" data-inline="true">Embed</a>
-	  </div> </li>
+<!-- Social Button HTML -->
+
+<!-- Twitter -->
+<a href="http://twitter.com/share?url=http://www.seattle.gov/broadband-speed-test&text=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&via=@SeattleCTO" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+</a>
+
+<!-- Google Plus -->
+<a href="https://plus.google.com/share?url=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+</a>
+
+<!-- Facebook -->
+<a href="http://www.facebook.com/sharer/sharer.php?u=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+</a>
+
+<!-- StumbleUpon (url, title) -->
+<a href="http://www.stumbleupon.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+</a>
+
+<!-- Reddit (url, title) -->
+<a href="http://reddit.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit"></i>
+</a>
+
+<!-- LinkedIn -->
+<a href="http://www.linkedin.com/shareArticle?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&summary=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&source=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+</a>
+
+<!-- Email -->
+<a href="mailto:?subject=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&body=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+</a>
+
+	  </li>
 	</ul>
 </body>
 
