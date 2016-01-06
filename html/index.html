@@ -232,30 +232,6 @@ var polygonType = 'city_council_districts';
 // the right choice.  TODO: prove this theory.
 var jsonType = "topojson";
 
-// Get current year/month into variables
-var currentYear = new Date().getFullYear();
-var currentMonth = new Date().getMonth() + 1;
-// Zero pad the front of the month
-currentMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
-
-// The oldest year and month for which we have data.
-var startYear = 2014;
-var startMonth = 1;
-
-// An object with the years and months we have data for.  This will be used to
-// auto-generate various form controls.
-var dates = {};
-var thisYear = startYear;
-while (thisYear <= currentYear) {
-	if (thisYear == currentYear) {
-		var months = [];
-		for (i = 1; i <= currentMonth; i++) { months.push(i) };
-		dates[thisYear] = months
-	} else {
-		dates[thisYear] = ['1','2','3','4','5','6','7','8','9','10','11','12'];
-	}
-	thisYear++;
-}
 
 // The minimum number of data points in any given polygon for a it to be
 // considered statistically relevant.  These cells will either not be displayed
@@ -328,6 +304,56 @@ var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
 // if there are many files and they are large.
 var geoJsonCache = {};
 var geometryCache = null;
+
+// The oldest year and month for which we have data.
+var startYear = 2014;
+var startMonth = 1;
+
+// Get current year/month into variables
+var currentYear = new Date().getFullYear();
+var currentMonth = new Date().getMonth() + 1;
+// Zero pad the front of the month
+currentMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
+
+// Be sure that we actually have data for the current month.  If not, then fall
+// back to the previous month.
+var start = Date.UTC(currentYear, currentMonth - 1, 1) / 1000;
+var end = Math.floor(Date.now() / 1000);
+var dataUrl = geoLayers[defaultLayer]['dataUrl'] + start + ',' + end;
+$.ajax({
+	url: dataUrl,
+	dataType: 'json',
+	async: false,
+	success: function(resp) {
+		if ( ! resp.features.length ) {
+			if ( currentMonth == '01' ) {
+				currentMonth = 12;
+				currentYear = currentYear - 1;
+			} else {
+				currentMonth = currentMonth - 1;
+				currentMonth = currentMonth < 10 ?
+					'0' + currentMonth : currentMonth;
+			}
+			console.log("No data for current year/month, using last" +
+				" month instead.");
+		}
+	}
+});
+
+// An object with the years and months we have data for.  This will be used to
+// auto-generate various form controls.
+var dates = {};
+var thisYear = startYear;
+while (thisYear <= currentYear) {
+	if (thisYear == currentYear) {
+		var months = [];
+		for (i = 1; i <= currentMonth; i++) { months.push(i) };
+		dates[thisYear] = months
+	} else {
+		dates[thisYear] = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+	}
+	thisYear++;
+}
 
 // Create the map
 var map = L.map('map', {zoomControl: false}).setView(center, zoom);
