@@ -932,3 +932,27 @@ a.leaflet-popup-close-button {
 .disclaimer {
   font-size:0.8em;
 }
+
+.ui-icon-reddit:after {
+	background-image: url("/images/reddit.png");
+}
+
+.ui-icon-facebook:after {
+	background-image: url("/images/facebook.png");
+}
+
+.ui-icon-twitter:after {
+	background-image: url("/images/twitter.png");
+}
+
+.canvas .ui-icon-calendar:after {
+	background-color: rgb(226, 125, 117);
+}
+
+.ui-icon-wordpress:after {
+	background-image: url("/images/wordpress.png");
+}
+
+.ui-icon-email:after {
+	background-image: url("/images/email.png");
+}
