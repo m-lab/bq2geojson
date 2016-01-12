@@ -106,8 +106,6 @@ d3.json("/collector/bq_results?limit=1000")
   
 
   records.forEach(function(d) { 
-
-  	if (d.download_octets != 0){
 	    d.timestamp   = new Date(d.timestamp*1000); 
 	    d.date = d.timestamp.getDate();
 	    //d.day = d.timestamp.getDay();
@@ -119,7 +117,6 @@ d3.json("/collector/bq_results?limit=1000")
 	    d.isp   = d.isp;
 	    //d.magnitude = d3.round(+d.magnitude,1);
 	    //d.depth = d3.round(+d.depth,0);
-	}
   });
 
   //console.log(data);
@@ -137,7 +134,7 @@ d3.json("/collector/bq_results?limit=1000")
 * 	Run the data through crossfilter    *
 ****************************************/
 
-  var facts = crossfilter(data);  // Gets our 'facts' into crossfilter
+  var facts = crossfilter(records);  // Gets our 'facts' into crossfilter
   var total = facts.groupAll().reduceCount().value();
   $('#dc-total-count').text(total);
 
