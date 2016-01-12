@@ -161,10 +161,10 @@ d3.json("/collector/bq_results?limit=1000")
 
   var minDate = dates.bottom(1);
   console.log(minDate);
-  $('#dc-total-count4').text(minDate);
+  $('#dc-total-count4').text(minDate.timestamp);
 
   var maxDate = dates.top(1);
-  $('#dc-total-count5').text(maxDate);
+  $('#dc-total-count5').text(maxDate.timestamp);
 
 /******************************************************
 * Create the Dimensions                               *
