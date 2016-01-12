@@ -98,7 +98,7 @@
 d3.json("/collector/bq_results?")
 	.get(function(error, data){
 		if (error) return console.warn(error);
-		var records = data.result.records;
+		var records = data;//.result.records;
 		console.log(records);
 
   // format our data
