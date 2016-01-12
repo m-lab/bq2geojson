@@ -95,11 +95,11 @@
 * Step0: Load data from json file *
 **********************************/
 
-d3.json("/collector/bq_results?limit=10000")
+d3.json("/collector/bq_results?limit=5000")
 	.get(function(error, data){
 		if (error) return console.warn(error);
 		var records = data.records;
-		console.log(records);
+		//console.log(records);
 
   // format our data
   var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
@@ -119,7 +119,7 @@ d3.json("/collector/bq_results?limit=10000")
 	    //d.depth = d3.round(+d.depth,0);
   });
 
-  //console.log(data);
+  //console.log(records);
 
 /******************************************************
 * Step1: Create the dc.js chart objects & ling to div *
