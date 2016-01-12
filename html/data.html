@@ -95,7 +95,7 @@
 * Step0: Load data from json file *
 **********************************/
 
-d3.json("/collector/bq_results?limit=1000")
+d3.json("/collector/bq_results?limit=100000")
 	.get(function(error, data){
 		if (error) return console.warn(error);
 		var records = data.records;
