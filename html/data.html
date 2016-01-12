@@ -104,7 +104,7 @@ d3.json("/collector/bq_results?")
   // format our data
   var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
   
-  data.forEach(function(d) { 
+  records.forEach(function(d) { 
     d.timestamp   = new Date(d.timestamp*1000); 
     d.date = d.timestamp.getDate();
     //d.day = d.timestamp.getDay();
