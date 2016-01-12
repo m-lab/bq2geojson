@@ -107,6 +107,10 @@
 * Step0: Load data from json file *
 **********************************/
 
+Date.prototype.getJulian = function() {
+    return Math.floor((this / 86400000) - (this.getTimezoneOffset()/1440) + 2440587.5);
+}
+
 //var today = Math.floor(Date.now() / 1000);
 //d3.json("/collector/bq_results?&range=" + today + ",&limit=1000")
 d3.json("/collector/bq_results?&limit=1000")
@@ -129,6 +133,7 @@ d3.json("/collector/bq_results?&limit=1000")
 	    d.upload_octets   = +d.upload_octets/1048576;
 	    d.rtt   = +d.sum_rtt/d.count_rtt/1000;
 	    d.isp   = d.isp;
+	    d.julian = d.timestamp.getJulian();
 	    //d.magnitude = d3.round(+d.magnitude,1);
 	    //d.depth = d3.round(+d.depth,0);
   });
@@ -215,7 +220,7 @@ d3.json("/collector/bq_results?&limit=1000")
   
   // define a daily volume Dimension
   var volumeByDay = facts.dimension(function(d) {
-    return d.timestamp;
+    return d.julian;
     //return d3.time.hour(d.timestamp);
   });
 
