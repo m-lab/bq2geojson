@@ -160,6 +160,7 @@ d3.json("/collector/bq_results?limit=1000")
   var dates = facts.dimension(function(d){ return d.date;});
 
   var minDate = dates.bottom(1);
+  console.log(minDate);
   $('#dc-total-count4').text(minDate);
 
   var maxDate = dates.top(1);
