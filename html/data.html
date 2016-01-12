@@ -104,18 +104,22 @@ d3.json("/collector/bq_results?limit=1000")
   // format our data
   var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
   
+
   records.forEach(function(d) { 
-    d.timestamp   = new Date(d.timestamp*1000); 
-    d.date = d.timestamp.getDate();
-    //d.day = d.timestamp.getDay();
-    d.month = d.timestamp.getMonth();
-    d.year = d.timestamp.getYear()+1900;
-    d.download_octets   = +d.download_octets/1048576;
-    d.upload_octets   = +d.upload_octets/1048576;
-    d.rtt   = +d.sum_rtt/d.count_rtt/1000;
-    d.isp   = d.isp;
-    //d.magnitude = d3.round(+d.magnitude,1);
-    //d.depth = d3.round(+d.depth,0);
+
+  	if (d.download_octets != 0){
+	    d.timestamp   = new Date(d.timestamp*1000); 
+	    d.date = d.timestamp.getDate();
+	    //d.day = d.timestamp.getDay();
+	    d.month = d.timestamp.getMonth();
+	    d.year = d.timestamp.getYear()+1900;
+	    d.download_octets   = +d.download_octets/1048576;
+	    d.upload_octets   = +d.upload_octets/1048576;
+	    d.rtt   = +d.sum_rtt/d.count_rtt/1000;
+	    d.isp   = d.isp;
+	    //d.magnitude = d3.round(+d.magnitude,1);
+	    //d.depth = d3.round(+d.depth,0);
+	}
   });
 
   //console.log(data);
