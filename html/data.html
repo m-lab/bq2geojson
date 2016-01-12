@@ -231,10 +231,10 @@ d3.json("/collector/bq_results?&limit=1000")
     var sumByDayGroup = volumeByDay.group()
     .reduceSum(function(d) { return d.date; });
 
-    var medianDLByDayGroup = volumeByDay.group()
+    var medianDLByDayGroup = magValue.group()
     .reduceSum(function(d) { return d.download_octets; });
 
-	var medianULByDayGroup = volumeByDay.group()
+	var medianULByDayGroup = magValue2.group()
     .reduceSum(function(d) { return d.upload_octets; });
 
     //by isp
