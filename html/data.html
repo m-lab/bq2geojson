@@ -29,7 +29,7 @@
     <div class='span12'>
       <h2>Seattle Broadband Quality</h2>
       <div class='row'>
-        <h3>
+        <h4>
         <div class="pie-graph span6">
         Start Date: <span id='dc-total-count4'></span>
         </div>
@@ -37,7 +37,7 @@
         <div class="pie-graph span6">
         End Date: <span id='dc-total-count5'></span>
         </div>
-        </h3>
+        </h4>
       </div>
 
       <div class='row'>
@@ -220,7 +220,7 @@ d3.json("/collector/bq_results?&limit=1000")
   
   // define a daily volume Dimension
   var volumeByDay = facts.dimension(function(d) {
-    return d.julian;
+    return d.timestamp;
     //return d3.time.hour(d.timestamp);
   });
 
