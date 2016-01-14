@@ -451,7 +451,7 @@ function setupLayer(layer) {
 function closeAllTheThings() {
 	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
-	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
+	$('#ndt, #ndt-results, #about-ndt').hide();
 }
 
 function showHideControls() {
@@ -479,6 +479,7 @@ function showTestingPanel() {
 		$('#sidebar').addClass('extended');
 		$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
+			$('#intro').show();
 			$('#ndt').show();
 			$('#ndt-results').show();
 			$('#extra-data').show();
