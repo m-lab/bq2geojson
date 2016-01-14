@@ -69,7 +69,10 @@ html, body {
 	margin-bottom: 2em;
 }
 #extra-data {
-	display: none;
+
+}
+#thank-you {
+  display: none;
 }
 
 #sidebar #extra-data h4 {
