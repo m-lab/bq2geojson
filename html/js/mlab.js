@@ -552,7 +552,7 @@ $(function() {
 	$('#testSpeed').click(function() {
 		showHideControls();
 		//showTestingPanel();
-		$('#header').remove();
+		//$('#header').remove();
 		//$('#layers-box').show();
 		//$('.leaflet-top.leaflet-left').show();
 		//$('#testSpeed, #exploreMap').toggle();
