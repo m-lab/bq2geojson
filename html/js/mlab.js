@@ -551,11 +551,12 @@ $(function() {
 	});
 	$('#testSpeed').click(function() {
 		showHideControls();
-		showTestingPanel();
+		//showTestingPanel();
 		$('#header').remove();
-		$('#layers-box').show();
-		$('.leaflet-top.leaflet-left').show();
-		$('#testSpeed, #exploreMap').toggle();
+		//$('#layers-box').show();
+		//$('.leaflet-top.leaflet-left').show();
+		//$('#testSpeed, #exploreMap').toggle();
+		$('#testSpeed', '#ndt', '#extra-data').toggle();
 	});
   $('#testSpeedEmptyPrompt').click(function() {
     $('#header').removeClass('initial');
