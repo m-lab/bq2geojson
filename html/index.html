@@ -33,17 +33,118 @@
 <div id="header">
 	<div id="intro">
 		<p></p>
-		<p>By contributing to this map, you help illustrate how Seattle is progressing toward Mayor’s goal of competitive, equal, and affordable broadband service.</p>
-
-		<p>This test is a measurement of real-world experiences, not your Internet connection itself. The speed you experience can be affected by many things, ranging from the device you’re using, to the time of day, to how many other applications you are running. What you will see is an accurate representation of your Internet speed at the time of each test. You may repeat it as often as you like from different locations and types of connections. The more information about your experience you provide, the better we'll be able to understand current broadband service levels, and plan for the future.</p>
-
-		<p>The software for this map has been developed by the <a href="http://newamerica.org/oti">Open Technology Institute at New America</a> in partnership with the City of Seattle, using open source tools from <a href="http://measurementlab.net">Measurement Lab (M-Lab)</a>. To learn more about how this works and why we’re doing it, as well as how the data we collect will be used and protected, please see the <a href="http://www.seattle.gov/broadband/broadband-map-faq">About the Broadband Speed test page</a>.</p>
+		<p>The City of Seattle is collecting information from residents about broadband experiences across the City. To contribute, please answer the following questions and then take our Broadband Speed Test:</p>
+		<div id="extra-data" class="ndt-related">
+			<form action="/collector/collect" method="post" id="collector">
+				<p>Who is your Internet Service Provider?  
+				<select name="isp" class="form-control">
+					<option value="default">------</option>
+					<option value="comcast">Comcast</option>
+					<option value="centurylink">CenturyLink</option>
+					<option value="wave">Wave</option>
+					<option value="other">Other</option>
+				</select>
+				<input type="text" name="other" id="isp" class="form-control" style="display:none;"/></p>
+				<p>How do you connect to the Internet?
+				<select name="connection_type" class="form-control">
+					<option value="default">------</option>
+					<option value="wired">Wired connection</option>
+					<option value="wireless-single">Wireless connection - 1 device</option>
+					<option value="wireless-multiple">Wireless connection - shared among multiple devices or households</option>
+				</select></p>
+				<p>How much do you pay, per month? 
+				<select name="cost_of_service" class="form-control">
+					<option value="default">------</option>
+					<option value="less_than_25">Less than $25</option>
+					<option value="25_50">$25-$50</option>
+					<option value="50_75">$50-$75</option>
+					<option value="75_100">$75-$100</option>
+					<option value="100_or_above">$100+</option>
+					<option value="dont_know">Don't know</option>
+				</select>
+				<p>What are your advertised upload and download speeds? <strong>(Optional)</strong><br >
+				Upload: <input name="advertised_upload" size="3"/><small> mbps</small><br >
+				Download: <input name="advertised_download" size="3"/><small>mbps</small></p>
+				<p><input type="checkbox" name="data_acknowledgement" value="yes" checked> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
+				<input name="latitude" id="latitude" type="hidden" />
+				<input name="longitude" id="longitude" type="hidden" />
+				<input name="actual_download" id="actual_download" type="hidden" />
+				<input name="actual_upload" id="actual_upload" type="hidden" />
+				<input name="min_rtt" id="min_rtt" type="hidden" />
+				<input name="bigquery_key" id="bigquery_key" type="hidden" />
+		</div>
 
 		<div id="button-container">
-		  <button id="testSpeed" class="btn btn-primary btn-lg">Test my speed<img src="images/speed-light.svg" id="test-icon-sm" alt="Click here to run the M-Lab speed test" title="Click here to run the M-Lab speed test" /></button><br />
-		  <button id="exploreMap" class="btn btn-primary btn-sm">No thanks, just show me the map</button>
+		  <button id="testSpeed" class="btn btn-primary btn-lg">Take the Speed Test<img src="images/speed-light.svg" id="test-icon-sm" alt="Take the Speed Test" title="Take the Speed Test" /></button><br />
 		</div>
-		<p class="disclaimer">Please be aware that the results of the Seattle Broadband Map speed test may vary due to factors other than the actual speed of your internet connection. The device you’re using, operating system, browser, time of day, whether you’re using WiFi or a wired connection, whether you have another process like email or a video running at the same time – all of these and more may significantly alter your results from test to test. The results of the speed test are an accurate representation of your internet connect at the time of each test, and provide a valuable contribution to the overall picture of how Seattle is progressing towards the Mayor’s goal of competitive, equal, and affordable broadband service that approaches a rapidly evolving gigabit standard. Send your questions or comments to <a href="mailto:broadband.map@seattle.gov">broadband.map@seattle.gov</a>.</p>
+
+		<div id="ndt" class="ndt-related">
+			<h3 class="league-gothic">Test your speed!</h3>
+			<h4>You can contribute to this map!</h4>
+			<div id="ndt-div">
+				<div id="ndt-svg"></div>
+			</div>
+			<div id="approx-loc"></div>
+			<div id="ndt-status"></div>
+		</div>
+
+		<div id="ndt-results" class="ndt-related">
+			<h3 class="league-gothic">Your test results</h3>
+			<p>Download speed: <span id="s2cRate"></span>mbps</p>
+			<p>Upload speed: <span id="c2sRate"></span>mbps</p>
+			<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
+			<input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
+		</form>
+		</div>
+
+		<div id="thank-you" class="ndt-related">
+			<h2>Thank you!</h2>
+
+			<h3>What do you want to do next?</h3>
+			<ul>
+			  <li><a href="/">Explore the map and see how your results compare to other users</li>
+			  <li>Learn more about this test and how the data will be used</li>
+			  <li>Share this test to your friends, colleagues, and neighbors<br>
+				<!-- Social Button HTML -->
+
+				<!-- Twitter -->
+				<a href="http://twitter.com/share?url=http://www.seattle.gov/broadband-speed-test&text=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&via=SeattleCTO" target="_blank" class="share-btn twitter">
+				    <i class="fa fa-twitter"></i>
+				</a>
+
+				<!-- Google Plus -->
+				<a href="https://plus.google.com/share?url=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn google-plus">
+				    <i class="fa fa-google-plus"></i>
+				</a>
+
+				<!-- Facebook -->
+				<a href="http://www.facebook.com/sharer/sharer.php?u=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn facebook">
+				    <i class="fa fa-facebook"></i>
+				</a>
+
+				<!-- StumbleUpon (url, title) -->
+				<a href="http://www.stumbleupon.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn stumbleupon">
+				    <i class="fa fa-stumbleupon"></i>
+				</a>
+
+				<!-- Reddit (url, title) -->
+				<a href="http://reddit.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn reddit">
+				    <i class="fa fa-reddit"></i>
+				</a>
+
+				<!-- LinkedIn -->
+				<a href="http://www.linkedin.com/shareArticle?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&summary=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&source=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn linkedin">
+				    <i class="fa fa-linkedin"></i>
+				</a>
+
+				<!-- Email -->
+				<a href="mailto:?subject=Take%20the%20Seattle%20Broadband%20Speed Test&body=I%20just%20took%20the%20Seattle%20Broadband%20Speed%20Test,%20and%20you%20should%20too!%20Take%20the%20test%20and%20contribute%20to%20a%20map%20of%20broadband%20speeds%20across%20the%20city. http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn email">
+				    <i class="fa fa-envelope"></i>
+				</a>
+
+			  </li>
+			</ul>
+		</div>
 	</div>
 </div>
 
@@ -57,57 +158,7 @@
 		<p>M-Lab data is combined with speed tests contributed from this website provide a picture of Seattle's broadband experience over time. The more data that is contributed, the more accurate the map will become.</p>
 		<p>The speed test data you submit here is submitted to M-Lab, is aggregated to assure that it remains anonymous before it’s made publicly available on data.seattle.gov and conforms to <a href="http://seattle.gov/privacy" target="_blank">the City of Seattle’s Privacy Policy</a> and <a href="http://www.measurementlab.net/privacy" target="_blank">M-Lab's Privacy and Acceptable Use Policies</a>. The Seattle Broadband Map application optionally requests your location and after the speed test asks for additional information about your connection to better understand the state of consumer broadband in the city. This additional information is not sent to M-Lab, but is stored in a private database used by this site.</p>
 	</div>
-	<div id="ndt" class="ndt-related">
-		<h3 class="league-gothic">Test your speed!</h3>
-		<h4>You can contribute to this map!</h4>
-		<div id="ndt-div">
-			<div id="ndt-svg"></div>
-		</div>
-		<p>To start, simply hit the button and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
-		<div id="approx-loc">
-		</div>
-		<div id="ndt-status"></div>
-	</div>
 
-	<div id="ndt-results" class="ndt-related">
-		<h3 class="league-gothic">Your test results:</h3>
-		<p>Download speed: <span id="s2cRate"></span>Mbps</p>
-		<p>Upload speed: <span id="c2sRate"></span>Mbps</p>
-		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p>
-	</div>
-	<div id="extra-data" class="ndt-related">
-		<h4>Thank you for contributing to the Seattle Broadband Speed Test!</h4>
-		<h4>Please tell us more (anonymously) about your Internet connection, including who your service provider is, so we can use your speed test results to improve broadband access in Seattle.</h4>
-		<form action="/collector/collect" method="post" id="collector">
-			<p>Location: 
-			<select name="location_type" class="form-control">
-				<option value="default">------</option>
-				<option value="residence">Residence</option>
-				<option value="workplace">Workplace</option>
-				<option value="business">Business</option>
-				<option value="public">Public space</option>
-			</select></p>
-			<p>What Type of Connection?
-			<select name="connection_type" class="form-control">
-				<option value="default">------</option>
-				<option value="cable">Cable</option>
-				<option value="dsl">DSL</option>
-				<option value="fiber">Fiber</option>
-				<option value="cellular">Cellular</option>
-				<option value="other">Other</option>
-			</select></p>
-			<p>Advertised download speed? <input name="advertised_download" size="3"/><small>Mbps</small></p>
-			<p>Advertised upload speed? <input name="advertised_upload" size="3"/><small>Mbps</small></p>
-			<p>Monthly cost of service: $ <input name="cost_of_service" size="3" /></p>
-			<input name="latitude" id="latitude" type="hidden" />
-			<input name="longitude" id="longitude" type="hidden" />
-			<input name="actual_download" id="actual_download" type="hidden" />
-			<input name="actual_upload" id="actual_upload" type="hidden" />
-			<input name="min_rtt" id="min_rtt" type="hidden" />
-			<input name="bigquery_key" id="bigquery_key" type="hidden" />
-			<input class="btn btn-primary btn-sm" type="submit" value="Send"/>
-		</form>
-	</div>
 
 
 	<script>
@@ -263,15 +314,6 @@ var geoLayers = {
 		'cache': null,
 		'layer': null
 	},
-	'council_districts': {
-		'name': 'Council districts',
-		'polygonFile': 'seattle_council_districts.topojson',
-		'dataUrl': 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
-		'dbKey': 'district',
-		'geoKey': 'district',
-		'cache': null,
-		'layer': null
-	}
 };
 
 // Which of the geoLayers should be the one added to the map by default
