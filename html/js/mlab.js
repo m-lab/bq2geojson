@@ -528,7 +528,7 @@ $(function() {
 					$('#icons img').removeClass('selected');
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #extra-data').hide();
+					$('#ndt, #ndt-results, #thank-you').hide();
 					$('#about-ndt').show();					
 				}
 			}
@@ -566,7 +566,7 @@ $(function() {
 
 
 function showOtherIspBox(val) {
-  var element=document.getElementById('isp');
+  var element=document.getElementById('isp_user');
   if(val=='other') {
 		element.style.display='block';		
 	}
