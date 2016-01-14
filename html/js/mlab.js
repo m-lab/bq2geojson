@@ -550,7 +550,7 @@ $(function() {
 		$('#testSpeed, #exploreMap').toggle();
 	});
 	$('#testSpeed').click(function() {
-		showHideControls();
+		//showHideControls();
 		//showTestingPanel();
 		//$('#header').remove();
 		//$('#layers-box').show();
