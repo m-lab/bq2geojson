@@ -306,7 +306,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #approx-loc {
   text-align: left;
   width:auto;
-  float:right;
   display:inline-block;
 }
 
@@ -427,7 +426,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   margin:20px;
 }
 #approx-loc {
-  width:40%;
   margin-top:10px;
   padding-right:10px;
 }
@@ -762,9 +760,6 @@ a.leaflet-popup-close-button {
   }
   #mobile-menu, #mobile-container {
     display:none !important;
-  }
-  #approx-loc {
-    float: right;
   }
   #icon-container {
     width:13%;
