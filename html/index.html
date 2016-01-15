@@ -59,10 +59,10 @@
 	</div>
 	<div id="ndt" class="ndt-related">
 		<h3 class="league-gothic">Test your speed!</h3>
-		<h4>You can contribute to this map!</h4>
 		<div id="ndt-div">
 			<div id="ndt-svg"></div>
 		</div>
+		<h4>You can contribute to this map!</h4>
 		<p>To start, simply hit the button and answer the questions at the end. All data is kept anonymous and used to improve the state of Seattle’s broadband.</p>
 		<div id="approx-loc">
 		</div>
@@ -79,7 +79,7 @@
 		<h4>Thank you for contributing to the Seattle Broadband Speed Test!</h4>
 		<h4>Please tell us more (anonymously) about your Internet connection, including who your service provider is, so we can use your speed test results to improve broadband access in Seattle.</h4>
 		<form action="/collector/collect" method="post" id="collector">
-			<p>Location: 
+			<p>Location:
 			<select name="location_type" class="form-control">
 				<option value="default">------</option>
 				<option value="residence">Residence</option>
@@ -130,11 +130,11 @@
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(success, error);
 		}
-		
+
 		function success(position) {
 			document.getElementById('latitude').value = position.coords.latitude;
 			document.getElementById('longitude').value = position.coords.longitude;
-			
+
 			var xhr = new XMLHttpRequest(),
 			currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
 
@@ -164,7 +164,7 @@
 		function getNdtServer () {
 			var xhr = new XMLHttpRequest(),
 				mlabNsUrl = 'http://mlab-ns.appspot.com/ndt?format=json';
-		
+
 			xhr.open('GET', mlabNsUrl, true);
 			xhr.send();
 			xhr.onreadystatechange = function () {
@@ -195,7 +195,7 @@
 						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
 						$('#extra-data').css('display', 'none');
 						setTimeout(window.location.assign("thankyou.html"),7000000);
- 						
+
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
 						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {

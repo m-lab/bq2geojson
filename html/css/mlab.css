@@ -58,10 +58,6 @@ html, body {
 	margin: 0 1.3em 5px;
 }
 
-#ndt > p {
-  float:right;
-  width:55%;	
-}
 
 #ndt-results .btn-sm {
 	float: right;
@@ -131,14 +127,14 @@ html, body {
 	border-style: solid;
 	border-color: #BBB #999 #666 #222;
 	border-radius: 40px;
-	animation: spin 1s linear infinite; 
+	animation: spin 1s linear infinite;
 }
 
-@keyframes spin {  
-	from { transform: rotate(0deg); }  
-	50%  { transform: rotate(180deg); }  
-	to   { transform: rotate(360deg); }  
-}		
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	50%  { transform: rotate(180deg); }
+	to   { transform: rotate(360deg); }
+}
 
 #loading {
 	margin: 10px auto;
@@ -335,13 +331,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #sidebar h4 {
   margin:0 1.3em 5px;
-  font-size: 1em;
+  font-size: 1.1em;
   line-height: 1.42857143;
-}
-
-#ndt h4 {
-  float:right;
-  width:55%;
 }
 
 #ndt, #ndt-results, #extra-data {
@@ -356,7 +347,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   overflow:hidden;
 }
 #sidebar.extended {
-  width:50%;
+  width:70%;
 }
 #icons {
   float:right;
@@ -543,7 +534,7 @@ a.leaflet-popup-close-button {
   #ndt-status {
     float:left;
     margin-top: 10%;
-  } 
+  }
   #progress-meter text.information {
     font-size: 20px;
   }
@@ -560,10 +551,6 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:500px) {
-  #ndt h4, #ndt > p {
-    width:50%;
-    float:right;
-  }
   #ndt-div {
     margin-top:0;
   }
@@ -586,7 +573,7 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #ndt, #ndt-results, #extra-data, #about-ndt {
-    font-size: 0.8em
+    font-size: 1em
   }
   #header h2 {
     font-size: 2.5em;
@@ -604,15 +591,11 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(min-width:600px) {
-  #ndt h4, #ndt > p {
-    width:60%;
-  }
-}
 
-@media(max-width:968px) {
+
+@media(max-width:700px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-    display:none; 
+    display:none;
   }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
@@ -622,21 +605,18 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #desktop-legend {
-    display:none; 
+    display:none;
   }
   #sliderMonth {
     width:85%;
   }
   .sliderElements, .metricControls {
-    display: none; 
-  }
-  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
-    display:none;
+    display: none;
   }
   #approx-loc {
     display:none !important;
   }
- 
+
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
@@ -704,9 +684,6 @@ a.leaflet-popup-close-button {
   #sidebar {
     top:80px;
   }
-  #sidebar img {
-    max-width: 60px;
-  }
   .info.legend.leaflet-control {
     height:100%;
     position: absolute;
@@ -729,7 +706,6 @@ a.leaflet-popup-close-button {
   }
   #sidebar.extended {
     width:100%;
-    min-height: 50%;
     top:60px;
   }
   .leaflet-top.leaflet-right .leaflet-control-layers {
@@ -759,7 +735,7 @@ a.leaflet-popup-close-button {
 	}
 }
 
-@media(min-width:969px) {
+@media(min-width:701px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
     display:block;
   }
@@ -812,7 +788,6 @@ a.leaflet-popup-close-button {
   #ndt h4, #ndt > p, #approx-loc {
   /*#ndt h4, #ndt p, #about-ndt p {
     font-size: 0.8em;*/
-    width:65%;
     margin:5px 0 0 0;
   }
 }
@@ -929,6 +904,12 @@ a.leaflet-popup-close-button {
   }
 }
 
+@media(min-width:700px) {
+  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
+    display:none;
+  }
+}
+
 .disclaimer {
   font-size:0.8em;
 }
@@ -959,31 +940,31 @@ a.leaflet-popup-close-button {
   outline: none;
 }
 
-.share-btn.twitter     { 
-  background: #55acee; 
+.share-btn.twitter     {
+  background: #55acee;
   background-image: url("/images/twitter.png");
 }
-.share-btn.google-plus { 
-  background: #dd4b39; 
+.share-btn.google-plus {
+  background: #dd4b39;
   background-image: url("/images/googleplus.png");
 }
-.share-btn.facebook    { 
-  background: #3B5998; 
+.share-btn.facebook    {
+  background: #3B5998;
   background-image: url("/images/facebook.png");
 }
-.share-btn.linkedin    { 
-  background: #4875B4; 
+.share-btn.linkedin    {
+  background: #4875B4;
   background-image: url("/images/linkedin.png");
 }
-.share-btn.stumbleupon { 
-  background: #EB4823; 
+.share-btn.stumbleupon {
+  background: #EB4823;
   background-image: url("/images/stumbleupon.png");
 }
-.share-btn.reddit { 
-  background: #ff5700; 
+.share-btn.reddit {
+  background: #ff5700;
   background-image: url("/images/reddit.png");
 }
-.share-btn.email       { 
-  background: #444444; 
+.share-btn.email       {
+  background: #444444;
   background-image: url("/images/email.png");
 }

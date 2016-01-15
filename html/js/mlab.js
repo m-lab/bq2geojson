@@ -49,7 +49,7 @@ function addControls() {
 		selectMetric = L.DomUtil.create('select', 'mapControls', controls),
 		labelYear = L.DomUtil.create('span', 'mapControls', controls),
 		selectYear = L.DomUtil.create('select', 'mapControls', controls);
-		
+
 		if ( polygonType == 'hex' ) {
 			var labelRes = L.DomUtil.create('span', 'mapControls', controls),
 				selectRes = L.DomUtil.create('select', 'mapControls', controls);
@@ -70,7 +70,7 @@ function addControls() {
 		}
 
 		checkAnimate.innerHTML = '<span id="playAnimation" class="paused"></span>';
-		
+
 		sliderMonth.setAttribute('id', 'sliderMonth');
 		// Prevent the entire map from dragging when the slider is dragged.
 		L.DomEvent.disableClickPropagation(sliderMonth);
@@ -92,8 +92,8 @@ function addControls() {
 	};
 
 	controls.addTo(map);
-	
-	
+
+
 	var metricChoices = $(".leaflet-control > span, .leaflet-control > select").slice(0,4);
 	$(".leaflet-control > div.mapControls").wrapAll("<div class='sliderElements'></div>");
 	metricChoices.wrapAll("<div class='metricControls'></div>");
@@ -110,7 +110,7 @@ function addControls() {
 			function (e) { updateLayers(e, 'update'); });
 	});
 
-	var clearId;	
+	var clearId;
 	$('#playAnimation').click( function() {
 		$('#playAnimation').toggleClass('paused');
 		if ( $('#playAnimation').hasClass('paused') ) {
@@ -313,11 +313,11 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 			if ( metric == "download_median" &&
 					cell.properties.download_count > 0 ) {
 				l.bindPopup(makePopup(cell.properties));
-			} 
+			}
 			if ( metric == "upload_median" &&
 					cell.properties.upload_count > 0 ) {
 				l.bindPopup(makePopup(cell.properties));
-			} 
+			}
 			l.setStyle(cell['polygonStyle']);
 		});
 
@@ -389,7 +389,7 @@ function setPlotLayer(year, month, mode) {
 /**
  * Takes a year and attempts to load the base layer date  into memory in the
  * background to speed switching between months for the current year.
- * 
+ *
  * @param {string} year Year of layer to seed cache for
  */
 function seedLayerCache(year) {
@@ -458,7 +458,7 @@ function showHideControls() {
 	$('.leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
 	if ($('#header').hasClass('initial')) {
 		$('.leaflet-bottom.leaflet-right').hide();
-	} else if ($(document).width() > 968) {
+	} else if ($(document).width() > 700) {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
 		$('.leaflet-top.leaflet-left').show();
 	}
@@ -489,11 +489,11 @@ function showTestingPanel() {
 	}
 }
 
-$( window ).resize(function() {		
+$( window ).resize(function() {
 		if ($('#header').hasClass('initial')) {
 			return;
 		}
-		else if (($(document).width() > 968)) {
+		else if (($(document).width() > 700)) {
 			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 		}
 });
@@ -517,7 +517,7 @@ $(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
 			$('#mobile-container').hide();
-			if ($(document).width() < 968) {
+			if ($(document).width() < 700) {
 				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 			}
 			if (clickedElement == "about-icon") {
@@ -529,11 +529,11 @@ $(function() {
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
 					$('#ndt, #ndt-results, #extra-data').hide();
-					$('#about-ndt').show();					
+					$('#about-ndt').show();
 				}
 			}
 			else if (clickedElement == "test-icon") {
-				showTestingPanel();			
+				showTestingPanel();
 			}
 		}
 	});
@@ -568,9 +568,9 @@ $(function() {
 function showOtherIspBox(val) {
   var element=document.getElementById('isp');
   if(val=='other') {
-		element.style.display='block';		
+		element.style.display='block';
 	}
   else {
     element.style.display='none';
 	}
-} 
+}
