@@ -500,7 +500,7 @@ $( window ).resize(function() {
 });
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#intro, #takeTest, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
@@ -549,7 +549,7 @@ $(function() {
 		$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
-	$('#testSpeed').click(function() {
+	$('#takeTest').click(function() {
 		//showHideControls();
 		//showTestingPanel();
 		//$('#header').remove();
