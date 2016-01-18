@@ -549,7 +549,7 @@ $(function() {
 		$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
-	$('#takeTest').click(function() {
+	$('#testSpeed').click(function() {
 		//showHideControls();
 		//showTestingPanel();
 		//$('#header').remove();
