@@ -36,49 +36,65 @@
 		<h3>The City of Seattle is collecting information from residents about broadband experiences across the City. To contribute, please answer the following questions and then take our Broadband Speed Test:</h3>
 		<div id="extra-data" class="ndt-related">
 			<form action="/collector/collect" method="post" id="collector">
-				<div style="width:50%; float:left;">
-				<p>Who is your Internet Service Provider?</p>
-				<p>How do you connect to the Internet?</p>
-				<p>How much do you pay, per month?</p>
-				<p>What are your advertised upload and download speeds? <strong>(Optional)</strong><br >
-				Upload: <br >
-				Download: <br ></p>
-
+				<div style="width:40%; float:left;">
+					<p>Who is your Internet Service Provider?</p>
 				</div>
-				<div style="width:50%; float:left;">
-				<p>
-				<select id="isp_user" name="isp_user" class="form-control">
-					<option value="default">------</option>
-					<option value="comcast">Comcast</option>
-					<option value="centurylink">CenturyLink</option>
-					<option value="wave">Wave</option>
-					<option value="other">Other</option>
-				</select>
-				<input type="text" name="other" id="isp_user" class="form-control" style="display:none;"/></p>
-				</p>
-				<p>
-				<select name="connection_type" class="form-control">
-					<option value="default">------</option>
-					<option value="wired">Wired connection</option>
-					<option value="wireless-single">Wireless connection - 1 device</option>
-					<option value="wireless-multiple">Wireless connection - shared among multiple devices or households</option>
-				</select>
-			    </p>
-			    <p>
-				<select name="cost_of_service" class="form-control">
-					<option value="default">------</option>
-					<option value="less_than_25">Less than $25</option>
-					<option value="25_50">$25-$50</option>
-					<option value="50_75">$50-$75</option>
-					<option value="75_100">$75-$100</option>
-					<option value="100_or_above">$100+</option>
-					<option value="dont_know">Don't know</option>
-				</select>
-				</p>
-				<p>
-				<input name="advertised_upload" size="3"/><small> mbps</small><br >
-				<input name="advertised_download" size="3"/><small>mbps</small>
-				</p>
+				<div style="width:60%; float:left;">
+					<p>
+						<select id="isp_user" name="isp_user" class="form-control">
+							<option value="default">------</option>
+							<option value="comcast">Comcast</option>
+							<option value="centurylink">CenturyLink</option>
+							<option value="wave">Wave</option>
+							<option value="other">Other</option>
+						</select>
+						<input type="text" name="other" id="isp_user" class="form-control" style="display:none;"/>
+					</p>
+				</div>
+				<div style="width:40%; float:left;">						
+					<p>How do you connect to the Internet?</p>
+				</div>
+				<div style="width:60%; float:left;">
+					<p>
+					<select name="connection_type" class="form-control">
+						<option value="default">------</option>
+						<option value="wired">Wired connection</option>
+						<option value="wireless-single">Wireless connection - 1 device</option>
+						<option value="wireless-multiple">Wireless connection - shared among multiple devices or households</option>
+					</select>
+				    </p>
+				</div>
+				<div style="width:40%; float:left;">						
+					<p>How much do you pay, per month?</p>
+				</div>
+				<div style="width:60%; float:left;">
+				    <p>
+					<select name="cost_of_service" class="form-control">
+						<option value="default">------</option>
+						<option value="less_than_25">Less than $25</option>
+						<option value="25_50">$25-$50</option>
+						<option value="50_75">$50-$75</option>
+						<option value="75_100">$75-$100</option>
+						<option value="100_or_above">$100+</option>
+						<option value="dont_know">Don't know</option>
+					</select>
+					</p>
+				</div>
+				<div style="width:40%; float:left;">						
+					<p>What are your advertised upload and download speeds? <strong>(Optional)</strong>
+					</p>
+					<p style="text-align: right;">
+						Upload: <br >
+						Download: <br >
+					</p>
+				</div>
+				<div style="width:60%; float:left;">
+					<p>
+					<input name="advertised_upload" size="3"/><small> mbps</small><br >
+					<input name="advertised_download" size="3"/><small>mbps</small>
+					</p>
+				</div>	
+				<div style="width:100%; float:left;">
 				<p><input type="checkbox" name="data_acknowledgement" value="yes" checked> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
 				</div>
 
