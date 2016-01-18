@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset='utf-8' />
-	<title>Seattle Broadband Map</title>
+	<title>Thailand Broadband Map</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -219,7 +219,7 @@
 // the MMMM_YY- suffix to look for. For example:
 // If set to 'city_council_districts', then the system will look for
 // GeoJSON files like 'MMMM_YY-city_council_districts.geojson'.
-var polygonType = 'city_council_districts';
+var polygonType = 'thailand_provinces';
 
 // Either 'topojson' or 'geojson'.  The Node.js script creates both TopoJSON and
 // GeoJSON files.  TopoJSON files are significantly smaller in size, but need to
@@ -228,7 +228,7 @@ var polygonType = 'city_council_districts';
 // client-side to convert the TopJSON to GeoJSON.  I would conjecture that
 // the network is the most limiting factor and that generally TopoJSON will be
 // the right choice.  TODO: prove this theory.
-var jsonType = "topojson";
+var jsonType = "geojson";
 
 
 // The minimum number of data points in any given polygon for a it to be
@@ -254,21 +254,12 @@ var overlays = {
 
 // Defines the layers that are going to be added to the map.
 var geoLayers = {
-	'census_block_groups': {
-		'name': 'Census block groups',
-		'polygonFile': 'seattle_census10_blockgroups.topojson',
-		'dataUrl': 'stats/q/by_census_block?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
+	'thailand_provinces': {
+		'name': 'Provinces',
+		'polygonFile': 'THA_adm3.json',
+		'dataUrl': 'stats/q/by_thai_province?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
 		'dbKey': 'geoid10',
 		'geoKey': 'GEOID10',
-		'cache': null,
-		'layer': null
-	},
-	'council_districts': {
-		'name': 'Council districts',
-		'polygonFile': 'seattle_council_districts.topojson',
-		'dataUrl': 'stats/q/by_council_district?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
-		'dbKey': 'district',
-		'geoKey': 'district',
 		'cache': null,
 		'layer': null
 	}
@@ -288,9 +279,9 @@ var animateInterval = 1500;
 // Center and zoom level of map.  center may be pulled in via js/center.js, but
 // if not then just set it to the center of the USA.
 if ( typeof center == 'undefined' ) {
-	var center = [38.8961302513129,-99.04025268554688]; //USA
+	var center = [13.3298928,96.6992677]; //
 }
-var zoom = 11;
+var zoom = 6;
 
 // These are the labels that will be used for the month slider in the control
 // box in the lower left corner.
