@@ -228,7 +228,7 @@ var polygonType = 'thailand_provinces';
 // client-side to convert the TopJSON to GeoJSON.  I would conjecture that
 // the network is the most limiting factor and that generally TopoJSON will be
 // the right choice.  TODO: prove this theory.
-var jsonType = "geojson";
+var jsonType = "topojson";
 
 
 // The minimum number of data points in any given polygon for a it to be
@@ -256,7 +256,7 @@ var overlays = {
 var geoLayers = {
 	'thailand_provinces': {
 		'name': 'Provinces',
-		'polygonFile': 'THA_adm3.geojson',
+		'polygonFile': 'THA_adm1.topojson',
 		'dataUrl': 'stats/q/by_thai_province?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
 		'dbKey': 'geoid10',
 		'geoKey': 'GEOID10',
