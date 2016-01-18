@@ -256,7 +256,7 @@ var overlays = {
 var geoLayers = {
 	'thailand_provinces': {
 		'name': 'Provinces',
-		'polygonFile': 'THA_adm3.json',
+		'polygonFile': 'THA_adm3.geojson',
 		'dataUrl': 'stats/q/by_thai_province?format=json&stats=AverageRTT,DownloadCount,MedianDownload,AverageDownload,UploadCount,MedianUpload,AverageUpload&b.spatial_join=key&b.time_slices=month&f.time_slices=',
 		'dbKey': 'geoid10',
 		'geoKey': 'GEOID10',
@@ -266,7 +266,7 @@ var geoLayers = {
 };
 
 // Which of the geoLayers should be the one added to the map by default
-var defaultLayer = 'census_block_groups';
+var defaultLayer = 'thailand_provinces';
 
 // If set to true, then prefetch the GeoJSON files into a local cache.  WARNING:
 // You may not want to enable if you expect mobile, low bandwidth, or otherwise
