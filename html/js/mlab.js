@@ -477,11 +477,11 @@ function showTestingPanel() {
 		$('#icons img').removeClass('selected');
 		$('#test-icon').addClass('selected');
 		$('#sidebar').addClass('extended');
-		$('#about-ndt').hide();
+		//$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#extra-data').show();
+			$('#extra-data').hide();
 		}
 		else {
 			$('#ndt').show();
