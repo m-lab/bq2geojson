@@ -521,12 +521,21 @@ $(function() {
 			if ($(document).width() < 700) {
 				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 			}
-			$('#icons img').removeClass('selected');
-			$(this).addClass('selected');
-			//$('#sidebar').addClass('extended');
-			//$('#extra-data').hide();
-			//$('#about-ndt').show();
-			showTestingPanel();
+			if (clickedElement == "about-icon") {
+				if ($('#about-icon').hasClass('selected')) {
+					closeAllTheThings();
+				}
+				else {
+					$('#icons img').removeClass('selected');
+					$(this).addClass('selected');
+					$('#sidebar').addClass('extended');
+					$('#ndt, #ndt-results, #extra-data').hide();
+					$('#about-ndt').show();
+				}
+			}
+			else if (clickedElement == "test-icon") {
+				showTestingPanel();
+			}
 		}
 	});
 	$('#mobile-menu').click(function() {
