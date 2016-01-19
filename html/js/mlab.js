@@ -449,9 +449,9 @@ function setupLayer(layer) {
 }
 
 function closeAllTheThings() {
-	$('#sidebar').removeClass('extended');
+	//$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
-	$('#ndt, #ndt-results, #about-ndt').hide();
+	$('#ndt, #ndt-results, #thank-you').hide();
 }
 
 function showHideControls() {
@@ -513,6 +513,8 @@ $(function)() {
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+
+	closeAllTheThings();
 
 }
 
