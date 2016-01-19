@@ -25,10 +25,12 @@ html, body {
 }
 
 #sidebar {
+/*
 	position: absolute;
 	width: 24%;
 	right: 0;
 	padding: 5px;
+*/
 }
 
 #ndt {
@@ -259,9 +261,10 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #sidebar {
-	z-index:5;
+/*	z-index:5;
 	background:#fff;
 	background:rgba(255,255,255,0.75);
+*/
 }
 
 .info {
@@ -354,12 +357,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width: 100%;
 }
 #sidebar {
-  width:auto;
+/*  width:auto;
   top:50px;
   overflow:hidden;
+*/
 }
 #sidebar.extended {
-  width:50%;
+/*  width:50%; */
 }
 #icons {
   width: 100%;
