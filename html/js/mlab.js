@@ -481,10 +481,11 @@ function showTestingPanel() {
 		if (resultsReceived !== "?") {
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#extra-data').hide();
+			$('#extra-data').show();
 		}
 		else {
 			$('#ndt').show();
+			$('#extra-data').hide();
 		}
 	}
 }
