@@ -507,11 +507,15 @@ $( window ).onload = function() {
 	$('#map').show();
 }
 // Function for post form, run test icon
-$(function() {
-	$('#test-icon').click(function() {
-		showTestingPanel();
-	)}
-)};
+$(function(step2) {
+	$('#extra-data').hide();
+	$('#ndt').show();
+	$('#ndt-div').show();
+	$('#ndt-status').show();
+	$('#ndt-results').show();
+	$('#approx-loc').show();
+)}
+
 /*
 $(function() {
 	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
