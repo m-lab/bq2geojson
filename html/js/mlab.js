@@ -507,15 +507,17 @@ $( window ).onload = function() {
 	$('#map').show();
 }
 // Function for post form, run test icon
-$('#test-icon').click(function() {
-	$('#extra-data').hide();
-	$('#ndt').show();
-	$('#ndt-svg').show();
-	$('#ndt-div').show();
-	$('#approx-loc').show();
-	$('#ndt-status').show();
-	$('#ndt-results').show();
-}
+$(function() {
+	$('#test-icon').click(function() {
+		$('#extra-data').hide();
+		$('#ndt').show();
+		$('#ndt-svg').show();
+		$('#ndt-div').show();
+		$('#approx-loc').show();
+		$('#ndt-status').show();
+		$('#ndt-results').show();
+	)}
+)};
 /*
 $(function() {
 	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
