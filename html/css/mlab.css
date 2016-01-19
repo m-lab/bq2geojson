@@ -56,6 +56,7 @@ html, body {
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
 	margin: 0 1.3em 5px;
+  font-size: 1.3em;
 }
 
 
