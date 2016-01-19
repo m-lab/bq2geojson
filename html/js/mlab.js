@@ -499,6 +499,24 @@ $( window ).resize(function() {
 		}
 });
 
+$(function)() {
+	/* Initial states for divs */
+	$('#intro, #testSpeed, #exploreMap, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
+	$('#header').addClass('initial');
+	var mobileContainer = '<div id="mobile-container"></div>';
+	$('#map').append(mobileContainer);
+	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
+	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+
+	var attribution = $('div.leaflet-control-attribution.leaflet-control');
+	$('div.info.legend.leaflet-control').append(attribution);
+	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
+	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+
+}
+
+/*
 $(function() {
 	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
@@ -564,7 +582,7 @@ $(function() {
     $('#testSpeed, #exploreMap').toggle();
   });
 });
-
+*/
 
 function showOtherIspBox(val) {
   var element=document.getElementById('isp');
