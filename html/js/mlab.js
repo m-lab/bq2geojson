@@ -514,6 +514,22 @@ $(function)() {
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 
+	closeAllTheThings();
+	$('#icons img').click(function() {
+		var clickedElement = $(this).attr('id');
+		if (clickedElement == "test-icon" ) {
+			$('#mobile-container').hide();
+			if ($(document).width() < 700) {
+				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
+			}
+
+			$('#icons img').removeClass('selected');
+			$(this).addClass('selected');
+			$('#ndt, #ndt-results, #extra-data').hide();
+			showTestingPanel();
+		}
+	});
+
 }
 
 /*
