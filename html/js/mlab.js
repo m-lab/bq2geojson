@@ -499,7 +499,7 @@ $( window ).resize(function() {
 			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 		}
 });
-/*
+
 $(function() {
 	$('#intro, #speedTest, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
@@ -568,7 +568,7 @@ $(function() {
     $('#testSpeed, #exploreMap').toggle();
   });
 });
-*/
+
 
 function showOtherIspBox(val) {
   var element=document.getElementById('isp_user');
