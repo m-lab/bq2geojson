@@ -516,6 +516,10 @@ $(function() {
 
 	closeAllTheThings();
 
+	$('#test-icon').click(function() {
+		$('#testSpeed', '#ndt', '#extra-data', '#intro').toggle();
+	});
+
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon") {
@@ -537,7 +541,7 @@ $(function() {
 			// }
 			// else if (clickedElement == "test-icon") {
 
-			showTestingPanel();			
+			// showTestingPanel();			
 			// }
 		}
 	});
@@ -552,15 +556,15 @@ $(function() {
 		$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
-	$('#testSpeed').click(function() {
+	// $('#testSpeed').click(function() {
 		//showHideControls();
 		//showTestingPanel();
 		//$('#header').remove();
 		//$('#layers-box').show();
 		//$('.leaflet-top.leaflet-left').show();
 		//$('#testSpeed, #exploreMap').toggle();
-		$('#testSpeed', '#ndt', '#extra-data').toggle();
-	});
+		// $('#testSpeed', '#ndt', '#extra-data', '#intro').toggle();
+	//});
   $('#testSpeedEmptyPrompt').click(function() {
     $('#header').removeClass('initial');
     showHideControls();
