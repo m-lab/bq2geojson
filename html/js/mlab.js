@@ -509,12 +509,12 @@ function showMap() {
 }
 
 $( window ).resize(function() {
-		if ($('#header').hasClass('initial')) {
-			return;
-		}
-		else if (($(document).width() > 700)) {
-			$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
-		}
+	if ($('#header').hasClass('initial')) {
+		return;
+	}
+	else if (($(document).width() > 700)) {
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+	}
 });
 
 $(function() {
