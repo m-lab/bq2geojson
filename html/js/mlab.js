@@ -523,7 +523,7 @@ $( window ).resize(function() {
 $(function() {
 /* Sets initial status on load for various divs */
 	$('#testSpeed, #exploreMap, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
-	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
+	$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
 /* mobile bits */
@@ -543,12 +543,6 @@ $(function() {
 	/* reset the display to initial desired state */
 	closeAllTheThings();
 /*
-	$('#test-icon').click(function() {
-		showTestingPanel();
-	});
-	$('#map-icon').click(function() {
-		showMap();
-	});
 
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
