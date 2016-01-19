@@ -508,6 +508,20 @@ $( window ).onload = function() {
 }
 
 $(function() {
+	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#header').addClass('initial');
+	var mobileContainer = '<div id="mobile-container"></div>';
+	$('#map').append(mobileContainer);
+	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
+	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+
+	var attribution = $('div.leaflet-control-attribution.leaflet-control');
+	$('div.info.legend.leaflet-control').append(attribution);
+	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
+	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+
+	closeAllTheThings();
+
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" ) {
@@ -518,6 +532,33 @@ $(function() {
 			showTestingPanel();
 		}
 	}
+
+	$('#mobile-menu').click(function() {
+		closeAllTheThings();
+		$('#mobile-container, .sliderElements, .metricControls, .leaflet-control-layers').toggle();
+	});
+	$('#exploreMap').click(function() {
+		showHideControls();
+		$('#header').remove();
+		$('#layers-box').show();
+		$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
+		$('#testSpeed, #exploreMap').toggle();
+	});
+	$('#testSpeed').click(function() {
+		showHideControls();
+		showTestingPanel();
+		$('#header').remove();
+		$('#layers-box').show();
+		$('.leaflet-top.leaflet-left').show();
+		$('#testSpeed, #exploreMap').toggle();
+	});
+	$('#testSpeedEmptyPrompt').click(function() {
+	  $('#header').removeClass('initial');
+	  showHideControls();
+	  showTestingPanel();
+	  $('#testSpeed, #exploreMap').toggle();
+	});
+
 }
 /*
 $(function() {
