@@ -508,13 +508,26 @@ $( window ).onload = function() {
 }
 // Function for post form, run test icon
 $(function(step2) {
-	$('#extra-data').hide();
-	$('#ndt').show();
-	$('#ndt-div').show();
-	$('#ndt-status').show();
-	$('#ndt-results').show();
-	$('#approx-loc').show();
-)}
+    if(document.getElementById('extra-data').style.display=='none') {
+      document.getElementById('extra-data').style.display='block';
+    }
+    if(document.getElementById('ndt').style.display=='none') {
+      document.getElementById('ndt').style.display='block';
+    }  
+
+    if(document.getElementById('ndt-div').style.display=='none') {
+      document.getElementById('ndt-div').style.display='block';
+    }
+    if(document.getElementById('ndt-status').style.display=='none') {
+      document.getElementById('ndt-status').style.display='block';
+    }    
+    if(document.getElementById('ndt-results').style.display=='none') {
+      document.getElementById('ndt-results').style.display='block';
+    }
+    if(document.getElementById('approx-loc').style.display=='none') {
+      document.getElementById('approx-loc').style.display='block';
+    }
+ )}
 
 /*
 $(function() {
