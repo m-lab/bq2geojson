@@ -51,7 +51,6 @@ html, body {
 }
 
 #ndt-results {
-	display: none;
 }
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
@@ -72,7 +71,7 @@ html, body {
 
 }
 #thank-you {
-  display: none;
+
 }
 
 #sidebar #extra-data h4 {
@@ -401,7 +400,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #intro {
-  display:none;
 }
 
 .leaflet-top {
@@ -449,7 +447,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #icon-container, .leaflet-bottom.leaflet-left, #approx-loc, .leaflet-top.leaflet-right {
-  display:none;
+
 }
 
 #takeTest, #exploreMap {
@@ -952,6 +950,7 @@ a.leaflet-popup-close-button {
     box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
     outline: none;
     text-align: center;
+    background-size: 35px 35px;
 }
 
 .share-btn:hover {
