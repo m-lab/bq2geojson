@@ -499,6 +499,7 @@ $( window ).resize(function() {
 });
 
 $(function() {
+/*	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle(); */
 	$('#testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
@@ -528,7 +529,8 @@ $(function() {
 					$('#icons img').removeClass('selected');
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #extra-data').hide();
+					$('#ndt, #ndt-results').hide();
+				/*	$('#ndt, #ndt-results, #extra-data').hide(); */
 					$('#about-ndt').show();
 				}
 			}
