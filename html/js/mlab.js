@@ -451,7 +451,8 @@ function setupLayer(layer) {
 function closeAllTheThings() {
 	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
-	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
+	$('#ndt, #ndt-results, #about-ndt').hide();
+/*	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
 }
 
 function showHideControls() {
@@ -529,8 +530,7 @@ $(function() {
 					$('#icons img').removeClass('selected');
 					$(this).addClass('selected');
 					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results').hide();
-				/*	$('#ndt, #ndt-results, #extra-data').hide(); */
+					$('#ndt, #ndt-results, #extra-data').hide(); 
 					$('#about-ndt').show();
 				}
 			}
