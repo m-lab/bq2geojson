@@ -401,6 +401,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #intro {
+  display: block;
 }
 
 .leaflet-top {
