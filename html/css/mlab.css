@@ -45,7 +45,7 @@ html, body {
 }
 
 #ndt-status {
-	font-size: 1.5em;
+	font-size: 1em;
   margin:0 1.3em 5px;
   font-weight: bold;
 }
@@ -56,9 +56,12 @@ html, body {
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
 	margin: 0 1.3em 5px;
-  font-size: 1.3em;
 }
 
+#ndt > p {
+  float:right;
+  width:55%;	
+}
 
 #ndt-results .btn-sm {
 	float: right;
@@ -66,7 +69,10 @@ html, body {
 	margin-bottom: 2em;
 }
 #extra-data {
-	display: none;
+
+}
+#thank-you {
+  display: none;
 }
 
 #sidebar #extra-data h4 {
@@ -128,14 +134,14 @@ html, body {
 	border-style: solid;
 	border-color: #BBB #999 #666 #222;
 	border-radius: 40px;
-	animation: spin 1s linear infinite;
+	animation: spin 1s linear infinite; 
 }
 
-@keyframes spin {
-	from { transform: rotate(0deg); }
-	50%  { transform: rotate(180deg); }
-	to   { transform: rotate(360deg); }
-}
+@keyframes spin {  
+	from { transform: rotate(0deg); }  
+	50%  { transform: rotate(180deg); }  
+	to   { transform: rotate(360deg); }  
+}		
 
 #loading {
 	margin: 10px auto;
@@ -307,6 +313,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #approx-loc {
   text-align: left;
   width:auto;
+  float:right;
   display:inline-block;
 }
 
@@ -331,8 +338,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 #sidebar h4 {
   margin:0 1.3em 5px;
-  font-size: 1.1em;
+  font-size: 1em;
   line-height: 1.42857143;
+}
+
+#ndt h4 {
+  float:right;
+  width:55%;
 }
 
 #ndt, #ndt-results, #extra-data {
@@ -347,10 +359,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   overflow:hidden;
 }
 #sidebar.extended {
-  width:70%;
+  width:50%;
 }
 #icons {
-  float:right;
+  width: 100%;
+  margin: 0 auto;
+  float: left;
+  text-align: center;
 }
 #sidebar #icons img.selected {
   opacity:1.0;
@@ -362,10 +377,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #icons img {
   width:90%;
   max-width:100px;
-  margin:10px auto;
+  margin:1em 1em;
   display: block;
   opacity:0.75;
   cursor: pointer;
+  float: right;
 }
 #icons img:hover {
   opacity:1.0;
@@ -427,6 +443,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   margin:20px;
 }
 #approx-loc {
+  width:40%;
   margin-top:10px;
   padding-right:10px;
 }
@@ -435,7 +452,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   display:none;
 }
 
-#testSpeed, #exploreMap {
+#takeTest, #exploreMap {
   display:none;
 }
 
@@ -533,7 +550,7 @@ a.leaflet-popup-close-button {
   #ndt-status {
     float:left;
     margin-top: 10%;
-  }
+  } 
   #progress-meter text.information {
     font-size: 20px;
   }
@@ -550,6 +567,10 @@ a.leaflet-popup-close-button {
 }
 
 @media(min-width:500px) {
+  #ndt h4, #ndt > p {
+    width:50%;
+    float:right;
+  }
   #ndt-div {
     margin-top:0;
   }
@@ -590,11 +611,15 @@ a.leaflet-popup-close-button {
   }
 }
 
+@media(min-width:600px) {
+  #ndt h4, #ndt > p {
+    width:60%;
+  }
+}
 
-
-@media(max-width:700px) {
+@media(max-width:968px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-    display:none;
+    display:none; 
   }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
@@ -604,18 +629,21 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #desktop-legend {
-    display:none;
+    display:none; 
   }
   #sliderMonth {
     width:85%;
   }
   .sliderElements, .metricControls {
-    display: none;
+    display: none; 
+  }
+  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
+    display:none;
   }
   #approx-loc {
     display:none !important;
   }
-
+ 
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
@@ -683,6 +711,9 @@ a.leaflet-popup-close-button {
   #sidebar {
     top:80px;
   }
+  #sidebar img {
+    max-width: 60px;
+  }
   .info.legend.leaflet-control {
     height:100%;
     position: absolute;
@@ -705,6 +736,7 @@ a.leaflet-popup-close-button {
   }
   #sidebar.extended {
     width:100%;
+    min-height: 50%;
     top:60px;
   }
   .leaflet-top.leaflet-right .leaflet-control-layers {
@@ -734,7 +766,7 @@ a.leaflet-popup-close-button {
 	}
 }
 
-@media(min-width:701px) {
+@media(min-width:969px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
     display:block;
   }
@@ -762,6 +794,9 @@ a.leaflet-popup-close-button {
   #mobile-menu, #mobile-container {
     display:none !important;
   }
+  #approx-loc {
+    float: right;
+  }
   #icon-container {
     width:13%;
   }
@@ -784,6 +819,7 @@ a.leaflet-popup-close-button {
   #ndt h4, #ndt > p, #approx-loc {
   /*#ndt h4, #ndt p, #about-ndt p {
     font-size: 0.8em;*/
+    width:65%;
     margin:5px 0 0 0;
   }
 }
@@ -900,12 +936,6 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(min-width:700px) {
-  #mobile-container, .leaflet-top.leaflet-right.mobile-view {
-    display:none;
-  }
-}
-
 .disclaimer {
   font-size:0.8em;
 }
@@ -917,8 +947,8 @@ a.leaflet-popup-close-button {
     color: #ffffff;
     border: none;
     padding: 0.5em;
-    width: 71px;
-    height: 71px;
+    width: 35px;
+    height: 35px;
     box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
     outline: none;
     text-align: center;
@@ -936,31 +966,35 @@ a.leaflet-popup-close-button {
   outline: none;
 }
 
-.share-btn.twitter     {
-  background: #55acee;
+.share-btn.twitter     { 
+  background: #55acee; 
   background-image: url("/images/twitter.png");
 }
-.share-btn.google-plus {
-  background: #dd4b39;
+.share-btn.google-plus { 
+  background: #dd4b39; 
   background-image: url("/images/googleplus.png");
 }
-.share-btn.facebook    {
-  background: #3B5998;
+.share-btn.facebook    { 
+  background: #3B5998; 
   background-image: url("/images/facebook.png");
 }
-.share-btn.linkedin    {
-  background: #4875B4;
+.share-btn.linkedin    { 
+  background: #4875B4; 
   background-image: url("/images/linkedin.png");
 }
-.share-btn.stumbleupon {
-  background: #EB4823;
+.share-btn.stumbleupon { 
+  background: #EB4823; 
   background-image: url("/images/stumbleupon.png");
 }
-.share-btn.reddit {
-  background: #ff5700;
+.share-btn.reddit { 
+  background: #ff5700; 
   background-image: url("/images/reddit.png");
 }
-.share-btn.email       {
-  background: #444444;
+.share-btn.email       { 
+  background: #444444; 
   background-image: url("/images/email.png");
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
 }
