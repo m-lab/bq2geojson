@@ -451,8 +451,8 @@ function setupLayer(layer) {
 function closeAllTheThings() {
 	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
-	$('#ndt, #ndt-results, #about-ndt').hide();
-/*	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
+/*	$('#ndt, #ndt-results, #about-ndt').hide();
+	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
 }
 
 function showHideControls() {
@@ -559,12 +559,12 @@ $(function() {
 		$('.leaflet-top.leaflet-left').show();
 		$('#testSpeed, #exploreMap').toggle();
 	});
-  $('#testSpeedEmptyPrompt').click(function() {
-    $('#header').removeClass('initial');
-    showHideControls();
-    showTestingPanel();
-    $('#testSpeed, #exploreMap').toggle();
-  });
+    $('#testSpeedEmptyPrompt').click(function() {
+    	$('#header').removeClass('initial');
+    	showHideControls();
+    	showTestingPanel();
+    	$('#testSpeed, #exploreMap').toggle();
+ 	 });
 });
 
 
