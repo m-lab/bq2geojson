@@ -69,7 +69,7 @@ html, body {
 	margin-bottom: 2em;
 }
 #extra-data {
-
+  display: block;
 }
 #thank-you {
 
