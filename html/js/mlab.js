@@ -513,7 +513,7 @@ $( window ).resize(function() {
 		return;
 	}
 	else if (($(document).width() > 700)) {
-		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
 	}
 });
 
@@ -523,12 +523,12 @@ $(function() {
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
-/* mobile bits 
+/* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
-mobile bits */
+/*mobile bits */
 
 /* copying the mapbox legend into the mobile container to override placement for mobile devices */
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
