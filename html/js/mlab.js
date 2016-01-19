@@ -509,13 +509,7 @@ $( window ).onload = function() {
 // Function for post form, run test icon
 $(function() {
 	$('#test-icon').click(function() {
-		$('#extra-data').hide();
-		$('#ndt').show();
-		$('#ndt-svg').show();
-		$('#ndt-div').show();
-		$('#approx-loc').show();
-		$('#ndt-status').show();
-		$('#ndt-results').show();
+		showTestingPanel();
 	)}
 )};
 /*
