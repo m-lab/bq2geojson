@@ -603,19 +603,15 @@ $(function() {
     	showTestingPanel();
     	$('#testSpeed, #exploreMap').toggle();
  	 });
-
-    if($("#isp_user").val() == 'other') {
-    	$("#isp_user_text").show();
-	});
 });
 
 
 function showOtherIspBox(val) {
-  var element=document.getElementById('isp');
+  var element=document.getElementById('isp_user');
   if(val=='other') {
-		element.style.display='block';
+		$('#isp_user_text').show();
 	}
   else {
-    element.style.display='none';
+		$('#isp_user_text').hide();
 	}
 }
