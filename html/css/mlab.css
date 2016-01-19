@@ -51,6 +51,7 @@ html, body {
 }
 
 #ndt-results {
+  display: none;
 }
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
@@ -325,7 +326,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #ndt {
-  display:block;
+  display:none;
 }
 
 

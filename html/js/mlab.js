@@ -514,9 +514,6 @@ $(function)() {
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 
-	$('#ndt').hide();
-	$('#ndt-results').hide();
-	$('#thank-you').hide();
 }
 
 /*
