@@ -485,12 +485,15 @@ function showTestingPanel() {
 			$('#extra-data').show();
 		}
 		else {
+			$('#ndt').show();
 		}
 	}
+/*
 	$('#mobile-container').hide();
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 	}
+*/
 }
 
 /* New functions */ 
@@ -516,20 +519,20 @@ $( window ).resize(function() {
 		return;
 	}
 	else if (($(document).width() > 700)) {
-	//	$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
 	}
 });
 
 $(function() {
 /* Sets initial status on load for various divs */
 	$('#testSpeed, #exploreMap, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
-	$('.leaflet-top.leaflet-right').attr('id','layers-box');
+	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
 /* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
-	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
+	var mobileMenuExtra = '<div id="mobile-menu">---</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
 /*mobile bits */
 
