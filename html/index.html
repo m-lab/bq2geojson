@@ -36,6 +36,7 @@
 	  <h3>The City of Seattle is collecting information from residents about broadband experiences across the City. To contribute, please answer the following questions and then take our Broadband Speed Test:</h3>
 	</div>
 </header>
+<div id="sidebar">
 	<div id="extra-data" class="ndt-related">
 	  <form action="/collector/collect" method="post" id="collector">
 	 	<div class="container">
@@ -129,13 +130,13 @@
 		</form>
 	</div>
 
-	<div id="sidebar">
-		<div id="icons">
-			<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more  about this test." title="Learn more about this test." /></a>
-			<img src="images/compass.png" id="map-icon" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /> 
-			<img src="images/speed.svg" id="test-icon" alt="Take the Speed test" title="Take the Speed Test" onclick="runTest()" />
-		</div>
+
+	<div id="icons">
+		<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more  about this test." title="Learn more about this test." /></a>
+		<img src="images/compass.png" id="map-icon" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /> 
+		<img src="images/speed.svg" id="test-icon" alt="Take the Speed test" title="Take the Speed Test" onclick="runTest()" />
 	</div>
+</div>
 
 	<script>
 		var ndtServer,
