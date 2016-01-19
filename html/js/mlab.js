@@ -482,7 +482,7 @@ function showTestingPanel() {
 		if (resultsReceived !== "?") {
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#extra-data').show();
+			$('#extra-data').hide();
 		}
 		else {
 			$('#ndt').show();
