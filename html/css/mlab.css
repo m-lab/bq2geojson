@@ -581,10 +581,10 @@ a.leaflet-popup-close-button {
     font-size: 25px;
   }
   #ndt-status {
-    float: none;
+    float: right;
     clear: both;
     text-align: center;
-    width: 25%;
+    width: 65%;
   }
   #extra-data p {
     display:inline-block;

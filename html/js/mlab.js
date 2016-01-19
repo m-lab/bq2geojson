@@ -455,6 +455,12 @@ function closeAllTheThings() {
 	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
 }
 
+function showMap() {
+	$('#sidebar').removeClass('extended');
+	$('#icons img').removeClass('selected');
+	$('#intro, #ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
+}
+
 function showHideControls() {
 	$('.leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
 	if ($('#header').hasClass('initial')) {
@@ -501,31 +507,39 @@ $( window ).resize(function() {
 });
 
 $(function() {
+/* Sets initial status on load for various divs */
 /*	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle(); */
 	$('#testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
+
+/* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
 	var mobileMenuExtra = '<div id="mobile-menu">...</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+/* mobile bits */
 
+/* copying the mapbox legend into the mobile container to override placement for mobile devices */
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+/* copying the mapbox legend into the mobile container */
 
+	/* reset the display to initial desired state */
 	closeAllTheThings();
+
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
-		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+		if (clickedElement == "test-icon" || clickedElement == "map-icon") {
 			$('#mobile-container').hide();
 			if ($(document).width() < 700) {
 				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 			}
-			if (clickedElement == "about-icon") {
-				if ($('#about-icon').hasClass('selected')) {
-					closeAllTheThings();
+			if (clickedElement == "map-icon") {
+				if ($('#map-icon').hasClass('selected')) {
+					showMap();
 				}
 				else {
 					$('#icons img').removeClass('selected');
