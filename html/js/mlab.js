@@ -540,8 +540,8 @@ $(function() {
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 /* copying the mapbox legend into the mobile container */
 
-	/* reset the display to initial desired state 
-	closeAllTheThings();*/
+	/* reset the display to initial desired state */
+	closeAllTheThings();
 /*
 	$('#test-icon').click(function() {
 		showTestingPanel();
