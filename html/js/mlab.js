@@ -449,9 +449,9 @@ function setupLayer(layer) {
 }
 
 function closeAllTheThings() {
-	//$('#sidebar').removeClass('extended');
+	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
-	$('#ndt, #ndt-results, #thank-you').hide();
+	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide();
 }
 
 function showHideControls() {
@@ -476,16 +476,15 @@ function showTestingPanel() {
 	else {
 		$('#icons img').removeClass('selected');
 		$('#test-icon').addClass('selected');
-		//$('#sidebar').addClass('extended');
-		//$('#about-ndt').hide();
+		$('#sidebar').addClass('extended');
+		$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#thank-you').show();
+			$('#extra-data').show();
 		}
 		else {
 			$('#ndt').show();
-			$('#extra-data').hide();
 		}
 	}
 }
@@ -500,7 +499,7 @@ $( window ).resize(function() {
 });
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
@@ -516,7 +515,7 @@ $(function() {
 	closeAllTheThings();
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
-		if (clickedElement == "test-icon" ) {
+		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
 			$('#mobile-container').hide();
 			if ($(document).width() < 700) {
 				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
@@ -563,7 +562,7 @@ $(function() {
     showTestingPanel();
     $('#testSpeed, #exploreMap').toggle();
   });
-
+});
 
 
 function showOtherIspBox(val) {
