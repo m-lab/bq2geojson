@@ -362,7 +362,10 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width:50%;
 }
 #icons {
-  float:right;
+  width: 100%;
+  margin: 0 auto;
+  float: left;
+  text-align: center;
 }
 #sidebar #icons img.selected {
   opacity:1.0;
@@ -374,10 +377,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #icons img {
   width:90%;
   max-width:100px;
-  margin:10px auto;
+  margin:1em 1em;
   display: block;
   opacity:0.75;
   cursor: pointer;
+  float: right;
 }
 #icons img:hover {
   opacity:1.0;
@@ -989,4 +993,8 @@ a.leaflet-popup-close-button {
 .share-btn.email       { 
   background: #444444; 
   background-image: url("/images/email.png");
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
 }
