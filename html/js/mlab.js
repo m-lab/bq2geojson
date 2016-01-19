@@ -603,6 +603,10 @@ $(function() {
     	showTestingPanel();
     	$('#testSpeed, #exploreMap').toggle();
  	 });
+
+    if($("#isp_user").val() == 'other') {
+    	$("#isp_user_text").show();
+	});
 });
 
 
