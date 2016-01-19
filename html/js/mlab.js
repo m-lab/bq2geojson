@@ -476,8 +476,8 @@ function showTestingPanel() {
 	else {
 		$('#icons img').removeClass('selected');
 		$('#test-icon').addClass('selected');
-		$('#sidebar').addClass('extended');
-		$('#about-ndt').hide();
+		// $('#sidebar').addClass('extended');
+		// $('#about-ndt').hide();
 		if (resultsReceived !== "?") {
 			$('#intro').show();
 			$('#ndt').show();
@@ -501,7 +501,7 @@ $( window ).resize(function() {
 });
 
 $(function() {
-	$('#intro, #takeTest, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#intro, #speedTest, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
@@ -515,28 +515,30 @@ $(function() {
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 
 	closeAllTheThings();
+
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
-		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+		if (clickedElement == "test-icon") {
 			$('#mobile-container').hide();
 			if ($(document).width() < 968) {
-				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
+			  $('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 			}
-			if (clickedElement == "about-icon") {
-				if ($('#about-icon').hasClass('selected')) {
-					closeAllTheThings();
-				}
-				else {
-					$('#icons img').removeClass('selected');
-					$(this).addClass('selected');
-					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #thank-you').hide();
-					$('#about-ndt').show();					
-				}
-			}
-			else if (clickedElement == "test-icon") {
-				showTestingPanel();			
-			}
+			// if (clickedElement == "about-icon") {
+			//	if ($('#about-icon').hasClass('selected')) {
+		 	//		closeAllTheThings();
+			//	}
+			//	else {
+			// $('#icons img').removeClass('selected');
+			// $(this).addClass('selected');
+			// $('#sidebar').addClass('extended');
+			// $('#ndt, #ndt-results, #thank-you').hide();
+			// $('#about-ndt').show();			
+			//	}
+			// }
+			// else if (clickedElement == "test-icon") {
+
+			showTestingPanel();			
+			// }
 		}
 	});
 	$('#mobile-menu').click(function() {
