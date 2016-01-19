@@ -500,7 +500,7 @@ function runTest() {
 }
 
 function showMap() {
-/*	$('#icons img').removeClass('selected'); */
+	$('#icons img').removeClass('selected'); 
 	$('#intro, #ndt, #ndt-results, #extra-data, #about-ndt').toggle(); 
 	$('#mobile-container').hide();
 	if ($(document).width() < 700) {
@@ -516,7 +516,7 @@ $( window ).resize(function() {
 		return;
 	}
 	else if (($(document).width() > 700)) {
-		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
+	//	$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
 	}
 });
 
