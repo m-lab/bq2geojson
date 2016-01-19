@@ -421,6 +421,35 @@ function makePopup(props) {
 		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+
+		console.log(props);
+
+		//add a chart
+		var x = d3.scale.ordinal()
+		    .rangeRoundBands([0, width], .1, 1);
+
+		var y = d3.scale.pow()
+		    .range([height, 0]);
+
+		var xAxis = d3.svg.axis()
+		    .scale(x)
+		    .orient("bottom");
+
+		var yAxis = d3.svg.axis()
+		    .scale(y)
+		    .orient("left");
+
+		var margin = {top: 20, right: 20, bottom: 30, left: 40}
+		var svg = d3.select("body").append("svg")
+    			.attr("width", 200 + margin.left + margin.right)
+    			.attr("height", 200 + margin.top + margin.bottom)
+  			.append("g")
+    			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    	//d3.
+
+    	popup = popup + svg;
+
 	return popup;
 }
 function makeBlankPopup() {
