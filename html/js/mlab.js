@@ -499,7 +499,7 @@ $( window ).resize(function() {
 });
 
 $(function() {
-	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 	var mobileContainer = '<div id="mobile-container"></div>';
