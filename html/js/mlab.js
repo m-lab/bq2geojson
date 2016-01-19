@@ -455,15 +455,7 @@ function closeAllTheThings() {
 	$('#ndt, #ndt-results, #extra-data, #about-ndt').hide(); */
 }
 
-function showMap() {
-	$('#sidebar').removeClass('extended');
-	$('#icons img').removeClass('selected');
-	$('#intro, #ndt, #ndt-results, #extra-data, #about-ndt').hide(); 
-	$('#mobile-container').hide();
-	if ($(document).width() < 700) {
-		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
-	}	
-}
+
 
 function showHideControls() {
 	$('.leaflet-bottom.leaflet-left, #sidebar, #approx-loc').toggle();
@@ -473,11 +465,6 @@ function showHideControls() {
 		$('#layers-box, .leaflet-bottom.leaflet-right').show();
 		$('.leaflet-top.leaflet-left').show();
 	}
-}
-
-function runTest() {
-	$('#ndt').toggle();
-	$('#extra-data').toggle();
 }
 
 function showTestingPanel() {
@@ -504,6 +491,21 @@ function showTestingPanel() {
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 	}
+}
+
+/* New functions */ 
+function runTest() {
+	$('#ndt').toggle();
+	$('#extra-data').toggle();
+}
+
+function showMap() {
+/*	$('#icons img').removeClass('selected'); */
+	$('#intro, #ndt, #ndt-results, #extra-data, #about-ndt').toggle(); 
+	$('#mobile-container').hide();
+	if ($(document).width() < 700) {
+		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
+	}	
 }
 
 $( window ).resize(function() {
