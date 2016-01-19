@@ -505,7 +505,11 @@ function showMap() {
 	$('#mobile-container').hide();
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
-	}	
+	}
+	$('#header').remove();
+	$('#layers-box').show();
+	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
+	$('#exploreMap').toggle();
 }
 
 $( window ).resize(function() {
