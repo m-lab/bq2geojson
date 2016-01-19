@@ -38,7 +38,7 @@
 	<div id="extra-data" class="ndt-related">
 	  <form action="/collector/collect" method="post" id="collector">
 	 	<div style="width:40%; float:left;">
-		<p>Who is your Internet Service Provider?</p>
+			<p>Who is your Internet Service Provider?</p>
 		</div>
 		<div style="width:60%; float:left;">
 		<p>
@@ -114,6 +114,103 @@
 			</div>
 			<div id="approx-loc"></div>
 			<div id="ndt-status"></div>
+			<script>
+				var ndtServer,
+					ndtPort = "3001",
+		  			ndtPath = "/ndt_protocol",
+		  			ndtUpdateInterval = 1000,
+					c2sRate,
+					s2cRate,
+					MinRTT;
+
+				getNdtServer();
+
+				NDT_meter = new NDTmeter('#ndt-svg');
+				NDT_meter.meter.on("click", function () {
+					NDT_client = new NDTjs(ndtServer, ndtPort, ndtPath, NDT_meter, ndtUpdateInterval);
+					NDT_client.startTest();
+				});
+
+				if ("geolocation" in navigator) {
+					navigator.geolocation.getCurrentPosition(success, error);
+				}
+				
+				function success(position) {
+					document.getElementById('latitude').value = position.coords.latitude;
+					document.getElementById('longitude').value = position.coords.longitude;
+					
+					var xhr = new XMLHttpRequest(),
+					currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
+
+					var currentLoc;
+					xhr.open('GET', currentLocationURL, true);
+					xhr.send();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+								currentLoc = JSON.parse(xhr.responseText);
+								console.log("Location received");
+
+								// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
+								$('#mobile-container').append('<div id="mobile-approx-loc"></div>')
+								$('#approx-loc, #mobile-approx-loc').append("<p>Searching from:</p><p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
+							} else {
+								console.log('Location lookup failed');
+							}
+						}
+					};
+				}
+
+				function error(error) {
+					document.getElementById('msg').innerHTML = 'ERROR(' + error.code + '): ' + error.message;
+				}
+
+				function getNdtServer () {
+					var xhr = new XMLHttpRequest(),
+						mlabNsUrl = 'http://mlab-ns.appspot.com/ndt?format=json';
+				
+					xhr.open('GET', mlabNsUrl, true);
+					xhr.send();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 200) {
+								ndtServer = JSON.parse(xhr.responseText).fqdn;
+								console.log('Using M-Lab Server ' + ndtServer);
+							} else {
+								console.log('M-Lab NS lookup failed.');
+							}
+						}
+					};
+				};
+
+				$('#collector :submit').click(function(e) {
+					e.preventDefault();
+					var xhr = new XMLHttpRequest(),
+						collectorUrl = '/collector/collect?';
+
+					collectorUrl = collectorUrl + $('#collector').serialize();
+
+					xhr.open('GET', collectorUrl, true);
+					xhr.send();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4) {
+							if (xhr.status === 201) {
+								console.log('Record successfully added.');
+								$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
+								$('#extra-data').css('display', 'none');
+								setTimeout(window.location.assign("thankyou.html"),7000000);
+		 						
+							} else {
+								console.log('Failed to create record: ' + xhr.responseText);
+								if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
+									$('#extra-data').append("<p style='color:red'>Please complete the form before submitting.</p>");
+								}
+							}
+						}
+					};
+				});
+
+			</script>	
 		</div>
 
 		<div id="ndt-results" class="ndt-related">
@@ -182,106 +279,6 @@
 		<p>M-Lab data is combined with speed tests contributed from this website provide a picture of Seattle's broadband experience over time. The more data that is contributed, the more accurate the map will become.</p>
 		<p>The speed test data you submit here is submitted to M-Lab, is aggregated to assure that it remains anonymous before it’s made publicly available on data.seattle.gov and conforms to <a href="http://seattle.gov/privacy" target="_blank">the City of Seattle’s Privacy Policy</a> and <a href="http://www.measurementlab.net/privacy" target="_blank">M-Lab's Privacy and Acceptable Use Policies</a>. The Seattle Broadband Map application optionally requests your location and after the speed test asks for additional information about your connection to better understand the state of consumer broadband in the city. This additional information is not sent to M-Lab, but is stored in a private database used by this site.</p>
 	</div>
-
-
-
-	<script>
-		var ndtServer,
-			ndtPort = "3001",
-  			ndtPath = "/ndt_protocol",
-  			ndtUpdateInterval = 1000,
-			c2sRate,
-			s2cRate,
-			MinRTT;
-
-		getNdtServer();
-
-		NDT_meter = new NDTmeter('#ndt-svg');
-		NDT_meter.meter.on("click", function () {
-			NDT_client = new NDTjs(ndtServer, ndtPort, ndtPath, NDT_meter, ndtUpdateInterval);
-			NDT_client.startTest();
-		});
-
-		if ("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition(success, error);
-		}
-		
-		function success(position) {
-			document.getElementById('latitude').value = position.coords.latitude;
-			document.getElementById('longitude').value = position.coords.longitude;
-			
-			var xhr = new XMLHttpRequest(),
-			currentLocationURL = "http://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1";
-
-			var currentLoc;
-			xhr.open('GET', currentLocationURL, true);
-			xhr.send();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4) {
-					if (xhr.status === 200) {
-						currentLoc = JSON.parse(xhr.responseText);
-						console.log("Location received");
-
-						// currentLocText.text(currentLoc.address.road + currentLoc.address.neighbourhood + currentLoc.address.suburb + currentLoc.address.city + currentLoc.address.state);
-						$('#mobile-container').append('<div id="mobile-approx-loc"></div>')
-						$('#approx-loc, #mobile-approx-loc').append("<p>Searching from:</p><p>" + currentLoc.address.road + ", " + currentLoc.address.city + ", " + currentLoc.address.state + "</p>");
-					} else {
-						console.log('Location lookup failed');
-					}
-				}
-			};
-		}
-
-		function error(error) {
-			document.getElementById('msg').innerHTML = 'ERROR(' + error.code + '): ' + error.message;
-		}
-
-		function getNdtServer () {
-			var xhr = new XMLHttpRequest(),
-				mlabNsUrl = 'http://mlab-ns.appspot.com/ndt?format=json';
-		
-			xhr.open('GET', mlabNsUrl, true);
-			xhr.send();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4) {
-					if (xhr.status === 200) {
-						ndtServer = JSON.parse(xhr.responseText).fqdn;
-						console.log('Using M-Lab Server ' + ndtServer);
-					} else {
-						console.log('M-Lab NS lookup failed.');
-					}
-				}
-			};
-		};
-
-		$('#collector :submit').click(function(e) {
-			e.preventDefault();
-			var xhr = new XMLHttpRequest(),
-				collectorUrl = '/collector/collect?';
-
-			collectorUrl = collectorUrl + $('#collector').serialize();
-
-			xhr.open('GET', collectorUrl, true);
-			xhr.send();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4) {
-					if (xhr.status === 201) {
-						console.log('Record successfully added.');
-						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
-						$('#extra-data').css('display', 'none');
-						setTimeout(window.location.assign("thankyou.html"),7000000);
- 						
-					} else {
-						console.log('Failed to create record: ' + xhr.responseText);
-						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
-							$('#extra-data').append("<p style='color:red'>Please complete the form before submitting.</p>");
-						}
-					}
-				}
-			};
-		});
-
-	</script>
 </div>
 
 <div id='map'></div>
