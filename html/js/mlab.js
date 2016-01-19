@@ -475,7 +475,10 @@ function showHideControls() {
 	}
 }
 
-
+function runTest() {
+	$('#ndt').toggle();
+	$('#extra-data').toggle();
+}
 
 function showTestingPanel() {
 	// are there results yet?
@@ -495,8 +498,6 @@ function showTestingPanel() {
 			$('#extra-data').show();
 		}
 		else {
-			$('#ndt').show();
-			$('#extra-data').toggle();
 		}
 	}
 	$('#mobile-container').hide();
@@ -568,9 +569,10 @@ $(function() {
 			else if (clickedElement == "test-icon") {
 				showTestingPanel();
 			}
-*/			
+			
 		}
 	});
+*/
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
 		$('#mobile-container, .sliderElements, .metricControls, .leaflet-control-layers').toggle();
