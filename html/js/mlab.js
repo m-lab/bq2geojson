@@ -425,6 +425,9 @@ function makePopup(props) {
 		console.log(props);
 
 		//add a chart
+		var width = 200,
+		var height = 200,
+
 		var x = d3.scale.ordinal()
 		    .rangeRoundBands([0, width], .1, 1);
 
@@ -441,8 +444,8 @@ function makePopup(props) {
 
 		var margin = {top: 20, right: 20, bottom: 30, left: 40}
 		var svg = d3.select("body").append("svg")
-    			.attr("width", 200 + margin.left + margin.right)
-    			.attr("height", 200 + margin.top + margin.bottom)
+    			.attr("width", width + margin.left + margin.right)
+    			.attr("height", height + margin.top + margin.bottom)
   			.append("g")
     			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
