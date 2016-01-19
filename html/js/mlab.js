@@ -508,7 +508,6 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-/*	$('#intro, #testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle(); */
 	$('#testSpeed, #exploreMap, #sidebar, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	// $('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
@@ -527,8 +526,8 @@ $(function() {
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 /* copying the mapbox legend into the mobile container */
 
-	/* reset the display to initial desired state */
-	closeAllTheThings();
+	/* reset the display to initial desired state 
+	closeAllTheThings();*/
 
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
