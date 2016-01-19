@@ -426,7 +426,7 @@ function makePopup(props) {
 
 		//add a chart
 		var width = 200,
-		var height = 200;
+			height = 200;
 
 		var x = d3.scale.ordinal()
 		    .rangeRoundBands([0, width], .1, 1);
