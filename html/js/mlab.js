@@ -486,6 +486,7 @@ function showTestingPanel() {
 		}
 		else {
 			$('#ndt').show();
+			$('#extra-data').hide();
 		}
 	}
 }
