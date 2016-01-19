@@ -476,12 +476,12 @@ function showTestingPanel() {
 	else {
 		$('#icons img').removeClass('selected');
 		$('#test-icon').addClass('selected');
-		$('#sidebar').addClass('extended');
+		//$('#sidebar').addClass('extended');
 		//$('#about-ndt').hide();
 		if (resultsReceived !== "?") {
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#extra-data').show();
+			$('#thank-you').show();
 		}
 		else {
 			$('#ndt').show();
