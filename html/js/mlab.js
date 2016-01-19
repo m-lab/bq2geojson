@@ -536,14 +536,14 @@ $(function() {
 
 	/* reset the display to initial desired state 
 	closeAllTheThings();*/
-
+/*
 	$('#test-icon').click(function() {
 		showTestingPanel();
 	});
 	$('#map-icon').click(function() {
 		showMap();
 	});
-/*
+
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "map-icon") {
