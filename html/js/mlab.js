@@ -516,26 +516,17 @@ $(function() {
 	closeAllTheThings();
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
-		if (clickedElement == "test-icon" || clickedElement == "about-icon") {
+		if (clickedElement == "test-icon" ) {
 			$('#mobile-container').hide();
 			if ($(document).width() < 700) {
 				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
 			}
-			if (clickedElement == "about-icon") {
-				if ($('#about-icon').hasClass('selected')) {
-					closeAllTheThings();
-				}
-				else {
-					$('#icons img').removeClass('selected');
-					$(this).addClass('selected');
-					$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #extra-data').hide();
-					$('#about-ndt').show();
-				}
-			}
-			else if (clickedElement == "test-icon") {
-				showTestingPanel();
-			}
+			$('#icons img').removeClass('selected');
+			$(this).addClass('selected');
+			//$('#sidebar').addClass('extended');
+			//$('#extra-data').hide();
+			//$('#about-ndt').show();
+			showTestingPanel();
 		}
 	});
 	$('#mobile-menu').click(function() {
