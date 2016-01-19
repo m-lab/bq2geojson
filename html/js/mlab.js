@@ -482,7 +482,7 @@ function showTestingPanel() {
 			$('#intro').show();
 			$('#ndt').show();
 			$('#ndt-results').show();
-			$('#extra-data').show();
+			//$('#extra-data').show();
 		}
 		else {
 			$('#ndt').show();
@@ -516,10 +516,6 @@ $(function() {
 
 	closeAllTheThings();
 
-	$('#test-icon').click(function() {
-		$('#testSpeed', '#ndt', '#extra-data', '#intro').toggle();
-	});
-
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon") {
@@ -539,10 +535,9 @@ $(function() {
 			// $('#about-ndt').show();			
 			//	}
 			// }
-			// else if (clickedElement == "test-icon") {
-
-			// showTestingPanel();			
-			// }
+			if (clickedElement == "test-icon") {
+				showTestingPanel();			
+			}
 		}
 	});
 	$('#mobile-menu').click(function() {
