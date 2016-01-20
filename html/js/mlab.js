@@ -427,10 +427,8 @@ function makePopup(props) {
 		var div = $('<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>')[0];
         var popup1 = L.popup().setContent(div);
 
-            layer.bindPopup(popup1);
-
-            var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
-            svg.append("rect").attr("width", 150).attr("height", 150).style("fill", "lightBlue");
+        var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
+        svg.append("rect").attr("width", 150).attr("height", 150).style("fill", "lightBlue");
 
 
 		//add a chart
