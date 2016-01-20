@@ -234,7 +234,7 @@ function getLayerData(url, callback) {
 			}
 			geoJsonCache[url] = resp;
 			callback(resp);
-			currData.push(resp);
+			currData[resp];
 		}, 'json');
 	}
 }
