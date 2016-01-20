@@ -234,7 +234,6 @@ function getLayerData(url, callback) {
 			}
 			geoJsonCache[url] = resp;
 			callback(resp);
-			currData[resp];
 		}, 'json');
 	}
 }
@@ -283,6 +282,7 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 			cell = l.feature;
 
 			var stats = lookup[cell.properties[geoLayers[layer]['geoKey']]];
+			currData = stats;
 			for (var k in stats) {
 				if (stats.hasOwnProperty(k)) {
 					cell.properties[k] = stats[k];
