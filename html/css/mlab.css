@@ -987,6 +987,11 @@ a.leaflet-popup-close-button {
   background: #444444; 
   background-image: url("/images/email.png");
 }
+
+//popup sizing
 .leaflet-popup-content-wrapper {
  width: 350px;
+}
+.leaflet-popup-content-wrapper div {
+ width: 325px;
 }
