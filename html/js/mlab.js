@@ -428,15 +428,15 @@ function makePopup(props) {
 		var div = $(html)[0];
         var popup1 = L.popup().setContent(div);
 
-        var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
-        svg.append("rect").attr("width", 150).attr("height", 150).style("fill", "lightBlue");
+        var svg = d3.select(div).select("svg").attr("width", 250).attr("height", 200);
+        svg.append("rect")
+        	.attr("width", 250)
+        	.attr("height", 100)
+        	.style("fill", "lightBlue");
 
 
 		//add a chart
-		/*var width = 200,
-			height = 200;
-
-		var x = d3.scale.ordinal()
+		/*var x = d3.scale.ordinal()
 		    .rangeRoundBands([0, width], .1, 1);
 
 		var y = d3.scale.pow()
@@ -448,20 +448,7 @@ function makePopup(props) {
 
 		var yAxis = d3.svg.axis()
 		    .scale(y)
-		    .orient("left");
-
-		var margin = {top: 20, right: 20, bottom: 30, left: 40}
-		var svg = d3.select("leaflet-popup-content").append("svg")
-    			.attr("width", width + margin.left + margin.right)
-    			.attr("height", height + margin.top + margin.bottom)
-  			.append("g")
-    			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");*/
-
-    	//d3.
-
-    	//var svgDiv = '<svg></svg>';
-
-    	//popup = popup + svg;
+		    .orient("left");*/
 
 	return popup1;
 }
