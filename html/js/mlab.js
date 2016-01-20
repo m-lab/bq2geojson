@@ -506,6 +506,8 @@ function runTest() {
 	$('#approx-loc').addClass('visible');
 	$('#ndt-results').removeClass('hidden');
 	$('#ndt-results').addClass('visible');
+	$('#intro').addClass('hidden');
+	$('#icons').addClass('hidden');	
 }
 /*
 var results = document.getElementById('s2cRate');
@@ -521,13 +523,14 @@ if (resultsReceived !== "?") {
 function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header, #intro, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
+	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('visible');
+
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').addClass('hidden');
 	}
 	$('#layers-box').show();
 	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
-//	$('#exploreMap').toggle();
 }
 
 $( window ).resize(function() {
