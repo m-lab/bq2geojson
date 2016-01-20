@@ -263,10 +263,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #sidebar {
-/*	z-index:5;
-	background:#fff;
-	background:rgba(255,255,255,0.75);
-*/
+  width: 72%;
+  margin: 0 auto;
+  clear: both;
 }
 
 .info {
