@@ -426,15 +426,8 @@ function makePopup(props) {
 		var div = $(html)[0];
         var popup1 = L.popup().setContent(div);
 
-        var svg = d3.select(div).select("svg").attr("width", 350).attr("height", 200);
-        svg.append("rect")
-        	.attr("width", 200)
-        	.attr("height", 150)
-        	.style("fill", "lightBlue");
-
-
-		//add a chart
-		/*var x = d3.scale.ordinal()
+        //CHART INFO
+        var x = d3.scale.ordinal()
 		    .rangeRoundBands([0, width], .1, 1);
 
 		var y = d3.scale.pow()
@@ -446,7 +439,40 @@ function makePopup(props) {
 
 		var yAxis = d3.svg.axis()
 		    .scale(y)
-		    .orient("left");*/
+		    .orient("left");
+
+        var svg = d3.select(div).select("svg").attr("width", 350).attr("height", 200);
+
+        d3.json(props, function(error, data){
+
+        	data.forEach(function(d) {
+			    d.download_median = +d.download_median;
+			    d.upload_median = +d.upload_median;
+			  });
+
+	        svg.append("g")
+		      .attr("class", "y axis")
+		      .call(yAxis)
+		    .append("text")
+		      .attr("transform", "rotate(-90)")
+		      .attr("y", 6)
+		      .attr("dy", ".71em")
+		      .style("text-anchor", "end")
+		      .text("Median Monthly Download (Mbps)");
+
+		  	svg.selectAll(".bar")
+		      .data(data)
+		    .enter().append("rect")
+		      .attr("class", "bar")
+		      .attr("x", function(d) { return x(d.GEOID10); })
+		      .attr("width", x.rangeBand())
+		      .style("fill", function(d) { return color(d.GEOID10); })
+		      .attr("y", function(d) { return y(d.download_median); })
+		      .attr("height", function(d) { return height - y(d.download_median); })
+		      .append("svg:title")
+		        .text(function(d){ return d.download_median;});
+
+	     });
 
 	return popup1;
 }
