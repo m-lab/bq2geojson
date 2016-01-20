@@ -480,7 +480,7 @@ function showTestingPanel() {
 	/*	$('#sidebar').addClass('extended');
 		$('#about-ndt').hide(); */
 		if (resultsReceived !== "?") {
-			$('#ndt').show();
+			$('#ndt-div').show();
 			$('#ndt-results').show();
 			$('#extra-data').show();
 		}
@@ -504,7 +504,7 @@ function runTest() {
 
 function showMap() {
 	$('#icons img').removeClass('selected'); 
-	$('#header, #intro, #ndt, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
+	$('#header, #intro, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').addClass('hidden');
@@ -525,7 +525,7 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
