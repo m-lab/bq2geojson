@@ -427,6 +427,8 @@ function makePopup(props) {
         var popup1 = L.popup().setContent(div);
 
         //CHART INFO
+        var width = 350, height = 200;
+
         var x = d3.scale.ordinal()
 		    .rangeRoundBands([0, width], .1, 1);
 
@@ -441,7 +443,7 @@ function makePopup(props) {
 		    .scale(y)
 		    .orient("left");
 
-        var svg = d3.select(div).select("svg").attr("width", 350).attr("height", 200);
+        var svg = d3.select(div).select("svg").attr("width", width).attr("height", height);
 
         d3.json(props, function(error, data){
 
