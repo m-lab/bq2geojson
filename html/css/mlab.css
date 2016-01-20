@@ -359,7 +359,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width: 100%;
 }
 #sidebar {
-  width: 72%;
   margin: 1em auto;
   position: relative;
 }
@@ -714,10 +713,10 @@ a.leaflet-popup-close-button {
   }
   #header.initial #intro {
     padding:0;
-    min-height: auto;
+   /* min-height: auto; */
   }
   #sidebar {
-    top:80px;
+   /* top:80px; */
   }
   #sidebar img {
     max-width: 60px;
