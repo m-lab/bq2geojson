@@ -47,8 +47,8 @@ html, body {
 }
 
 #ndt-status {
-	font-size: 1em;
-  margin:0 1.3em 5px;
+	font-size: 2em;
+  margin: 0 auto;
   font-weight: bold;
 }
 
@@ -589,7 +589,6 @@ a.leaflet-popup-close-button {
     font-size: 25px;
   }
   #ndt-status {
-    float: right;
     clear: both;
     text-align: center;
     width: 65%;
