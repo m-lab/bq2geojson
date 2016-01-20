@@ -558,9 +558,10 @@ a.leaflet-popup-close-button {
   #ndt-status {
     float:left;
     margin-top: 10%;
+    font-size: 2em;
   } 
   #progress-meter text.information {
-    font-size: 20px;
+    font-size: 4em;
   }
   #ndt, #ndt-results, #extra-data, #about-ndt {
     font-size: 0.8em;
@@ -647,7 +648,7 @@ a.leaflet-popup-close-button {
     display:none;
   }
   #approx-loc {
-    display:none !important;
+    /*display:none !important; */
   }
  
   #mobile-container {
