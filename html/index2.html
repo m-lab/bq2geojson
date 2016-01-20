@@ -102,7 +102,8 @@
 			</div>	
 		</div>
 		<div class="container">
-			<p><span class="required">*</span> <input type="checkbox" name="data_acknowledgement" value="yes" checked> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
+			<p>
+				<span class="required">*</span> <input type="checkbox" name="data_acknowledgement" value="yes" checked /> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
 		</div>
 		<input name="latitude" id="latitude" type="hidden" />
 		<input name="longitude" id="longitude" type="hidden" />
@@ -110,17 +111,12 @@
 		<input name="actual_upload" id="actual_upload" type="hidden" />
 		<input name="min_rtt" id="min_rtt" type="hidden" />
 		<input name="bigquery_key" id="bigquery_key" type="hidden" />
-  	  </div>
-	  <div id="ndt" class="ndt-related">
-	  	<div id="ndt-div">
-	  		<div id="ndt-svg"></div>
-	  	</div>
-	  </div>
+  	</div>
+	<div id="ndt-div">
+	  	<div id="ndt-svg"></div>
 	</div>
 	<div id="approx-loc"><h3 class="league-gothic">Test your speed!</h3></div>
 	<div id="ndt-status"></div>
-
-
 	<div id="ndt-results" class="ndt-related">
 		<h3 class="league-gothic">Your test results</h3>
 		<p>Download speed: <span id="s2cRate"></span>mbps</p>
@@ -129,8 +125,6 @@
 		<input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
 		</form>
 	</div>
-
-
 	<div id="icons">
 		<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more  about this test." title="Learn more about this test." /></a>
 		<img src="images/compass.png" id="exploreMap" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /> 
