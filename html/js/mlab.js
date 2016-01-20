@@ -523,6 +523,7 @@ if (resultsReceived !== "?") {
 function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header, #intro, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
+	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').removeClass('hidden');
 	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('visible');
 
 	$('#mobile-container').addClass('hidden');
