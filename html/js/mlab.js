@@ -448,7 +448,7 @@ function makePopup(props) {
 
         d3.json(props, function(error, data){
 
-        	data = props;
+        	data = props[0];
         	console.log("Data: "+ data);
 
         	//x.domain(data.map(function(d) { return d.properties.GEOID10; }));
@@ -465,7 +465,7 @@ function makePopup(props) {
 		      .text("Median Download (Mbps)");
 
 		  	svg.selectAll(".bar")
-		      //.data(data)
+		      .data(data)
 		    .enter().append("rect")
 		      .attr("class", "bar")
 		      .attr("x", function(d) { return x(d.properties.GEOID10); })
