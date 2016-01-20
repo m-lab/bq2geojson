@@ -149,6 +149,14 @@
 			NDT_client = new NDTjs(ndtServer, ndtPort, ndtPath, NDT_meter, ndtUpdateInterval);
 			NDT_client.startTest();
 		});
+		var results = document.getElementById('s2cRate');
+		var resultsReceived = results.textContent;
+		if (resultsReceived !== "?") {
+			$('#ndt-results').removeClass('hidden');
+			$('#ndt-results').addClass('visible');
+			$('#ndt-div').removeClass('visible');
+			$('#ndt-div').addClass('hidden');
+		}
 
 		if ("geolocation" in navigator) {
 			navigator.geolocation.getCurrentPosition(success, error);
