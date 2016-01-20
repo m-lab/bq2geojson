@@ -447,6 +447,9 @@ function makePopup(props) {
 
         	console.log(props);
 
+        	x.domain(data.map(function(d) { return d.GEOID10; }));
+  			y.domain([0,d3.max(data, function(d) { return d.download_median; })]).nice();
+
 	        svg.append("g")
 		      .attr("class", "y axis")
 		      .call(yAxis)
