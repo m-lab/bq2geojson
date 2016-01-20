@@ -420,8 +420,6 @@ function makePopup(props) {
 		' Mbps (' + Math.round(props.upload_count * 10) / 10 + ' samples)<br/>' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/></div>';
 
-		console.log(props);
-
 		var html = '<div class="popupGraph">' + popup + '<svg/></div>';
 		var div = $(html)[0];
         var popup1 = L.popup().setContent(div);
@@ -447,6 +445,8 @@ function makePopup(props) {
 
         d3.json(props, function(error, data){
 
+        	console.log(props);
+
 	        svg.append("g")
 		      .attr("class", "y axis")
 		      .call(yAxis)
@@ -455,7 +455,7 @@ function makePopup(props) {
 		      .attr("y", 6)
 		      .attr("dy", ".71em")
 		      .style("text-anchor", "end")
-		      .text("Median Monthly Download (Mbps)");
+		      .text("Median Download (Mbps)");
 
 		  	svg.selectAll(".bar")
 		      .data(data)
