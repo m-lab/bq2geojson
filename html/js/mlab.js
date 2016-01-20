@@ -525,7 +525,7 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, .leaflet-top.leaflet-left .leaflet-control-layers').toggle();
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, .leaflet-top.leaflet-left .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
