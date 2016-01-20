@@ -414,17 +414,18 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = 'Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
+	var popup = '<div>Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
 		' Mbps (' + Math.round(props.download_count * 10) / 10 +
 		' samples)<br/>' +
 		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
 		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
-		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/></div>';
 
 		console.log(props);
 
-		var div = $(popup + '<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>')[0];
+		var html = popup + '<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>';
+		var div = $(html)[0];
         var popup1 = L.popup().setContent(div);
 
         var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
