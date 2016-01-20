@@ -452,8 +452,8 @@ function makePopup(props) {
         	data = currData;
         	console.log(data);
 
-        	x.domain(data.map(function(d) { return d.GEOID10; }));
-  			y.domain([0,d3.max(data, function(d) { return d.download_median; })]).nice();
+        	x.domain(data.map(function(d) { return d.properties.GEOID10; }));
+  			y.domain([0,d3.max(data, function(d) { return d.properties.download_median; })]).nice();
 
 	        svg.append("g")
 		      .attr("class", "y axis")
@@ -469,13 +469,13 @@ function makePopup(props) {
 		      .data(data)
 		    .enter().append("rect")
 		      .attr("class", "bar")
-		      .attr("x", function(d) { return x(d.GEOID10); })
+		      .attr("x", function(d) { return x(d.properties.GEOID10); })
 		      .attr("width", x.rangeBand())
-		      .style("fill", function(d) { return color(d.GEOID10); })
-		      .attr("y", function(d) { return y(d.download_median); })
-		      .attr("height", function(d) { return height - y(d.download_median); })
+		      .style("fill", function(d) { return color(d.properties.GEOID10); })
+		      .attr("y", function(d) { return y(d.properties.download_median); })
+		      .attr("height", function(d) { return height - y(d.properties.download_median); })
 		      .append("svg:title")
-		        .text(function(d){ return d.download_median;});
+		        .text(function(d){ return d.properties.download_median;});
 
 	     });
 
