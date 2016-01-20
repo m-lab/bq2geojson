@@ -214,7 +214,7 @@ function getPolygonColor(val) {
  * @param {function} callback Callback to pass server response to
  */
 
-var currData;
+var currData = {};
 
 function getLayerData(url, callback) {
 	if ( geoJsonCache[url] ) {
@@ -234,7 +234,7 @@ function getLayerData(url, callback) {
 			}
 			geoJsonCache[url] = resp;
 			callback(resp);
-			currData = resp;
+			currData.push(resp);
 		}, 'json');
 	}
 }
