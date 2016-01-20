@@ -357,10 +357,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   width: 100%;
 }
 #sidebar {
-/*  width:auto;
-  top:50px;
-  overflow:hidden;
-*/
+  width: 72%;
+  margin: 1em auto;
 }
 #sidebar.extended {
 /*  width:50%; */
