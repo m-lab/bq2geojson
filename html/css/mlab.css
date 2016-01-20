@@ -698,7 +698,6 @@ a.leaflet-popup-close-button {
     margin-bottom: 5px;
   }
   #header.initial {
-    height:100%;
     padding:2em;
   }
   #header.initial h2 {
@@ -708,14 +707,13 @@ a.leaflet-popup-close-button {
     width:100%;
     padding:1em;
     padding-right: 75px;
-    min-height: 180px;
   }
   #header.initial #intro {
     padding:0;
    /* min-height: auto; */
   }
   #sidebar {
-   /* top:80px; */
+    width: 100%;
   }
   #sidebar img {
     max-width: 60px;
