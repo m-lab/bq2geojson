@@ -464,6 +464,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   float:right;
   cursor: pointer;
 }
+
+/* Mapbox CSS overrides */
+
 .leaflet-bar a:hover
 .leaflet-tile .leaflet-tile-loaded {
     opacity:0.75;
@@ -530,7 +533,9 @@ a.leaflet-popup-close-button {
   background-color: white;
   opacity: 1;
 }
-
+.leaflet-popup-content-wrapper {
+  width: 350px;
+}
 
 @media(min-width:460px) {
   .metricControls {
@@ -1006,4 +1011,9 @@ a.leaflet-popup-close-button {
 }
 .visible {
   display: block;
+}
+.required {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2em;
 }

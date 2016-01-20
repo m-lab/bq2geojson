@@ -41,7 +41,7 @@
 	  <form action="/collector/collect" method="post" id="collector">
 	 	<div class="container">
 	 		<div style="width:40%; float:left;">
-				<p>Who is your Internet Service Provider?</p>
+				<p>Who is your Internet Service Provider? <span class="required">*</span></p>
 			</div>
 			<div style="width:60%; float:left;">
 			<p>
@@ -58,7 +58,7 @@
 		</div>	
 	 	<div class="container">
 			<div style="width:40%; float:left;">
-			<p>How do you connect to the Internet?</p>
+			<p>How do you connect to the Internet? <span class="required">*</span></p>
 			</div>
 			<div style="width:60%; float:left;">
 			<p>
@@ -73,7 +73,7 @@
 		</div>
 	 	<div class="container">
 			<div style="width:40%; float:left;">				
-			<p>How much do you pay, per month?</p>
+			<p>How much do you pay, per month? <span class="required">*</span></p>
 			</div>
 			<div style="width:60%; float:left;">
 			<p>
@@ -102,7 +102,7 @@
 			</div>	
 		</div>
 		<div class="container">
-			<p><input type="checkbox" name="data_acknowledgement" value="yes" checked> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
+			<p><span class="required">*</span> <input type="checkbox" name="data_acknowledgement" value="yes" checked> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.</p>
 		</div>
 		<input name="latitude" id="latitude" type="hidden" />
 		<input name="longitude" id="longitude" type="hidden" />
@@ -136,7 +136,6 @@
 		<img src="images/compass.png" id="exploreMap" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /> 
 		<img src="images/speed.svg" id="test-icon" alt="Take the Speed test" title="Take the Speed Test" onclick="runTest()" />
 	</div>
-</div>
 
 	<script>
 		var ndtServer,
@@ -235,9 +234,9 @@
 		});
 
 	</script>
+</div>
 
 <div id='map'></div>
-
 <script>
 
 // If set to 'hex' then GeoJSON files are assumed to be named like
