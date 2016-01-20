@@ -513,16 +513,17 @@ function testComplete() {
 		$('#ndt-results').addClass('visible');
     }
 }	
-
+/*
 var results = document.getElementById('s2cRate');
 var resultsReceived = results.textContent;
+
 if (resultsReceived !== "?") {
 	$('#ndt-results').removeClass('hidden');
 	$('#ndt-results').addClass('visible');
 	$('#ndt-div').removeClass('visible');
 	$('#ndt-div').addClass('hidden');
 }
-
+*/
 function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header, #intro, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
