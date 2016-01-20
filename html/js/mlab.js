@@ -424,7 +424,7 @@ function makePopup(props) {
 
 		console.log(props);
 
-		var html = popup + '<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>';
+		var html = '<div class="popupGraph" style="width: 200px; height:200px;">' + popup + '<svg/></div>';
 		var div = $(html)[0];
         var popup1 = L.popup().setContent(div);
 
