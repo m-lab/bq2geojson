@@ -499,11 +499,13 @@ function showTestingPanel() {
 /* New functions */ 
 function runTest() {
 	$('#ndt-div').removeClass('hidden');
-	$('#extra-data').removeClass('visible');
 	$('#ndt-div').addClass('visible');
+	$('#extra-data').removeClass('visible');
+	$('#extra-data').addClass('hidden');
 	$('#approx-loc').removeClass('hidden');
 	$('#approx-loc').addClass('visible');
-	$('#extra-data').addClass('hidden');
+	$('#ndt-results').removeClass('hidden');
+	$('#ndt-results').addClass('visible');
 }
 /*
 var results = document.getElementById('s2cRate');
@@ -539,7 +541,7 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, .leaflet-top.leaflet-left .leaflet-control-layers').addClass('hidden');
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
