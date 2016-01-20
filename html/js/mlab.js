@@ -581,7 +581,7 @@ $(function() {
 	});
 	$('#exploreMap').click(function() {
 		showHideControls();
-		$('#header').remove();
+		$('#header').addClass('hidden');
 		$('#layers-box').show();
 		$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
 		$('#testSpeed, #exploreMap').toggle();
@@ -589,7 +589,7 @@ $(function() {
 	$('#testSpeed').click(function() {
 		showHideControls();
 		showTestingPanel();
-		$('#header').remove();
+		$('#header').addClass('hidden');
 		$('#layers-box').show();
 		$('.leaflet-top.leaflet-left').show();
 		$('#testSpeed, #exploreMap').toggle();
