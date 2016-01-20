@@ -282,7 +282,6 @@ function setPolygonLayer(layer, year, month, metric, mode, resolution) {
 			cell = l.feature;
 
 			var stats = lookup[cell.properties[geoLayers[layer]['geoKey']]];
-			currData = stats;
 			for (var k in stats) {
 				if (stats.hasOwnProperty(k)) {
 					cell.properties[k] = stats[k];
@@ -447,10 +446,9 @@ function makePopup(props) {
 
         var svg = d3.select(div).select("svg").attr("width", width).attr("height", height);
 
-        d3.json(currData, function(error, data){
+        d3.json(props, function(error, data){
 
-        	data = currData;
-        	console.log("Current Data: " + currData);
+        	data = props;
         	console.log("Data: "+ data);
 
         	//x.domain(data.map(function(d) { return d.properties.GEOID10; }));
@@ -467,7 +465,7 @@ function makePopup(props) {
 		      .text("Median Download (Mbps)");
 
 		  	svg.selectAll(".bar")
-		      .data(data)
+		      //.data(data)
 		    .enter().append("rect")
 		      .attr("class", "bar")
 		      .attr("x", function(d) { return x(d.properties.GEOID10); })
