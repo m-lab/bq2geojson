@@ -447,11 +447,6 @@ function makePopup(props) {
 
         d3.json(props, function(error, data){
 
-        	data.forEach(function(d) {
-			    d.download_median = +d.download_median;
-			    d.upload_median = +d.upload_median;
-			  });
-
 	        svg.append("g")
 		      .attr("class", "y axis")
 		      .call(yAxis)
