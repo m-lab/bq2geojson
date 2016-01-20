@@ -172,7 +172,7 @@ NDTmeter.prototype.onfinish = function (passed_results) {
   }
 
   d3.selectAll("#progress-meter .foreground").classed("complete", true);
-  document.getElementById('ndt').style.display = "none";
+  document.getElementById('ndt-div').style.display = "none";
   document.getElementById('ndt-results').style.display = "block";
   document.getElementById('extra-data').style.display = "block";
   var child = document.getElementById('ndt');

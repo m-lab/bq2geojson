@@ -504,7 +504,6 @@ function runTest() {
 	$('#approx-loc').removeClass('hidden');
 	$('#approx-loc').addClass('visible');
 	$('#extra-data').addClass('hidden');
-
 }
 /*
 var results = document.getElementById('s2cRate');
