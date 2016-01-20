@@ -523,8 +523,8 @@ if (resultsReceived !== "?") {
 function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header, #intro, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
-	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').removeClass('hidden');
-	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('visible');
+	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').removeClass('hidden');
+	$('#icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').addClass('visible');
 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
@@ -539,7 +539,7 @@ $( window ).resize(function() {
 		return;
 	}
 	else if (($(document).width() > 700)) {
-		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').toggle();
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 	}
 });
 
@@ -566,36 +566,6 @@ $(function() {
 	/* reset the display to initial desired state */
 	closeAllTheThings();
 
-/*
-	
-	$('#icons img').click(function() {
-		var clickedElement = $(this).attr('id');
-		if (clickedElement == "test-icon" || clickedElement == "map-icon") {
-			$('#mobile-container').hide();
-			if ($(document).width() < 700) {
-				$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
-			}
-
-			if (clickedElement == "map-icon") {
-				if ($('#map-icon').hasClass('selected')) {
-					showMap();
-				}
-				else {
-					$('#icons img').removeClass('selected');
-					$(this).addClass('selected');
-					//$('#sidebar').addClass('extended');
-					$('#ndt, #ndt-results, #extra-data').hide(); 
-					//$('#about-ndt').show();
-				}
-			}
-
-			else if (clickedElement == "test-icon") {
-				showTestingPanel();
-			}
-			
-		}
-	});
-*/
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
 		$('#mobile-container, .sliderElements, .metricControls, .leaflet-control-layers').toggle();
