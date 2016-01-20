@@ -213,6 +213,9 @@ function getPolygonColor(val) {
  * @param {string} url URL where resource can be found
  * @param {function} callback Callback to pass server response to
  */
+
+var currData;
+
 function getLayerData(url, callback) {
 	if ( geoJsonCache[url] ) {
 		console.log('Using cached version of ' + url);
@@ -231,6 +234,7 @@ function getLayerData(url, callback) {
 			}
 			geoJsonCache[url] = resp;
 			callback(resp);
+			currData = resp;
 		}, 'json');
 	}
 }
@@ -443,9 +447,9 @@ function makePopup(props) {
 
         var svg = d3.select(div).select("svg").attr("width", width).attr("height", height);
 
-        d3.json(props, function(error, data){
+        d3.json(currData, function(error, data){
 
-        	data = props;
+        	data = currData;
         	console.log(data);
 
         	x.domain(data.map(function(d) { return d.GEOID10; }));
