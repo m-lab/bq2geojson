@@ -424,7 +424,7 @@ function makePopup(props) {
 
 		console.log(props);
 
-		var div = $('<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>')[0];
+		var div = $(popup + '<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>')[0];
         var popup1 = L.popup().setContent(div);
 
         var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
