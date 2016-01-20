@@ -450,7 +450,7 @@ function makePopup(props) {
         d3.json(currData, function(error, data){
 
         	data = currData;
-        	console.log(data);
+        	console.log("Data: "+ data);
 
         	//x.domain(data.map(function(d) { return d.properties.GEOID10; }));
   			//y.domain([0,d3.max(data, function(d) { return d.properties.download_median; })]).nice();
