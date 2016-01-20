@@ -424,8 +424,17 @@ function makePopup(props) {
 
 		console.log(props);
 
+		var div = $('<div class="popupGraph" style="width: 200px; height:200px;"><svg/></div>')[0];
+        var popup1 = L.popup().setContent(div);
+
+            layer.bindPopup(popup1);
+
+            var svg = d3.select(div).select("svg").attr("width", 200).attr("height", 200);
+            svg.append("rect").attr("width", 150).attr("height", 150).style("fill", "lightBlue");
+
+
 		//add a chart
-		var width = 200,
+		/*var width = 200,
 			height = 200;
 
 		var x = d3.scale.ordinal()
@@ -447,15 +456,15 @@ function makePopup(props) {
     			.attr("width", width + margin.left + margin.right)
     			.attr("height", height + margin.top + margin.bottom)
   			.append("g")
-    			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");*/
 
     	//d3.
 
     	//var svgDiv = '<svg></svg>';
 
-    	popup = popup + svg;
+    	//popup = popup + svg;
 
-	return popup;
+	return popup1;
 }
 function makeBlankPopup() {
         var popup = "<h3 class='league-gothic'>This area doesn't have enough data yet!</h3><p>Help make our map more accurate by <a id='testSpeedEmptyPrompt' href='#' onClick='javascript:showTestingPanel()'>running your test</a> from an address in this area</a>!</p>";
