@@ -415,11 +415,9 @@ function seedLayerCache(year) {
  */
 function makePopup(props) {
 	var popup = '<div>Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
-		' Mbps (' + Math.round(props.download_count * 10) / 10 +
-		' samples)<br/>' +
+		' Mbps (' + Math.round(props.download_count * 10) / 10 + ' samples)<br/>' +
 		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
-		' samples)<br/>' +
+		' Mbps (' + Math.round(props.upload_count * 10) / 10 + ' samples)<br/>' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/></div>';
 
 		console.log(props);
