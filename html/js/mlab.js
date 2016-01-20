@@ -430,8 +430,8 @@ function makePopup(props) {
 
         var svg = d3.select(div).select("svg").attr("width", 250).attr("height", 200);
         svg.append("rect")
-        	.attr("width", 250)
-        	.attr("height", 100)
+        	.attr("width", 200)
+        	.attr("height", 150)
         	.style("fill", "lightBlue");
 
 
