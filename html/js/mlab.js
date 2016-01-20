@@ -508,6 +508,8 @@ function runTest() {
 	$('#ndt-results').addClass('visible');
 	$('#intro').addClass('hidden');
 	$('#icons').addClass('hidden');	
+	$('#header').removeClass('initial');
+	$('#header').addClass('hidden');
 }
 /*
 var results = document.getElementById('s2cRate');
@@ -563,8 +565,8 @@ $(function() {
 	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 /* copying the mapbox legend into the mobile container */
 
-	/* reset the display to initial desired state */
-	closeAllTheThings();
+	/* reset the display to initial desired state 
+	closeAllTheThings();*/
 
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
