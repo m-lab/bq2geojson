@@ -504,7 +504,7 @@ function runTest() {
 
 function showMap() {
 	$('#icons img').removeClass('selected'); 
-	$('#intro, #ndt, #ndt-results, #extra-data, #about-ndt').toggle(); 
+	$('#header, #intro, #ndt, #ndt-results, #extra-data, #about-ndt').hide(); 
 	$('#mobile-container').hide();
 	if ($(document).width() < 700) {
 		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
