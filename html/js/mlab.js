@@ -445,7 +445,8 @@ function makePopup(props) {
 
         d3.json(props, function(error, data){
 
-        	console.log(props);
+        	data = props;
+        	console.log(data);
 
         	x.domain(data.map(function(d) { return d.GEOID10; }));
   			y.domain([0,d3.max(data, function(d) { return d.download_median; })]).nice();
