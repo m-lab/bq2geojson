@@ -54,6 +54,9 @@ html, body {
 
 #ndt-results {
   display: none;
+  padding-top: 1em;
+  font-size: 1.3em;
+
 }
 
 #ndt-results p, #extra-data p, #ndt p, #about-ndt p {
@@ -66,9 +69,8 @@ html, body {
 }
 
 #ndt-results .btn-sm {
-	float: right;
-	margin-right: 2.3em;
-	margin-bottom: 2em;
+	margin-left: 5em;
+	font-size: 1.3em;
 }
 #extra-data {
   display: block;
