@@ -504,15 +504,8 @@ function runTest() {
 	$('#approx-loc').removeClass('hidden');
 	$('#approx-loc').addClass('visible');
 	$('#extra-data').addClass('hidden');
+
 }
-function testComplete() {
-    if $("#ndt-status").html() == "Test complete") {
-		$('#ndt-div').removeClass('visible');
-		$('#ndt-div').addClass('hidden');
-		$('#ndt-results').removeClass('hidden');
-		$('#ndt-results').addClass('visible');
-    }
-}	
 /*
 var results = document.getElementById('s2cRate');
 var resultsReceived = results.textContent;
@@ -568,8 +561,6 @@ $(function() {
 	/* reset the display to initial desired state */
 	closeAllTheThings();
 
-	/* Periodic check for test completion */
-	setInterval(testComplete, 500);
 /*
 	
 	$('#icons img').click(function() {
