@@ -498,8 +498,10 @@ function showTestingPanel() {
 
 /* New functions */ 
 function runTest() {
-	$('#ndt').toggle();
-	$('#extra-data').toggle();
+	$('#ndt-div').removeClass('hidden');
+	$('#extra-data').removeClass('visible');
+	$('#ndt-div').addClass('visible');
+	$('#extra-data').addClass('hidden');
 }
 
 function showMap() {
