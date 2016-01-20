@@ -549,8 +549,16 @@ $(function() {
 
 	/* reset the display to initial desired state */
 	closeAllTheThings();
-/*
 
+	var results = document.getElementById('s2cRate');
+	var resultsReceived = results.textContent;
+	if (resultsReceived !== "?") {
+		$('#ndt-results').removeClass('hidden');
+		$('#ndt-results').addClass('visible');
+	}
+
+/*
+	
 	$('#icons img').click(function() {
 		var clickedElement = $(this).attr('id');
 		if (clickedElement == "test-icon" || clickedElement == "map-icon") {

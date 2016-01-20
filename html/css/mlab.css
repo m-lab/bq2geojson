@@ -40,15 +40,15 @@ html, body {
 
 #ndt-div {
 	height: auto;
-	width: 25%;
+	width: 30%;
 	margin: 5%;
 	float: left;
-  max-width:95px;
+  max-width: 175px;
 }
 
 #ndt-status {
 	font-size: 2em;
-  margin: 0 auto;
+  margin: 0.5em;
   font-weight: bold;
 }
 
@@ -590,8 +590,7 @@ a.leaflet-popup-close-button {
   }
   #ndt-status {
     clear: both;
-    text-align: center;
-    width: 65%;
+    width: 100%;
   }
   #extra-data p {
     display:inline-block;
