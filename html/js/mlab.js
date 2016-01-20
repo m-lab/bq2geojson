@@ -501,6 +501,7 @@ function runTest() {
 	$('#ndt-div').removeClass('hidden');
 	$('#extra-data').removeClass('visible');
 	$('#ndt-div').addClass('visible');
+	$('#approx-loc').addClass('visible');
 	$('#extra-data').addClass('hidden');
 }
 
