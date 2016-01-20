@@ -504,14 +504,14 @@ function runTest() {
 
 function showMap() {
 	$('#icons img').removeClass('selected'); 
-	$('#header, #intro, #ndt, #ndt-results, #extra-data, #about-ndt').hide(); 
-	$('#mobile-container').hide();
+	$('#header, #intro, #ndt, #ndt-results, #extra-data, #about-ndt').addClass('hidden'); 
+	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
-		$('.metricControls, .sliderElements, .leaflet-control-layers').hide();
+		$('.metricControls, .sliderElements, .leaflet-control-layers').addClass('hidden');
 	}
 	$('#layers-box').show();
 	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
-	$('#exploreMap').toggle();
+//	$('#exploreMap').toggle();
 }
 
 $( window ).resize(function() {
