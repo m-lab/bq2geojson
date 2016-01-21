@@ -448,7 +448,7 @@ function makePopup(props) {
 
         d3.json(props, function(error, data){
 
-        	data = props[0];
+        	data = props;
         	console.log("Data: "+ data);
 
         	//x.domain(data.map(function(d) { return d.properties.GEOID10; }));
