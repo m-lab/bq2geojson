@@ -593,6 +593,10 @@ $(function() {
 function validateExtraDataForm() {
 	if ( $('#isp_user option:selected').val() == 'default' ) {
 		return false;
+	} else if ( $('#isp_user option:selected').val() == 'other' ) {
+		$('#isp_user_text').toggle(true);
+	} else {
+		$('#isp_user_text').toggle(false);
 	}
 	if ( $('#connection_type option:selected').val() == 'default' ) {
 		return false;
