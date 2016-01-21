@@ -511,11 +511,6 @@ function runTest() {
 	$('#header').removeClass('initial');
 	$('#header').addClass('hidden');
 }
-function runTestAgain() {
-	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
-	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
-	$('#header').addClass('initial');
-}
 function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header').removeClass('initial'); 
