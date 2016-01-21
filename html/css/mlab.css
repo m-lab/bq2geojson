@@ -15,6 +15,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+  background-color: rgba(255,255,255,0.75)
 }
 
 #map {
@@ -392,7 +393,12 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #icons img.small-icon {
   width:50%;
 }
-
+.button-label {
+  float: left;
+  margin-top: 2em;
+  font-size: 1.3em;
+  font-weight: bold;
+}
 #mapview-icons {
   width: 100px;
   float: left;
