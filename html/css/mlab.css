@@ -384,7 +384,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   display: block;
   opacity:0.75;
   cursor: pointer;
-  float: right;
+  float: left;
 }
 #icons img:hover {
   opacity:1.0;
