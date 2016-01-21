@@ -120,11 +120,17 @@
 		<div id="ndt-status"></div>
 	</div>
 	<div id="ndt-results" class="ndt-related">
-		<h3 class="league-gothic">Your test results</h3>
-		<p>Download speed: <span id="s2cRate"></span>mbps</p>
-		<p>Upload speed: <span id="c2sRate"></span>mbps</p>
-		<p>Minimum Round Trip Time: <span id="MinRTT"></span>ms</p><br >
-		<input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
+		<div class="container">
+			<div style="width:50%; float:left;">		
+				<h3 class="league-gothic">Your test results</h3>
+				<p>Download speed: <span id="s2cRate"></span> mbps</p>
+				<p>Upload speed: <span id="c2sRate"></span> mbps</p>
+				<p>Minimum Round Trip Time: <span id="MinRTT"></span> ms</p>
+			</div>
+			<div style="width:40%; float:left;">		
+ 			  <input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
+ 			</div>
+ 		</div>
 		</form>
 	</div>
 	<div id="icons">
@@ -215,9 +221,13 @@
 				if (xhr.readyState === 4) {
 					if (xhr.status === 201) {
 						console.log('Record successfully added.');
-						$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
-						$('#extra-data').css('display', 'none');
-						setTimeout(window.location.assign("thankyou.html"),7000000);
+						//$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
+						//$('#extra-data').css('display', 'none');
+
+						$('#thankyou').removeClass('hidden');
+						$('#thankyou').addClass('visible');
+
+						//setTimeout(window.location.assign("thankyou.html"),7000000);
  						
 					} else {
 						console.log('Failed to create record: ' + xhr.responseText);
@@ -232,6 +242,11 @@
 	</script>
 	</div>
 </div>
+<div id="mapview-icons">
+	<img src="images/speed.svg" id="mapview-test-icon" alt="Take the Speed test" title="Take the Speed Test" onclick="runTest()" />
+	<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more  about this test." title="Learn more about this test." /></a>
+</div>
+
 <div id='map'></div>
 <script>
 
