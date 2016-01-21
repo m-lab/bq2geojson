@@ -588,7 +588,7 @@ $(function() {
 		var formState = validateExtraDataForm();
 		$('#take-test').toggle(formState);
 	});
-	$('#submit-collector').click(function(e) {
+	$('#collector :submit').click(function(e) {
 		e.preventDefault();
 		var formData = $('#collector').serialize();
 		$.ajax({
@@ -601,8 +601,8 @@ $(function() {
 					$('#thankyou').addClass('visible');
 				}
 			},
-			error: function(msg) {
-				console.log('Something went wrong: ' + msg);
+			error: function(jqXHR, status, msg) {
+				console.log('Something went wrong: ' + status + ' ' + msg);
 			}
 		});
 	});
