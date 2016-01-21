@@ -65,7 +65,7 @@ html, body {
 
 #ndt > p {
   float:right;
-  width:55%;	
+  width:55%;
 }
 
 #ndt-results .btn-sm {
@@ -138,14 +138,14 @@ html, body {
 	border-style: solid;
 	border-color: #BBB #999 #666 #222;
 	border-radius: 40px;
-	animation: spin 1s linear infinite; 
+	animation: spin 1s linear infinite;
 }
 
-@keyframes spin {  
-	from { transform: rotate(0deg); }  
-	50%  { transform: rotate(180deg); }  
-	to   { transform: rotate(360deg); }  
-}		
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	50%  { transform: rotate(180deg); }
+	to   { transform: rotate(360deg); }
+}
 
 #loading {
 	margin: 10px auto;
@@ -263,7 +263,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #sidebar {
-  width: 72%;
   margin: 0 auto;
   clear: both;
 }
@@ -304,11 +303,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #header {
-  position: relative;
   top:auto;
-  z-index: 5;
-  background-color:rgba(255,255,255,0.75);
-  width:100%;
   min-height:60px;
 }
 
@@ -364,6 +359,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 #sidebar {
   margin: 1em auto;
   position: relative;
+  overflow:auto;
 }
 #sidebar.extended {
 /*  width:50%; */
@@ -467,7 +463,6 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 }
 
 #header #intro {
-  width:60%;
   margin:0 auto;
   clear:both;
 }
@@ -592,7 +587,7 @@ a.leaflet-popup-close-button {
     float:left;
     margin-top: 10%;
     font-size: 2em;
-  } 
+  }
   #progress-meter text.information {
     font-size: 4em;
   }
@@ -659,7 +654,7 @@ a.leaflet-popup-close-button {
 
 @media(max-width:968px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
-    display:none; 
+    display:none;
   }
   .leaflet-top.leaflet-right {
     padding:0.35em 0.85em;
@@ -669,13 +664,13 @@ a.leaflet-popup-close-button {
     display:block;
   }
   #desktop-legend {
-    display:none; 
+    display:none;
   }
   #sliderMonth {
     width:85%;
   }
   .sliderElements, .metricControls {
-    display: none; 
+    display: none;
   }
   #mobile-container, .leaflet-top.leaflet-right.mobile-view {
     display:none;
@@ -683,7 +678,7 @@ a.leaflet-popup-close-button {
   #approx-loc {
     /*display:none !important; */
   }
- 
+
   #mobile-container {
     background-color: rgba(255,255,255,0.75);
   }
@@ -846,7 +841,6 @@ a.leaflet-popup-close-button {
   }
   #header #intro {
     font-size: 1em;
-    width:72%;
   }
   .metricControls {
     width:auto;
@@ -1005,32 +999,32 @@ a.leaflet-popup-close-button {
   outline: none;
 }
 
-.share-btn.twitter     { 
-  background: #55acee; 
+.share-btn.twitter     {
+  background: #55acee;
   background-image: url("/images/twitter.png");
 }
-.share-btn.google-plus { 
-  background: #dd4b39; 
+.share-btn.google-plus {
+  background: #dd4b39;
   background-image: url("/images/googleplus.png");
 }
-.share-btn.facebook    { 
-  background: #3B5998; 
+.share-btn.facebook    {
+  background: #3B5998;
   background-image: url("/images/facebook.png");
 }
-.share-btn.linkedin    { 
-  background: #4875B4; 
+.share-btn.linkedin    {
+  background: #4875B4;
   background-image: url("/images/linkedin.png");
 }
-.share-btn.stumbleupon { 
-  background: #EB4823; 
+.share-btn.stumbleupon {
+  background: #EB4823;
   background-image: url("/images/stumbleupon.png");
 }
-.share-btn.reddit { 
-  background: #ff5700; 
+.share-btn.reddit {
+  background: #ff5700;
   background-image: url("/images/reddit.png");
 }
-.share-btn.email       { 
-  background: #444444; 
+.share-btn.email       {
+  background: #444444;
   background-image: url("/images/email.png");
 }
 .container {
@@ -1047,4 +1041,16 @@ a.leaflet-popup-close-button {
   color: red;
   font-weight: bold;
   font-size: 1.2em;
+}
+
+#welcome-container {
+  background:#fff;
+  background:rgba(255,255,255,0.75);
+  position:absolute;
+  z-index:5;
+}
+
+#header, #sidebar {
+  width:80%;
+  margin:0 auto;
 }
