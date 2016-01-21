@@ -584,8 +584,27 @@ $(function() {
     	$('#testSpeed, #exploreMap').toggle();
  	 });
 */
+	$('#isp_user, #connection_type, #cost_of_service, #data_acknowledgement').change(function() {
+		var formState = validateExtraDataForm();
+		$('#take-test').toggle(formState);
+	});
 });
 
+function validateExtraDataForm() {
+	if ( $('#isp_user option:selected').val() == 'default' ) {
+		return false;
+	}
+	if ( $('#connection_type option:selected').val() == 'default' ) {
+		return false;
+	}
+	if ( $('#cost_of_service option:selected').val() == 'default' ) {
+		return false;
+	}
+	if ( ! $('#data_acknowledgement').is(':checked') ) {
+		return false;
+	}
+	return true;
+}
 
 function showOtherIspBox(val) {
   var element=document.getElementById('isp_user');

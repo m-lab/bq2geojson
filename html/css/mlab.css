@@ -277,6 +277,10 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
 	font-family: 'league_gothicregular';
 }
 
+#take-test {
+  display: none;
+}
+
 .icon-speed {
   background-image: url(images/speed.svg);
   background-size: cover;
