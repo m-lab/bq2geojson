@@ -128,7 +128,7 @@
 				<p>Minimum Round Trip Time: <span id="MinRTT"></span> ms</p>
 			</div>
 			<div style="width:40%; float:left;">		
- 			  <input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
+ 			  <input id="submit-collector" class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
  			</div>
  		</div>
 		</form>
@@ -212,38 +212,6 @@
 				}
 			};
 		};
-
-		$('#collector :submit').click(function(e) {
-			e.preventDefault();
-			var xhr = new XMLHttpRequest(),
-				collectorUrl = '/collector/collect?';
-
-			collectorUrl = collectorUrl + $('#collector').serialize();
-
-			xhr.open('GET', collectorUrl, true);
-			xhr.send();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === 4) {
-					if (xhr.status === 201) {
-						console.log('Record successfully added.');
-						//$('#ndt-results').append("<h3 class='league-gothic'>Thank you for submitting your test!</h3>");
-						//$('#extra-data').css('display', 'none');
-
-						$('#thankyou').removeClass('hidden');
-						$('#thankyou').addClass('visible');
-
-						//setTimeout(window.location.assign("thankyou.html"),7000000);
- 						
-					} else {
-						console.log('Failed to create record: ' + xhr.responseText);
-						if ($('#extra-data p:last-child').text() != "Please complete the form before submitting.") {
-							$('#extra-data').append("<p style='color:red'>Please complete the form before submitting.</p>");
-						}
-					}
-				}
-			};
-		});
-
 	</script>
 	</div>
 </div>

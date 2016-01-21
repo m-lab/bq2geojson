@@ -588,6 +588,24 @@ $(function() {
 		var formState = validateExtraDataForm();
 		$('#take-test').toggle(formState);
 	});
+	$('#submit-collector').click(function(e) {
+		e.preventDefault();
+		var formData = $('#collector').serialize();
+		$.ajax({
+			method: 'GET',
+			url: $('#collector').attr('action'),
+			data: formData,
+			statusCode: {
+				201: function() {
+					$('#thankyou').removeClass('hidden');
+					$('#thankyou').addClass('visible');
+				}
+			},
+			error: function(msg) {
+				console.log('Something went wrong: ' + msg);
+			}
+		});
+	});
 });
 
 function validateExtraDataForm() {
