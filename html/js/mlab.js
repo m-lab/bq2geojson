@@ -447,7 +447,7 @@ function setupLayer(layer) {
 		}
 	}, 'json');
 }
-/*
+
 function closeAllTheThings() {
 	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
@@ -495,7 +495,7 @@ function showTestingPanel() {
 	}
 
 }
-*/
+
 /* New functions */ 
 function runTest() {
 	$('#ndt-div').removeClass('hidden');
@@ -548,8 +548,8 @@ $(function() {
 /* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
-/*	var mobileMenuExtra = '<div id="mobile-menu">---</div>'; 
-	$('.info.controls.leaflet-control').append(mobileMenuExtra); */
+	var mobileMenuExtra = '<div id="mobile-menu">---</div>'; 
+	$('.info.controls.leaflet-control').append(mobileMenuExtra); 
 /*mobile bits */
 
 /* copying the mapbox legend into the mobile container to override placement for mobile devices */
