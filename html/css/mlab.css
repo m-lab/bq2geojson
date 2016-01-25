@@ -1053,4 +1053,5 @@ a.leaflet-popup-close-button {
 #header, #sidebar {
   width:80%;
   margin:0 auto;
+  overflow: hidden;
 }
