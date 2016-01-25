@@ -544,6 +544,7 @@ $(function() {
 	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #desktop-legend, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
+	$('.sliderElements, .metricControls').toggle();
 
 /* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
