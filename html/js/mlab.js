@@ -515,8 +515,8 @@ function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header').removeClass('initial'); 
 	$('#header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden'); 
-	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').removeClass('hidden');
-	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').addClass('visible');
+	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
+	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
