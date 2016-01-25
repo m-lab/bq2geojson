@@ -556,7 +556,7 @@ $(function() {
 	var attribution = $('div.leaflet-control-attribution.leaflet-control');
 	$('div.info.legend.leaflet-control').append(attribution);
 	$('div.info.legend.leaflet-control').clone().appendTo('#mobile-container');
-	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
+//	$('div.info.legend.leaflet-control').first().attr('id', 'desktop-legend');
 /* copying the mapbox legend into the mobile container */
 
 	/* reset the display to initial desired state 
