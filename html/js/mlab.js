@@ -588,25 +588,24 @@ $(function() {
 		var formState = validateExtraDataForm();
 		$('#take-test').toggle(formState);
 	});
-	$('#collector :submit').click(function(e) {
-		e.preventDefault();
-		var formData = $('#collector').serialize();
-		$.ajax({
-			method: 'GET',
-			url: $('#collector').attr('action'),
-			data: formData,
-			statusCode: {
-				201: function() {
-					$('#thankyou').removeClass('hidden');
-					$('#thankyou').addClass('visible');
-				}
-			},
-			error: function(jqXHR, status, msg) {
-				console.log('Something went wrong: ' + status + ' ' + msg);
-			}
-		});
-	});
 });
+
+function submitExtraData() {
+	var formData = $('#collector').serialize();
+	$.ajax({
+		method: 'GET',
+		url: $('#collector').attr('action'),
+		data: formData,
+		statusCode: {
+			201: function() {
+				console.log('Data submitted successfully.');
+			}
+		},
+		error: function(jqXHR, status, msg) {
+			console.log('Something went wrong: ' + status + ' ' + msg);
+		}
+	});
+}
 
 function validateExtraDataForm() {
 	if ( $('#isp_user option:selected').val() == 'default' ) {

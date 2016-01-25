@@ -171,6 +171,9 @@ NDTmeter.prototype.onfinish = function (passed_results) {
     }
   }
 
+  // Sends user and test data to server... defined in mlab.js
+  submitExtraData();
+
   d3.selectAll("#progress-meter .foreground").classed("complete", true);
   document.getElementById('ndt-div').style.display = "none";
   document.getElementById('ndt-results').style.display = "block";
