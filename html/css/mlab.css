@@ -940,12 +940,21 @@ a.leaflet-popup-close-button {
   }
 }
 
-.leaflet-top.leaflet-right {
+.leaflet-top.leaflet-right, #mapview-icons {
   top:auto;
   left:auto;
   right:0;
   bottom:auto;
   background:rgba(255,255,255,0.75);
+}
+
+#mapview-icons img {
+    width: 100%;
+    max-width: 55px;
+    margin: 1em;
+    display: block;
+    opacity: 0.75;
+    cursor: pointer;
 }
 
 .info.legend.leaflet-control, .leaflet-left.leaflet-bottom .leaflet-control-layers {
