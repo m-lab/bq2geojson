@@ -584,8 +584,49 @@ $(function() {
     	$('#testSpeed, #exploreMap').toggle();
  	 });
 */
+	$('#isp_user, #connection_type, #cost_of_service, #data_acknowledgement').change(function() {
+		var formState = validateExtraDataForm();
+		$('#take-test').toggle(formState);
+	});
+	$('#collector :submit').click(function(e) {
+		e.preventDefault();
+		var formData = $('#collector').serialize();
+		$.ajax({
+			method: 'GET',
+			url: $('#collector').attr('action'),
+			data: formData,
+			statusCode: {
+				201: function() {
+					$('#thankyou').removeClass('hidden');
+					$('#thankyou').addClass('visible');
+				}
+			},
+			error: function(jqXHR, status, msg) {
+				console.log('Something went wrong: ' + status + ' ' + msg);
+			}
+		});
+	});
 });
 
+function validateExtraDataForm() {
+	if ( $('#isp_user option:selected').val() == 'default' ) {
+		return false;
+	} else if ( $('#isp_user option:selected').val() == 'other' ) {
+		$('#isp_user_text').toggle(true);
+	} else {
+		$('#isp_user_text').toggle(false);
+	}
+	if ( $('#connection_type option:selected').val() == 'default' ) {
+		return false;
+	}
+	if ( $('#cost_of_service option:selected').val() == 'default' ) {
+		return false;
+	}
+	if ( ! $('#data_acknowledgement').is(':checked') ) {
+		return false;
+	}
+	return true;
+}
 
 function showOtherIspBox(val) {
   var element=document.getElementById('isp_user');
