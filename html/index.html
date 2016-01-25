@@ -38,7 +38,7 @@
 </div>
 <div id="sidebar">
 	<div id="extra-data" class="ndt-related">
-	  <form action="/collector/collect" method="post" id="collector">
+	  <form action="/collector/collect" method="get" id="collector">
 	 	<div class="container">
 	 		<div style="width:40%; float:left;">
 				<p><span class="required">*</span> Who is your Internet Service Provider?</p>
@@ -133,10 +133,63 @@
  		</div>
 		</form>
 	</div>
+	<div id="thankyou">
+		<h2>Thank you!</h2>
+		<h3>What do you want to do next?</h3>
+		<ul>
+		  <li><a href="/">Explore the map and see how your results compare to other users</li>
+		  <li>Learn more about this test and how the data will be used</li>
+		  <li>Share this test to your friends, colleagues, and neighbors<br>
+			<!-- Social Button HTML -->
+
+			<!-- Twitter -->
+			<a href="http://twitter.com/share?url=http://www.seattle.gov/broadband-speed-test&text=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&via=CivicTechSea" target="_blank" class="share-btn twitter">
+			    <i class="fa fa-twitter"></i>
+			</a>
+
+			<!-- Google Plus -->
+			<a href="https://plus.google.com/share?url=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn google-plus">
+			    <i class="fa fa-google-plus"></i>
+			</a>
+
+			<!-- Facebook -->
+			<a href="http://www.facebook.com/sharer/sharer.php?u=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn facebook">
+			    <i class="fa fa-facebook"></i>
+			</a>
+
+			<!-- StumbleUpon (url, title) -->
+			<a href="http://www.stumbleupon.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn stumbleupon">
+			    <i class="fa fa-stumbleupon"></i>
+			</a>
+
+			<!-- Reddit (url, title) -->
+			<a href="http://reddit.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn reddit">
+			    <i class="fa fa-reddit"></i>
+			</a>
+
+			<!-- LinkedIn -->
+			<a href="http://www.linkedin.com/shareArticle?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&summary=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&source=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn linkedin">
+			    <i class="fa fa-linkedin"></i>
+			</a>
+
+			<!-- Email -->
+			<a href="mailto:?subject=Take%20the%20Seattle%20Broadband%20Speed Test&body=I%20just%20took%20the%20Seattle%20Broadband%20Speed%20Test,%20and%20you%20should%20too!%20Take%20the%20test%20and%20contribute%20to%20a%20map%20of%20broadband%20speeds%20across%20the%20city. http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn email">
+			    <i class="fa fa-envelope"></i>
+			</a>
+
+		  </li>
+		</ul>
+	</div>
 	<div id="icons">
-		<img src="images/speed.svg" id="test-icon" alt="Take the Speed Test" title="Take the Speed Test" onclick="runTest()" /><span class="button-label">Take the Speed Test</span>
-		<img src="images/compass.png" id="exploreMap" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /><span class="button-label">Browse the Broadband Map</span>
-		<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more about this test." title="Learn more about this test." /></a><span class="button-label">Learn More</span>
+		<div class="container">
+			<img src="icon-images/speed.svg" id="test-icon" alt="Take the Speed Test" title="Take the Speed Test" onclick="runTest()" /><span class="button-label">Take the Speed Test</span>
+		</div>
+		<div class="icon-container">
+			<img src="images/compass.png" id="exploreMap" alt="Browse the Broadband Map" title="Browse the Broadband Map" onclick="showMap()" /><span class="button-label">Browse the Broadband Map</span>
+		</div>
+		<div class="icon-container">
+			<a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"><img src="images/about.svg" alt="Learn more about this test." title="Learn more about this test." /></a><span class="button-label">Learn More</span>
+		</div>
 	</div>
 	<script>
 		var ndtServer,
