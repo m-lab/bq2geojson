@@ -536,7 +536,11 @@ $( window ).resize(function() {
 	}
 	else if (($(document).width() > 700)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+	}	
+	else if (($(document).width() < 700)) {
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').hide();
 	}
+
 });
 
 $(function() {
