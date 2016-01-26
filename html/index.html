@@ -123,14 +123,60 @@
 			</div>
 			<div id="ndt-results" class="ndt-related">
 				<div class="container">
-					<div style="width:50%; float:left;">
+					<div style="width:40%; float:left;">
 						<h3 class="league-gothic">Your test results</h3>
 						<p>Download speed: <span id="s2cRate"></span> mbps</p>
 						<p>Upload speed: <span id="c2sRate"></span> mbps</p>
 						<p>Minimum Round Trip Time: <span id="MinRTT"></span> ms</p>
 					</div>
-					<div style="width:40%; float:left;">
-						<input class="btn btn-primary btn-sm" type="submit" value="Upload my results"/>
+					<div style="width:60%; float:left;">
+						<div id="thankyou">
+						<h3 class="league-gothic">Thank you!</h3>
+						<strong>What do you want to do next?</strong>
+						<ul>
+						  <li><a href="#" onclick="showMap()">View all results to-date on a map of Seattle</a></li>
+						  <li><a href="http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test">Learn how the City will use this data</a></li>
+						  <li><a href="#" onclick="showSocialShare()">Share this test to your friends, colleagues, and neighbors</a></li>
+						</ul>
+						<div id="socialshare">
+						  	<!-- Social Button HTML -->
+
+							<!-- Twitter -->
+							<a href="http://twitter.com/share?url=http://www.seattle.gov/broadband-speed-test&text=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&via=CivicTechSea" target="_blank" class="share-btn twitter">
+							    <i class="fa fa-twitter"></i>
+							</a>
+
+							<!-- Google Plus -->
+							<a href="https://plus.google.com/share?url=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn google-plus">
+							    <i class="fa fa-google-plus"></i>
+							</a>
+
+							<!-- Facebook -->
+							<a href="http://www.facebook.com/sharer/sharer.php?u=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn facebook">
+							    <i class="fa fa-facebook"></i>
+							</a>
+
+							<!-- StumbleUpon (url, title) -->
+							<a href="http://www.stumbleupon.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn stumbleupon">
+							    <i class="fa fa-stumbleupon"></i>
+							</a>
+
+							<!-- Reddit (url, title) -->
+							<a href="http://reddit.com/submit?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test" target="_blank" class="share-btn reddit">
+							    <i class="fa fa-reddit"></i>
+							</a>
+
+							<!-- LinkedIn -->
+							<a href="http://www.linkedin.com/shareArticle?url=http://www.seattle.gov/broadband-speed-test&title=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&summary=I%20tested%20my%20Internet%20speeds%20with%20the%20Seattle%20Broadband%20Speed%20Test&source=http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn linkedin">
+							    <i class="fa fa-linkedin"></i>
+							</a>
+
+							<!-- Email -->
+							<a href="mailto:?subject=Take%20the%20Seattle%20Broadband%20Speed Test&body=I%20just%20took%20the%20Seattle%20Broadband%20Speed%20Test,%20and%20you%20should%20too!%20Take%20the%20test%20and%20contribute%20to%20a%20map%20of%20broadband%20speeds%20across%20the%20city. http://www.seattle.gov/broadband-speed-test" target="_blank" class="share-btn email">
+							    <i class="fa fa-envelope"></i>
+							</a>
+						</div>
+						</div>
 					</div>
 				</div>
 			</div>

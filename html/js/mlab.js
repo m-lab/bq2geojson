@@ -447,7 +447,7 @@ function setupLayer(layer) {
 		}
 	}, 'json');
 }
-/*
+
 function closeAllTheThings() {
 	$('#sidebar').removeClass('extended');
 	$('#icons img').removeClass('selected');
@@ -495,7 +495,7 @@ function showTestingPanel() {
 	}
 
 }
-*/
+
 /* New functions */ 
 function runTest() {
 	$('#ndt-div').removeClass('hidden');
@@ -515,8 +515,8 @@ function showMap() {
 	$('#icons img').removeClass('selected'); 
 	$('#header').removeClass('initial'); 
 	$('#header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden'); 
-	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').removeClass('hidden');
-	$('#mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers, .leaflet-bottom.leaflet-left').addClass('visible');
+	$('#mapview-icons, #desktop-legend, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
+	$('#mapview-icons, #desktop-legend, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
@@ -525,6 +525,10 @@ function showMap() {
 	$('#layers-box').show();
 	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
 }
+function showSocialShare() {
+	$('#socialshare').removeClass('hidden'); 
+	$('#socialshare').addClass('visible'); 
+}
 
 $( window ).resize(function() {
 	if ($('#header').hasClass('initial')) {
@@ -532,20 +536,24 @@ $( window ).resize(function() {
 	}
 	else if (($(document).width() > 700)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
+	}	
+	else if (($(document).width() < 700)) {
+		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').hide();
 	}
+
 });
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #mapview-icons, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #desktop-legend, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
 /* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
-	var mobileMenuExtra = '<div id="mobile-menu">---</div>';
-	$('.info.controls.leaflet-control').append(mobileMenuExtra);
+	var mobileMenuExtra = '<div id="mobile-menu">---</div>'; 
+	$('.info.controls.leaflet-control').append(mobileMenuExtra); 
 /*mobile bits */
 
 /* copying the mapbox legend into the mobile container to override placement for mobile devices */
@@ -557,11 +565,12 @@ $(function() {
 
 	/* reset the display to initial desired state 
 	closeAllTheThings();*/
-/*
+
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
 		$('#mobile-container, .sliderElements, .metricControls, .leaflet-control-layers').toggle();
 	});
+/*	
 	$('#exploreMap').click(function() {
 		showHideControls();
 		$('#header').addClass('hidden');
