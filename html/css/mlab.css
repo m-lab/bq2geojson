@@ -698,13 +698,13 @@ a.leaflet-popup-close-button {
     height:auto;
     border: 2px solid #007dc3;
     float:right;
-    padding:0 1em;
     border-radius:10px;
     font-weight: bold;
     color:#007dc3;
-    font-size: 1.2em;
-    margin-top: 0.5em;
     cursor: pointer;
+    font-size: 24px;
+    padding:5px 10px;
+    margin: 0;
   }
   .leaflet-bottom.leaflet-right {
     display:none !important;
