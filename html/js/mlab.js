@@ -520,7 +520,7 @@ function showMap() {
 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
-		$('.metricControls, .sliderElements, .leaflet-control-layers').addClass('hidden');
+		$('.leaflet-control-layers').addClass('hidden');
 	}
 	$('#layers-box').show();
 	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
@@ -552,7 +552,7 @@ $(function() {
 /* mobile bits */
 	var mobileContainer = '<div id="mobile-container"></div>';
 	$('#map').append(mobileContainer);
-	var mobileMenuExtra = '<div id="mobile-menu">&equiv;</div>'; 
+	var mobileMenuExtra = '<div id="mobile-menu">&equiv;</div>';
 	$('.info.controls.leaflet-control').append(mobileMenuExtra);
 /*mobile bits */
 
