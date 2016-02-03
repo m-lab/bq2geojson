@@ -417,11 +417,11 @@ function makePopup(props) {
 	var popup = 'Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
 		' Mbps (' + Math.round(props.download_count * 10) / 10 +
 		' samples)<br/>' +
-		' Max. Download Speed: ' + props.download_max + '<br />' +
+		' Maximum Download Speed Submitted: ' + props.download_max + ' Mbps<br />' +
 		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
 		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
 		' samples)<br/>' +
-		' Max. Upload Speed: ' + props.upload_max + '<br />' +
+		' Maximum Upload Speed submitted: ' + props.upload_max + ' Mbps<br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
