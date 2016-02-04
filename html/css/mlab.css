@@ -562,6 +562,9 @@ a.leaflet-popup-close-button {
 .leaflet-popup-content-wrapper {
   width: 350px;
 }
+.leaflet-container h3 {
+  font-size: 1.7em;
+}
 
 @media(min-width:460px) {
   .metricControls {
