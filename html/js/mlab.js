@@ -423,7 +423,7 @@ function makePopup(props) {
 		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 		for(var key in props) {
-		    popup += props[key] + '<br />';
+		    popup += props[key] + ': '+ props[name] +'<br />';
 		}
 	return popup;
 }
