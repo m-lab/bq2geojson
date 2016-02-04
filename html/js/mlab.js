@@ -414,14 +414,14 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = '<p style="font-size:1.2em; font-weight:bold;">Internet Measurements in this Census Block, in '+ $('#sliderMonth').slider('value') +'/'+ $('#selectYear').val() + ' :</p>'+
-		' <strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
+	var popup = '<h3 class="league-gothic">Internet Measurements in this Census Block, in '+ $('#sliderMonth').slider('value') +'/'+ $('#selectYear').val() + ' :</h3>'+
+		' <p><strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
 		' Most common (median) speed: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
 		' Max: ' + props.download_max + ' Mbps<br /><br />' +
 		' <strong>Upload ('+ Math.round(props.upload_count * 10) / 10 + ' samples)</strong><br />' +
 		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
 		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
-		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
+		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/></p>';
 	return popup;
 }
 function makeBlankPopup() {

@@ -504,7 +504,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border: 0;
   border-radius: 50px;
   background: none;
-  margin:0;
+  margin:10px;
 }
 
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -556,11 +556,14 @@ a.leaflet-popup-close-button {
   top:-13px;
   right:-13px;
   margin:0;
-  background-color: white;
+  background-color: white;ssssss
   opacity: 1;
 }
 .leaflet-popup-content-wrapper {
   width: 350px;
+}
+.leaflet-container h3 {
+  font-size: 1.7em;
 }
 
 @media(min-width:460px) {
@@ -654,7 +657,6 @@ a.leaflet-popup-close-button {
     display:none;
   }
   .leaflet-top.leaflet-right {
-    padding:0.35em 0.85em;
   }
   .leaflet-bar a, .leaflet-control-layers-toggle, .leaflet-popup-close-button, .map-tooltip.closable .close, .mapbox-button-icon:before, .mapbox-icon, .leaflet-bar a:hover:first-child, .leaflet-bar a:hover:last-child {
     margin-bottom: 0.5em;
@@ -776,6 +778,7 @@ a.leaflet-popup-close-button {
     background:none;
     float:none;
   }
+  
   .info.legend.leaflet-control, #mobile-approx-loc, .leaflet-top.leaflet-right .leaflet-control-layers {
       padding:6px 8px;
       font-size: 10px;
@@ -822,7 +825,6 @@ a.leaflet-popup-close-button {
     top:auto;
     left: 13%;
     bottom:96px;
-    padding:10px;
   }
   .leaflet-right .leaflet-control {
     background: rgba(255,255,255,0.75);
