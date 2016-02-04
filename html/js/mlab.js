@@ -414,14 +414,13 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = 'Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
-		' Mbps (' + Math.round(props.download_count * 10) / 10 +
-		' samples)<br/>' +
-		' Maximum Download Speed Submitted: ' + props.download_max + ' Mbps<br />' +
-		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
-		' samples)<br/>' +
-		' Maximum Upload Speed submitted: ' + props.upload_max + ' Mbps<br />' +
+	var popup = '<strong>Internet Measurements in this Census Block, '+ props.month +', '+ props.year +'</strong><br />'+
+		' <strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
+		' Most common (median) speed: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
+		' Max: ' + props.download_max + ' Mbps<br /><br />' +
+		' <strong>Upload ('+ Math.round(props.upload_count * 10) / 10 + ' samples)</strong><br />' +
+		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
+		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
@@ -539,7 +538,7 @@ $( window ).resize(function() {
 	else if (($(document).width() > 700)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 	}
-	else if (($(document).width() < 700)) {
+	else if (($(document).width() < 400)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').hide();
 	}
 
