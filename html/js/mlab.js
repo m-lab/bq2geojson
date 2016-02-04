@@ -421,7 +421,7 @@ function makePopup(props) {
 		' <strong>Upload ('+ Math.round(props.upload_count * 10) / 10 + ' samples)</strong><br />' +
 		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
 		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
-		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';} 
+		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
 function makeBlankPopup() {
