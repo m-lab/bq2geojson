@@ -422,12 +422,10 @@ function makePopup(props) {
 		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
 		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
-/**		for(var key in props) {
+		for(var key in props) {
 		    popup += props[key] + '<br />';
-		} */
-		for(var i in props){
-		  popup += props(i) + ':' props[i] + '<br />';
-		}
+		} 
+
 	return popup;
 }
 function makeBlankPopup() {
