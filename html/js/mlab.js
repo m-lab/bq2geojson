@@ -535,10 +535,10 @@ $( window ).resize(function() {
 	if ($('#header').hasClass('initial')) {
 		return;
 	}
-	else if (($(document).width() > 700)) {
+	else if (($(document).width() > 501)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 	}
-	else if (($(document).width() < 400)) {
+	else if (($(document).width() < 500)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').hide();
 	}
 
