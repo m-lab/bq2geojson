@@ -414,7 +414,7 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = '<p style="font-size:1.2em; font-weight:bold;">Internet Measurements in this Census Block:</p>'+
+	var popup = '<p style="font-size:1.2em; font-weight:bold;">Internet Measurements in this Census Block, in '+ $('#sliderMonth').slider('value') +'/'+ $('#selectYear').val() + ' :</p>'+
 		' <strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
 		' Most common (median) speed: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
 		' Max: ' + props.download_max + ' Mbps<br /><br />' +
