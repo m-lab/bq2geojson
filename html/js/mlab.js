@@ -414,12 +414,13 @@ function seedLayerCache(year) {
  * @returns {string} Textual information for the popup
  */
 function makePopup(props) {
-	var popup = 'Most common <strong>Download</strong> speed: ' + Math.round(props.download_median * 10) / 10 +
-		' Mbps (' + Math.round(props.download_count * 10) / 10 +
-		' samples)<br/>' +
-		'Most common <strong>Upload</strong> speed: ' + Math.round(props.upload_median * 10) / 10 +
-		' Mbps (' + Math.round(props.upload_count * 10) / 10 + '<br/>' +
-		' samples)<br/>' +
+	var popup = '<p style="font-size:1.2em; font-weight:bold;">Internet Measurements in this Census Block:</p>'+
+		' <strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
+		' Most common (median) speed: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
+		' Max: ' + props.download_max + ' Mbps<br /><br />' +
+		' <strong>Upload ('+ Math.round(props.upload_count * 10) / 10 + ' samples)</strong><br />' +
+		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
+		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/>';
 	return popup;
 }
@@ -515,8 +516,8 @@ function showMap() {
 	$('#icons img').removeClass('selected');
 	$('#header').removeClass('initial');
 	$('#header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
-	$('#mapview-icons, #desktop-legend, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
-	$('#mapview-icons, #desktop-legend, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
+	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
+	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control,  .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
 
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
@@ -534,10 +535,10 @@ $( window ).resize(function() {
 	if ($('#header').hasClass('initial')) {
 		return;
 	}
-	else if (($(document).width() > 700)) {
+	else if (($(document).width() > 501)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').show();
 	}
-	else if (($(document).width() < 700)) {
+	else if (($(document).width() < 500)) {
 		$('.metricControls, .sliderElements, .leaflet-top.leaflet-left').hide();
 	}
 
@@ -545,7 +546,7 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #desktop-legend, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #desktop-legend, .info.legend.leaflet-control, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 

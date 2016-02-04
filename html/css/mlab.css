@@ -649,7 +649,7 @@ a.leaflet-popup-close-button {
   }
 }
 
-@media(max-width:968px) {
+@media(max-width:500px) {
   .leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control {
     display:none;
   }
