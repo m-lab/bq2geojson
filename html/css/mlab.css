@@ -504,7 +504,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all:focus {
   border: 0;
   border-radius: 50px;
   background: none;
-  margin:0;
+  margin:10px;
 }
 
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -778,6 +778,13 @@ a.leaflet-popup-close-button {
     padding:1em;
     background:none;
     float:none;
+  }
+  .leaflet-top.leaflet-right {
+    top: auto;
+    left: auto;
+    right: 0px;
+    background: rgba(255, 255, 255, 0.75) none repeat scroll 0% 0%;
+    bottom: auto;
   }
   .info.legend.leaflet-control, #mobile-approx-loc, .leaflet-top.leaflet-right .leaflet-control-layers {
       padding:6px 8px;
