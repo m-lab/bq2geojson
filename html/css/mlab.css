@@ -1107,11 +1107,12 @@ a.leaflet-popup-close-button {
 
 
 @media(max-width:400px) {
-  #header {
+  #header.initial, #sidebar {
     width:auto;
-    padding:5px;
+    padding:1em;
   }
   #header h3 {
     font-size:1.2em;
+    margin:0;
   }
 }
