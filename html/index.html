@@ -104,7 +104,7 @@
 				</div>
 				<div class="container">
 					<p>
-						<span class="required">*</span> <input type="checkbox" name="data_acknowledgement" id="data_acknowledgement" value="yes" /> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and Data.Seattle.Gov.
+						<span class="required">*</span> <input type="checkbox" name="data_acknowledgement" id="data_acknowledgement" value="yes" /> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and <a href="https://data.seattle.gov" target="_blank">Data.Seattle.Gov</a>.
 					</p>
 				</div>
 				<input name="latitude" id="latitude" type="hidden" />
@@ -114,12 +114,14 @@
 				<input name="min_rtt" id="min_rtt" type="hidden" />
 				<input name="bigquery_key" id="bigquery_key" type="hidden" />
 			</div>
-			<div id="ndt-div">
-				<div id="ndt-svg"></div>
-			</div>
-			<div id="approx-loc">
-				<h3 class="league-gothic">Test your speed!</h3>
-				<div id="ndt-status"></div>
+			<div id="test-container">
+				<div id="ndt-div">
+					<div id="ndt-svg"></div>
+				</div>
+				<div id="approx-loc">
+					<h3 class="league-gothic">Test your speed!</h3>
+					<div id="ndt-status"></div>
+				</div>
 			</div>
 			<div id="ndt-results" class="ndt-related">
 				<div class="container">

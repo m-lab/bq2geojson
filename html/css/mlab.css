@@ -1066,7 +1066,7 @@ a.leaflet-popup-close-button {
   font-size: 1.2em;
 }
 
-#welcome-container {
+#welcome-container, #test-container {
   background:#fff;
   background:rgba(255,255,255,0.75);
   position:absolute;
@@ -1079,7 +1079,7 @@ a.leaflet-popup-close-button {
 
 #header, #sidebar {
   width:80%;
-  margin: 30% auto auto;
+  margin: 0 auto;
   overflow: hidden;
 }
 
