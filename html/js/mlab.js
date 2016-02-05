@@ -600,6 +600,15 @@ $(function() {
 	});
 });
 
+function uncheckAcknowledgement(){
+	var datacheck = document.getElementById('data_acknowledgement');
+  if($(datacheck).is(':checked')){
+		console.log("uncheck");
+    $(datacheck).attr("checked", false);
+  }
+}
+
+
 function submitExtraData() {
 	var formData = $('#collector').serialize();
 	$.ajax({

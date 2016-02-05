@@ -191,6 +191,8 @@
 
 	getNdtServer();
 
+	uncheckAcknowledgement();
+
 	NDT_meter = new NDTmeter('#ndt-svg');
 	NDT_meter.meter.on("click", function () {
 		NDT_client = new NDTjs(ndtServer, ndtPort, ndtPath, NDT_meter, ndtUpdateInterval);
@@ -202,6 +204,7 @@
 	}
 
 	function success(position) {
+
 		document.getElementById('latitude').value = position.coords.latitude;
 		document.getElementById('longitude').value = position.coords.longitude;
 
