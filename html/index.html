@@ -78,14 +78,17 @@
 							</select>
 						</p>
 				</div>
-				<div class="container">
+				<div class="container textboxes">
 						<p>What are your advertised upload and download speeds? <strong>(Optional)</strong></p>
-						<div style="float:left; width: 25%;"><p>Upload:</p></div>
-						<div style="float:left; width: 75%;"><input name="advertised_upload" size="3"/><small> mbps</small></div>
-						<div style="float:left; width: 25%;"><p>Download:</p></div>
-						<div style="float:left; width: 75%;"><input name="advertised_download" size="3"/><small> mbps</small></div>
+						<div class='expected-values'>
+						<p>Upload:</p>
+						<input name="advertised_upload" size="3"/><small> mbps</small>
+					</div><div class="expected-values">
+						<p>Download:</p>
+						<input name="advertised_download" size="3"/><small> mbps</small>
+						</div>
 				</div>
-				<div class="container">
+				<div class="container" id="consent-text">
 					<p>
 						<span class="required">*</span> <input type="checkbox" name="data_acknowledgement" id="data_acknowledgement" value="yes" /> I understand that the data collected from this test will be anonymized and aggregated for publication to the Broadband Map and <a href="https://data.seattle.gov" target="_blank">Data.Seattle.Gov</a>.
 					</p>
