@@ -511,13 +511,11 @@ function runTest() {
 	$('#icons').addClass('hidden');
 	$('#header').removeClass('initial');
 	$('#header').addClass('hidden');
-	$('#test-container'.removeClass('hidden'); 	
-	$('#test-container'.addClass('visible');
 }
 function showMap() {
 	$('#icons img').removeClass('selected');
 	$('#header').removeClass('initial');
-	$('#header, #intro, #sidebar, #approx-loc, #test-container, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
+	$('#header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control,  .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
 
@@ -548,7 +546,7 @@ $( window ).resize(function() {
 
 $(function() {
 /* Sets initial status on load for various divs */
-	$('#testSpeed, #approx-loc, #test-container, #ndt-div, #ndt-results, #desktop-legend, .info.legend.leaflet-control, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
+	$('#testSpeed, #approx-loc, #ndt-div, #ndt-results, #desktop-legend, .info.legend.leaflet-control, .leaflet-bottom.leaflet-left, .info.controls.leaflet-control, #mapview-icons, #socialshare, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-control-layers').addClass('hidden');
 	//$('.leaflet-top.leaflet-right').attr('id','layers-box');
 	$('#header').addClass('initial');
 
