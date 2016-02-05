@@ -1106,7 +1106,7 @@ a.leaflet-popup-close-button {
 
 
 
-@media(max-width:400px) {
+@media(max-width:500px) {
   #header.initial, #sidebar {
     width:auto;
     padding:0.5em 1em;
@@ -1122,6 +1122,7 @@ a.leaflet-popup-close-button {
     padding:0;
   }
   .container p {
+    display:block;
     margin:0;
   }
   #test-container {
@@ -1140,13 +1141,19 @@ a.leaflet-popup-close-button {
     text-align: left;
   }
   .container select {
-    width:50%;
+    width:100%;
   }
   .button-label {
-    margin:0;
+    margin:0 0 0 10px;
     font-size: 1em;
+    cursor: pointer;
+    line-height: 50px;
+  }
+  #sidebar img {
+    max-width: 50px;
   }
 }
+
 
 #learn-more a {
   color: initial;
