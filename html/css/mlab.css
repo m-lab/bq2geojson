@@ -1109,10 +1109,45 @@ a.leaflet-popup-close-button {
 @media(max-width:400px) {
   #header.initial, #sidebar {
     width:auto;
-    padding:1em;
+    padding:0.5em 1em;
   }
   #header h3 {
     font-size:1.2em;
     margin:0;
   }
+  #extra-data {
+    width:auto;
+  }
+  .container {
+    padding:0;
+  }
+  .container p {
+    margin:0;
+  }
+  #test-container {
+    margin-top:0;
+  }
+  #icons img {
+    margin:0;
+    display:inline-block;
+  }
+  #explore-map, #take-test, #learn-more {
+    width:100%;
+    clear:both;
+    overflow: auto;
+  }
+  #icons {
+    text-align: left;
+  }
+  .container select {
+    width:50%;
+  }
+  .button-label {
+    margin:0;
+    font-size: 1em;
+  }
+}
+
+#learn-more a {
+  color: initial;
 }
