@@ -1080,11 +1080,7 @@ a.leaflet-popup-close-button {
   background:#fff;
   background:rgba(255,255,255,0.75);
   position:relative;
-  z-index:5;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  margin-top: 30%;
 }
 
 #header, #sidebar {
