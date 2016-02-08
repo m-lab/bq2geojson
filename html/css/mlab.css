@@ -1190,7 +1190,6 @@ a.leaflet-popup-close-button {
     text-align: left;
   }
   #explore-map, #learn-more {
-    width:49%;
     display:inline-block;
   }
 }
