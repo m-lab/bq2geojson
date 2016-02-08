@@ -1159,6 +1159,15 @@ a.leaflet-popup-close-button {
   #ndt-status + p {
     font-weight: bold;
   }
+  #ndt-results p {
+    margin:0
+  }
+  #thankyou ul {
+    padding:0 10px;
+  }
+  #socialshare {
+    margin:0;
+  }
 }
 
 @media(min-width:500px) and (max-width:700px) {
