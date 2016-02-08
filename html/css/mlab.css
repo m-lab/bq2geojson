@@ -1164,11 +1164,12 @@ a.leaflet-popup-close-button {
 
 
 @media(max-width:968px) {
+  #consent-text p {
+    padding:10px;
+    margin:0;
+  }
   #extra-data {
     width:auto;
-  }
-  .container p {
-    width:43%;
   }
   .container select {
     width:100%;
