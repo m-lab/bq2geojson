@@ -1108,7 +1108,6 @@ a.leaflet-popup-close-button {
 
 /*@media(max-width:700px) {*/
   #header.initial, #sidebar {
-    width:auto;
     padding:0.5em 1em;
   }
   #header h3 {
@@ -1141,6 +1140,12 @@ a.leaflet-popup-close-button {
     display:inline;
   }
 /*}*/
+
+@media(max-width:700px) {
+  #header.initial, #sidebar {
+    width:auto;
+  }
+}
 
 @media(min-width:500px) and (max-width:700px) {
   #extra-data p {
@@ -1201,14 +1206,36 @@ a.leaflet-popup-close-button {
   .container {
     padding:0;
   }
+  .container p{
+    margin:5px 0 !important;
+  }
+  .container p:first-child {
+    width:45%;
+  }
+  .container p:last-child {
+    width:52%;
+  }
   .expected-values p {
     width:auto;
   }
   .expected-values {
     float: left;
   }
-  .textboxes > p {
+  #consent-text > p {
     width:100%;
+  }
+  .textboxes p {
+    float:left;
+  }
+}
+
+@media(min-width:980px) {
+  #icons img {
+    margin:0;
+  }
+  #icons > div {
+    margin-right: 1em;
+    float:left;
   }
 }
 
