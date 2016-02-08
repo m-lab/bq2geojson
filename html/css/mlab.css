@@ -1106,7 +1106,7 @@ a.leaflet-popup-close-button {
 
 
 
-@media(max-width:700px) {
+/*@media(max-width:700px) {*/
   #header.initial, #sidebar {
     width:auto;
     padding:0.5em 1em;
@@ -1140,7 +1140,7 @@ a.leaflet-popup-close-button {
   .expected-values, .expected-values p, .expected-values input, .expected-values small {
     display:inline;
   }
-}
+/*}*/
 
 @media(min-width:500px) and (max-width:700px) {
   #extra-data p {
