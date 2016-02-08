@@ -515,7 +515,7 @@ function runTest() {
 function showMap() {
 	$('#icons img').removeClass('selected');
 	$('#header').removeClass('initial');
-	$('#header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
+	$('#welcome-container, #header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control,  .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
 
@@ -603,7 +603,6 @@ $(function() {
 function uncheckAcknowledgement(){
 	var datacheck = document.getElementById('data_acknowledgement');
   if($(datacheck).is(':checked')){
-		console.log("uncheck");
     $(datacheck).attr("checked", false);
   }
 }
