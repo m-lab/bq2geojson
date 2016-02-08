@@ -1136,7 +1136,28 @@ a.leaflet-popup-close-button {
   .expected-values, .expected-values p, .expected-values input, .expected-values small {
     display:inline;
   }
+  #thankyou ul {
+    padding:0 10px;
+  }
+  #ndt-status + p {
+    font-weight: bold;
+  }
+  #ndt-status {
+    float:none;
+    overflow:auto;
+    font-size:1em;
+    margin:5px 0;
+  }
+
 /*}*/
+
+@media(max-width:500px) {
+  #your-results, #thankyou {
+    width:auto;
+    float:left;
+    padding:10px;
+  }
+}
 
 @media(max-width:700px) {
   #header.initial, #sidebar {
@@ -1150,20 +1171,8 @@ a.leaflet-popup-close-button {
     margin:0;
     padding:0;
   }
-  #ndt-status {
-    float:none;
-    overflow:auto;
-    font-size:1em;
-    margin:5px 0;
-  }
-  #ndt-status + p {
-    font-weight: bold;
-  }
   #ndt-results p {
     margin:0
-  }
-  #thankyou ul {
-    padding:0 10px;
   }
   #socialshare {
     margin:0;
@@ -1173,11 +1182,6 @@ a.leaflet-popup-close-button {
 @media(min-width:500px) {
   #ndt-svg {
     width:75%;
-  }
-  #your-results, #thankyou {
-    width:50%;
-    float:left;
-    padding:10px;
   }
   #ndt-results {
     width:100%;
@@ -1264,6 +1268,22 @@ a.leaflet-popup-close-button {
   }
   .textboxes p {
     float:left;
+  }
+}
+
+@media(min-width:501px) and (max-width:850px) {
+  #your-results, #thankyou {
+    width:50%;
+    float:left;
+    padding:10px;
+  }
+}
+
+@media(min-width:851px) {
+  #your-results, #thankyou {
+    width:auto;
+    float:left;
+    padding:10px;
   }
 }
 
