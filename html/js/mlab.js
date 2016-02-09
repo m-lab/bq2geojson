@@ -110,7 +110,7 @@ function addControls() {
 		currentMonthOption = monthNames[currentMonthOption -1];
 		console.log(currentMonthOption);
 		$('#mobile-only-text').remove();
-		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + currentYearOption + '</p>');
+		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + " " + currentYearOption + '</p>');
 	}
 	$('#selectMetric, #selectYear, #sliderMonth').change(function() {
 		getCurrentValues();
