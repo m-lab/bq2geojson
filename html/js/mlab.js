@@ -98,6 +98,8 @@ function addControls() {
 	$(".leaflet-control > div.mapControls").wrapAll("<div class='sliderElements'></div>");
 	metricChoices.wrapAll("<div class='metricControls'></div>");
 
+	// purely launch workaround for #114
+	console.log($('.metricControls').before('<p class="mobile-only-text">Showing <span class="metric">' + $('#selectMetric option:selected').text() + '</span> from ' + $('#selectYear option:selected').text() + '</p>'));
 
 	var elems;
 	if ( polygonType != 'hex' ) {

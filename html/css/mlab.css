@@ -1304,3 +1304,16 @@ a.leaflet-popup-close-button {
 .leaflet-bottom {
   pointer-events: auto;
 }
+
+/* temp styles for launch workaround #114 */
+#mobile-menu {
+  display:none !important;
+}
+.metric {
+  text-transform: lowercase;
+}
+@media(min-width:501px) {
+  .mobile-only-text {
+      display:none !important;
+  }
+}
