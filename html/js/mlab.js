@@ -87,6 +87,8 @@ function addControls() {
 		selectYear.innerHTML = dateOptions;
 		selectYear.setAttribute('id', 'selectYear');
 		selectYear.setAttribute('class', 'form-control');
+		// for #114
+		getCurrentValues();
 
 		return controls;
 	};
@@ -99,18 +101,22 @@ function addControls() {
 	metricChoices.wrapAll("<div class='metricControls'></div>");
 
 	// purely launch workaround for #114
-	getCurrentValues();
-
 	function getCurrentValues() {
 		var currentMetricOption = $('#selectMetric option:selected').text();
 		var currentYearOption = $('#selectYear option:selected').text();
-		var currentMonthOption
+		// get index
+		var currentMonthOption = $('#sliderMonth').slider("value");
+		// apply index to month array
+		currentMonthOption = monthNames[currentMonthOption];
 		$('#mobile-only-text').remove();
-		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentYearOption + '</p>');
+		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + currentYearOption + '</p>');
 	}
-	$('#selectMetric, #selectYear').change(function() {
+	$('#selectMetric, #selectYear, #sliderMonth').change(function() {
 		getCurrentValues();
 	});
+
+
+
 
 	var elems;
 	if ( polygonType != 'hex' ) {
