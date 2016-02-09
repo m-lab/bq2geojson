@@ -569,7 +569,7 @@ $(function() {
 
 	$('#mobile-menu').click(function() {
 		closeAllTheThings();
-		$('#mobile-container, .sliderElements, .metricControls, .leaflet-control-layers').toggle();
+		$('#mobile-container, .sliderElements, .metricControls, #desktop-legend, .leaflet-control-layers').toggle();
 	});
 /*
 	$('#exploreMap').click(function() {

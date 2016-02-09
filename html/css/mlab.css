@@ -661,6 +661,7 @@ a.leaflet-popup-close-button {
   }
   #desktop-legend {
     display:none;
+    bottom:118px;
   }
   #sliderMonth {
     width:85%;
