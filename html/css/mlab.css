@@ -1092,14 +1092,8 @@ a.leaflet-popup-close-button {
 }
 
 @media(max-width:700px) {
-  #mobile-menu {
-    display:block !important;
-  }
 }
 @media(min-width:701px) {
-  #mobile-menu {
-    display:none !important;
-  }
 }
 
 
@@ -1210,6 +1204,12 @@ a.leaflet-popup-close-button {
   }
 }
 
+@media(min-width:501px){
+  #mobile-menu {
+    display:none !important;
+  }
+}
+
 
 @media(max-width:968px) {
   #consent-text p {
@@ -1301,4 +1301,21 @@ a.leaflet-popup-close-button {
 
 #learn-more a {
   color: initial;
+}
+
+.leaflet-bottom {
+  pointer-events: auto;
+}
+
+/* temp styles for launch workaround #114 */
+#mobile-menu {
+  display:none !important;
+}
+.metric {
+  text-transform: lowercase;
+}
+@media(min-width:501px) {
+  #mobile-only-text {
+      display:none !important;
+  }
 }

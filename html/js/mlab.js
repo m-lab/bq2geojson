@@ -1,3 +1,19 @@
+// purely launch workaround for #114
+function getCurrentValues() {
+	var currentMetricOption = $('#selectMetric option:selected').text();
+	var currentYearOption = $('#selectYear option:selected').text();
+	// get index
+	var currentMonthOption = $('#sliderMonth').slider("value");
+	// apply index to month array
+	currentMonthOption = monthNames[currentMonthOption -1];
+	$('#mobile-only-text').remove();
+	$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + " " + currentYearOption + '</p>');
+};
+$('#selectMetric, #selectYear, #sliderMonth').change(function() {
+	getCurrentValues();
+});
+
+
 /**
  * Creates the map legend that will appear in the lower right corner of the map.
  *
@@ -98,7 +114,6 @@ function addControls() {
 	$(".leaflet-control > div.mapControls").wrapAll("<div class='sliderElements'></div>");
 	metricChoices.wrapAll("<div class='metricControls'></div>");
 
-
 	var elems;
 	if ( polygonType != 'hex' ) {
 		elems = [selectYear, selectMetric];
@@ -184,6 +199,10 @@ function updateLayers(e, mode) {
 		if ( seedCache ) {
 			seedLayerCache(year);
 		}
+
+		// for #114
+		getCurrentValues();
+
 	}
 
 	var month = $('#sliderMonth').slider('value');
