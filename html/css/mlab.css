@@ -1262,6 +1262,7 @@ a.leaflet-popup-close-button {
   }
   .expected-values {
     float: left;
+    width: 25%;
   }
   #consent-text > p {
     width:100%;
