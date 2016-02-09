@@ -107,7 +107,8 @@ function addControls() {
 		// get index
 		var currentMonthOption = $('#sliderMonth').slider("value");
 		// apply index to month array
-		currentMonthOption = monthNames[currentMonthOption];
+		currentMonthOption = monthNames[currentMonthOption -1];
+		console.log(currentMonthOption);
 		$('#mobile-only-text').remove();
 		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + currentYearOption + '</p>');
 	}
