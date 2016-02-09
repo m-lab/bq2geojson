@@ -99,7 +99,18 @@ function addControls() {
 	metricChoices.wrapAll("<div class='metricControls'></div>");
 
 	// purely launch workaround for #114
-	console.log($('.metricControls').before('<p class="mobile-only-text">Showing <span class="metric">' + $('#selectMetric option:selected').text() + '</span> from ' + $('#selectYear option:selected').text() + '</p>'));
+	getCurrentValues();
+
+	function getCurrentValues() {
+		var currentMetricOption = $('#selectMetric option:selected').text();
+		var currentYearOption = $('#selectYear option:selected').text();
+		var currentMonthOption
+		$('#mobile-only-text').remove();
+		$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentYearOption + '</p>');
+	}
+	$('#selectMetric, #selectYear').change(function() {
+		getCurrentValues();
+	});
 
 	var elems;
 	if ( polygonType != 'hex' ) {

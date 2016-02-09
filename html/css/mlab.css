@@ -1313,7 +1313,7 @@ a.leaflet-popup-close-button {
   text-transform: lowercase;
 }
 @media(min-width:501px) {
-  .mobile-only-text {
+  #mobile-only-text {
       display:none !important;
   }
 }
