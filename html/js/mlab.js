@@ -511,6 +511,7 @@ function runTest() {
 	$('#icons').addClass('hidden');
 	$('#header').removeClass('initial');
 	$('#header').addClass('hidden');
+	window.scrollTo(0, 0);
 }
 function showMap() {
 	$('#icons img').removeClass('selected');
@@ -518,7 +519,6 @@ function showMap() {
 	$('#welcome-container, #header, #intro, #sidebar, #approx-loc, #ndt-div, #ndt-results, #extra-data, #about-ndt, #thankyou').addClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control, .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').removeClass('hidden');
 	$('#mapview-icons, #desktop-legend, .info.legend.leaflet-control,  .info.controls.leaflet-control, .leaflet-top.leaflet-left, .leaflet-top.leaflet-right, .leaflet-bottom.leaflet-left').addClass('visible');
-
 	$('#mobile-container').addClass('hidden');
 	if ($(document).width() < 700) {
 		$('.leaflet-control-layers').addClass('hidden');
