@@ -8,7 +8,7 @@ function getCurrentValues() {
 	currentMonthOption = monthNames[currentMonthOption -1];
 	console.log(currentMetricOption, currentYearOption, currentMonthOption);
 	$('#mobile-only-text').remove();
-	$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + " " + currentYearOption + '</p>');
+	$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from <span class="mobiledate">' + currentMonthOption + ". " + currentYearOption + '</span></p>');
 };
 
 

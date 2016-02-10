@@ -1311,6 +1311,12 @@ a.leaflet-popup-close-button {
 }
 .metric {
   text-transform: lowercase;
+  font-style: italic;
+  font-weight: bold;
+}
+.mobiledate {
+  font-style: italic;
+  font-weight: bold;
 }
 @media(min-width:501px) {
   #mobile-only-text {
