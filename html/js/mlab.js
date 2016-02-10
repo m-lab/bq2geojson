@@ -6,12 +6,10 @@ function getCurrentValues() {
 	var currentMonthOption = $('#sliderMonth').slider("value");
 	// apply index to month array
 	currentMonthOption = monthNames[currentMonthOption -1];
+	console.log(currentMetricOption, currentYearOption, currentMonthOption);
 	$('#mobile-only-text').remove();
-	$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from ' + currentMonthOption + " " + currentYearOption + '</p>');
+	$('.metricControls').before('<p id="mobile-only-text">Showing <span class="metric">' + currentMetricOption + '</span> from <span class="mobiledate">' + currentMonthOption + ". " + currentYearOption + '</span></p>');
 };
-$('#selectMetric, #selectYear, #sliderMonth').change(function() {
-	getCurrentValues();
-});
 
 
 /**
@@ -200,9 +198,6 @@ function updateLayers(e, mode) {
 			seedLayerCache(year);
 		}
 
-		// for #114
-		getCurrentValues();
-
 	}
 
 	var month = $('#sliderMonth').slider('value');
@@ -210,6 +205,7 @@ function updateLayers(e, mode) {
 	for (var geoLayer in geoLayers) {
 		setPolygonLayer(geoLayer, year, month, metric, mode, resolution);
 	}
+
 }
 
 /**
@@ -252,6 +248,7 @@ function getLayerData(url, callback) {
 			callback(resp);
 		}, 'json');
 	}
+	getCurrentValues();
 }
 
 /**
@@ -544,6 +541,9 @@ function showMap() {
 	}
 	$('#layers-box').show();
 	$('.leaflet-top.leaflet-left, .leaflet-top.leaflet-right').show();
+	// for #114
+	getCurrentValues();
+
 }
 function showSocialShare() {
 	$('#socialshare').removeClass('hidden');
