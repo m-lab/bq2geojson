@@ -432,10 +432,10 @@ function seedLayerCache(year) {
 function makePopup(props) {
 	var popup = '<h3 class="league-gothic">Internet Measurements in this Census Block, in '+ $('#sliderMonth').slider('value') +'/'+ $('#selectYear').val() + ' :</h3>'+
 		' <p><strong>Download ('+ Math.round(props.download_count * 10) / 10 +' samples)</strong><br />'+
-		' Most common (median) speed: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
+		' Median: ' + Math.round(props.download_median * 10) / 10 + ' Mbps <br />' +
 		' Max: ' + props.download_max + ' Mbps<br /><br />' +
 		' <strong>Upload ('+ Math.round(props.upload_count * 10) / 10 + ' samples)</strong><br />' +
-		' Most common (median): ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
+		' Median: ' + Math.round(props.upload_median * 10) / 10 + ' Mbps <br/>' +
 		' Max: ' + props.upload_max + ' Mbps<br /><br />' +
 		'<strong>Average Round Trip Time:</strong> ' + Math.round(props.rtt_avg) + ' ms <br/></p>';
 	return popup;
